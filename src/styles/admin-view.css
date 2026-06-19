@@ -1,0 +1,89 @@
+.admin-menu-panel {
+    grid-area: menu;
+    display: grid;
+    gap: var(--space-4);
+}
+
+.admin-menu-list {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.admin-item {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid rgba(128, 32, 56, 0.08);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+}
+
+.admin-item__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--space-3);
+}
+
+.admin-item__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.admin-side-panel {
+    grid-area: side;
+    display: grid;
+    gap: var(--space-5);
+    align-self: start;
+    height: fit-content;
+    position: sticky;
+    top: var(--space-4);
+}
+
+.admin-form {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.admin-form label {
+    display: grid;
+    gap: var(--space-1);
+}
+
+.admin-form span {
+    font-weight: 700;
+    color: var(--violet-700);
+}
+
+.admin-form__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-inner);
+    background: var(--surface-soft);
+    color: var(--text);
+}
+
+.admin-archive {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.admin-archive h4 {
+    margin: 0;
+}
+
+.archive-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
