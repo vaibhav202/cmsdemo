@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="3200" viewBox="0 0 2400 3200" role="img" aria-labelledby="title desc">
+  <title id="title">Security and Upload Flows - Text Diagram</title>
+  <desc id="desc">Monochrome text-based security, RLS, and image upload flow diagram.</desc>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #ffffff; stroke: #111111; stroke-width: 3; }
+      .soft { fill: #f7f7f7; stroke: #111111; stroke-width: 3; }
+      .line { stroke: #111111; stroke-width: 3; }
+      .thin { stroke: #777777; stroke-width: 2; }
+      .title { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 72px; font-weight: 800; }
+      .subtitle { fill: #333333; font-family: Arial, Helvetica, sans-serif; font-size: 34px; font-weight: 400; }
+      .h1 { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 42px; font-weight: 800; }
+      .h2 { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 32px; font-weight: 800; }
+      .body { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 29px; font-weight: 400; }
+      .small { fill: #333333; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 400; }
+      .mono { fill: #111111; font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 27px; font-weight: 400; }
+      .step { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 31px; font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="2400" height="3200"/>
+  <text x="120" y="140" class="title">SECURITY AND UPLOAD FLOWS</text>
+  <text x="120" y="196" class="subtitle">Flow reference for login, dashboard actions, RLS, realtime, and image normalization</text>
+  <line x1="120" y1="240" x2="2280" y2="240" class="line"/>
+
+  <rect x="120" y="320" width="2160" height="650" class="box"/>
+  <text x="170" y="390" class="h1">FLOW 1: LOGIN AND VENDOR ACCESS</text>
+  <line x1="170" y1="425" x2="2230" y2="425" class="thin"/>
+  <text x="170" y="500" class="step">1.</text>
+  <text x="230" y="500" class="body">User opens web/PWA app.</text>
+  <text x="170" y="560" class="step">2.</text>
+  <text x="230" y="560" class="body">User signs in through Supabase Auth.</text>
+  <text x="170" y="620" class="step">3.</text>
+  <text x="230" y="620" class="body">NextJS server reads and verifies the session.</text>
+  <text x="170" y="680" class="step">4.</text>
+  <text x="230" y="680" class="body">Server loads active vendor_members rows for auth.uid().</text>
+  <text x="170" y="740" class="step">5.</text>
+  <text x="230" y="740" class="body">If active membership exists, user enters the vendor dashboard.</text>
+  <text x="170" y="800" class="step">6.</text>
+  <text x="230" y="800" class="body">If no active membership exists, user sees access denied.</text>
+  <line x1="170" y1="850" x2="2230" y2="850" class="thin"/>
+  <text x="170" y="915" class="mono">Open App -> Supabase Login -> Server Session -> vendor_members -> Role Gate -> Dashboard</text>
+
+  <rect x="120" y="1060" width="2160" height="760" class="soft"/>
+  <text x="170" y="1130" class="h1">FLOW 2: PROTECTED DASHBOARD OPERATION</text>
+  <line x1="170" y1="1165" x2="2230" y2="1165" class="thin"/>
+  <text x="170" y="1240" class="step">1.</text>
+  <text x="230" y="1240" class="body">Staff performs an action: create order, update status, edit menu, or confirm payment.</text>
+  <text x="170" y="1300" class="step">2.</text>
+  <text x="230" y="1300" class="body">NextJS validates inputs using Zod schemas.</text>
+  <text x="170" y="1360" class="step">3.</text>
+  <text x="230" y="1360" class="body">Server checks role permission from vendor_members.</text>
+  <text x="170" y="1420" class="step">4.</text>
+  <text x="230" y="1420" class="body">Supabase query or mutation is executed with vendor_id attached.</text>
+  <text x="170" y="1480" class="step">5.</text>
+  <text x="230" y="1480" class="body">Postgres RLS policy verifies that auth.uid() belongs to the same vendor_id.</text>
+  <text x="170" y="1540" class="step">6.</text>
+  <text x="230" y="1540" class="body">Database accepts or rejects the operation.</text>
+  <text x="170" y="1600" class="step">7.</text>
+  <text x="230" y="1600" class="body">Realtime subscription updates kitchen, queue, and admin views.</text>
+  <line x1="170" y1="1660" x2="2230" y2="1660" class="thin"/>
+  <text x="170" y="1725" class="mono">Action -> Zod -> Role Check -> Supabase -> RLS vendor_id Check -> Response -> Realtime UI</text>
+
+  <rect x="120" y="1910" width="2160" height="840" class="box"/>
+  <text x="170" y="1980" class="h1">FLOW 3: IMAGE UPLOAD NORMALIZATION</text>
+  <line x1="170" y1="2015" x2="2230" y2="2015" class="thin"/>
+  <text x="170" y="2090" class="step">1.</text>
+  <text x="230" y="2090" class="body">Vendor selects a logo, menu item image, or employee avatar.</text>
+  <text x="170" y="2150" class="step">2.</text>
+  <text x="230" y="2150" class="body">Client shows preview and basic file feedback.</text>
+  <text x="170" y="2210" class="step">3.</text>
+  <text x="230" y="2210" class="body">NextJS upload route verifies session, vendor membership, role, MIME type, and size.</text>
+  <text x="170" y="2270" class="step">4.</text>
+  <text x="230" y="2270" class="body">Sharp resizes, crops if required, compresses, and converts to WebP.</text>
+  <text x="170" y="2330" class="step">5.</text>
+  <text x="230" y="2330" class="body">Normalized file is uploaded to Supabase Storage.</text>
+  <text x="170" y="2390" class="step">6.</text>
+  <text x="230" y="2390" class="body">media_assets row stores path, dimensions, MIME type, and size.</text>
+  <text x="170" y="2450" class="step">7.</text>
+  <text x="230" y="2450" class="body">Business row links to image_asset_id or logo_asset_id.</text>
+  <text x="170" y="2510" class="step">8.</text>
+  <text x="230" y="2510" class="body">Vendor sees optimized image. No manual compression is required.</text>
+  <line x1="170" y1="2570" x2="2230" y2="2570" class="thin"/>
+  <text x="170" y="2635" class="mono">Select -> Preview -> API Validate -> Sharp WebP -> Storage -> media_assets -> Entity Link -> UI</text>
+
+  <rect x="120" y="2840" width="2160" height="230" class="soft"/>
+  <text x="170" y="2910" class="h1">FOUNDATION RULE</text>
+  <line x1="170" y1="2945" x2="2230" y2="2945" class="thin"/>
+  <text x="170" y="3010" class="body">Frontend checks improve UX. Server validation and Postgres RLS provide actual security.</text>
+</svg>

@@ -1,0 +1,273 @@
+CANTEEN/CAFE MANAGEMENT SAAS - ROLE PERMISSION MATRIX
+=====================================================
+
+Purpose:
+- Define who can access each dashboard and action.
+- Guide route guards, server validation, and RLS policies.
+
+Core rule:
+- A user must have an active vendor_members row for the target vendor.
+- Role permissions apply only after active membership is verified.
+
+Roles:
+- owner
+- admin
+- manager
+- cashier
+- kitchen
+- accountant
+
+Statuses:
+- active: can use allowed features.
+- invited: cannot access until activated.
+- disabled: cannot access.
+
+
+1. DASHBOARD ACCESS
+===================
+
+Dashboard: /app/[vendorSlug]/order
+- owner: allow
+- admin: allow
+- manager: allow
+- cashier: allow
+- kitchen: deny
+- accountant: deny
+
+Dashboard: /app/[vendorSlug]/kitchen
+- owner: allow
+- admin: allow
+- manager: allow
+- cashier: deny
+- kitchen: allow
+- accountant: deny
+
+Dashboard: /app/[vendorSlug]/queue
+- owner: allow
+- admin: allow
+- manager: allow
+- cashier: allow
+- kitchen: allow
+- accountant: deny
+
+Dashboard: /app/[vendorSlug]/control
+- owner: allow
+- admin: allow
+- manager: allow limited
+- cashier: deny
+- kitchen: deny
+- accountant: deny
+
+Dashboard: /app/[vendorSlug]/inventory
+- owner: allow
+- admin: allow
+- manager: allow
+- cashier: deny
+- kitchen: allow limited
+- accountant: deny
+
+Dashboard: /app/[vendorSlug]/khatabook
+- owner: allow
+- admin: allow
+- manager: deny by default
+- cashier: deny
+- kitchen: deny
+- accountant: allow
+
+Dashboard: /app/[vendorSlug]/reports
+- owner: allow
+- admin: allow
+- manager: allow limited
+- cashier: deny
+- kitchen: deny
+- accountant: allow
+
+
+2. MENU PERMISSIONS
+===================
+
+View menu:
+- owner, admin, manager, cashier, kitchen: allow
+- accountant: deny by default
+
+Create/edit/archive menu item:
+- owner, admin, manager: allow
+- cashier, kitchen, accountant: deny
+
+Toggle item availability:
+- owner, admin, manager: allow
+- kitchen: allow limited if needed
+- cashier, accountant: deny
+
+Upload menu item image:
+- owner, admin, manager: allow
+- cashier, kitchen, accountant: deny
+
+
+3. ORDER PERMISSIONS
+====================
+
+Create order:
+- owner, admin, manager, cashier: allow
+- kitchen, accountant: deny
+
+View active orders:
+- owner, admin, manager, cashier, kitchen: allow
+- accountant: deny by default
+
+Confirm counter payment:
+- owner, admin, manager, cashier: allow
+- kitchen, accountant: deny
+
+Move order status:
+- owner, admin, manager, kitchen: allow
+- cashier: deny by default
+- accountant: deny
+
+Cancel/refund order:
+- owner, admin, manager: allow
+- cashier: allow limited if explicitly enabled
+- kitchen, accountant: deny
+
+
+4. QUEUE PERMISSIONS
+====================
+
+View queue:
+- owner, admin, manager, cashier, kitchen: allow
+- accountant: deny by default
+
+Fullscreen queue:
+- owner, admin, manager, cashier, kitchen: allow
+- accountant: deny by default
+
+Modify queue/order state:
+- owner, admin, manager, kitchen: allow through order status permissions
+- cashier, accountant: deny
+
+
+5. INVENTORY PERMISSIONS
+========================
+
+View stock:
+- owner, admin, manager: allow
+- kitchen: allow limited
+- cashier, accountant: deny by default
+
+Create/edit stock item:
+- owner, admin, manager: allow
+- cashier, kitchen, accountant: deny
+
+Record stock movement:
+- owner, admin, manager: allow
+- kitchen: allow limited if needed
+- cashier, accountant: deny
+
+View stocking suggestions:
+- owner, admin, manager: allow
+- kitchen: allow limited if needed
+- cashier, accountant: deny by default
+
+
+6. KHATABOOK AND FINANCE PERMISSIONS
+====================================
+
+View ledger:
+- owner, admin, accountant: allow
+- manager, cashier, kitchen: deny by default
+
+Create ledger entry:
+- owner, admin, accountant: allow
+- manager, cashier, kitchen: deny by default
+
+Edit/delete ledger entry:
+- owner, admin: allow
+- accountant: allow limited if policy permits
+- manager, cashier, kitchen: deny
+
+View expenses:
+- owner, admin, accountant: allow
+- manager: allow limited if needed
+- cashier, kitchen: deny
+
+Create expense:
+- owner, admin, accountant: allow
+- manager: allow limited if needed
+- cashier, kitchen: deny
+
+View profit/loss:
+- owner, admin, accountant: allow
+- manager: allow limited if needed
+- cashier, kitchen: deny
+
+
+7. MEMBER AND VENDOR SETTINGS
+=============================
+
+View members:
+- owner, admin: allow
+- manager: allow limited if needed
+- cashier, kitchen, accountant: deny
+
+Invite member:
+- owner, admin: allow
+- manager, cashier, kitchen, accountant: deny
+
+Change member role:
+- owner: allow
+- admin: allow except owner role
+- manager, cashier, kitchen, accountant: deny
+
+Disable member:
+- owner: allow
+- admin: allow except owner role
+- manager, cashier, kitchen, accountant: deny
+
+Edit vendor profile:
+- owner, admin: allow
+- manager: allow limited if needed
+- cashier, kitchen, accountant: deny
+
+Upload vendor logo:
+- owner, admin, manager: allow
+- cashier, kitchen, accountant: deny
+
+
+8. PLATFORM ADMIN ACCESS
+========================
+
+Platform owner/admin:
+- May need access for support/debugging.
+- Access should be limited, logged, and documented.
+- Should not casually browse vendor data.
+
+Agent rule:
+- Do not add platform admin access paths without explicit approval.
+
+
+9. RLS POLICY GUIDANCE
+======================
+
+Base check:
+- user must be active member of row.vendor_id.
+
+Role check:
+- write policies must check role.
+
+Disabled/invited check:
+- invited and disabled members must not access protected resources.
+
+Customer/public routes:
+- Keep separate from vendor staff dashboards.
+- Do not weaken staff table policies to support public ordering.
+
+
+10. OPEN DECISIONS
+==================
+
+Needs owner confirmation later:
+- Can manager view finance summaries?
+- Can cashier cancel/refund orders?
+- Can kitchen record stock movements?
+- Should queue view be public on vendor display screens?
+- Should customer ordering require login, phone OTP, or no login?

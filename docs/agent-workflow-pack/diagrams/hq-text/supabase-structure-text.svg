@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="3200" viewBox="0 0 2400 3200" role="img" aria-labelledby="title desc">
+  <title id="title">Supabase Structure - Text Diagram</title>
+  <desc id="desc">Monochrome text-based Supabase schema, storage, and RLS structure diagram.</desc>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #ffffff; stroke: #111111; stroke-width: 3; }
+      .soft { fill: #f7f7f7; stroke: #111111; stroke-width: 3; }
+      .line { stroke: #111111; stroke-width: 3; }
+      .thin { stroke: #777777; stroke-width: 2; }
+      .title { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 72px; font-weight: 800; }
+      .subtitle { fill: #333333; font-family: Arial, Helvetica, sans-serif; font-size: 34px; font-weight: 400; }
+      .h1 { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 40px; font-weight: 800; }
+      .h2 { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 32px; font-weight: 800; }
+      .body { fill: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 27px; font-weight: 400; }
+      .small { fill: #333333; font-family: Arial, Helvetica, sans-serif; font-size: 23px; font-weight: 400; }
+      .mono { fill: #111111; font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 25px; font-weight: 400; }
+      .mono-bold { fill: #111111; font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 26px; font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="2400" height="3200"/>
+  <text x="120" y="140" class="title">SUPABASE STRUCTURE</text>
+  <text x="120" y="196" class="subtitle">Multi-tenant PostgreSQL, Storage, and RLS structure for one Supabase project</text>
+  <line x1="120" y1="240" x2="2280" y2="240" class="line"/>
+
+  <rect x="120" y="300" width="2160" height="250" class="soft"/>
+  <text x="170" y="370" class="h1">TENANT PRINCIPLE</text>
+  <line x1="170" y1="405" x2="2230" y2="405" class="thin"/>
+  <text x="170" y="465" class="body">vendor_id = tenant boundary / workspace / root business container</text>
+  <text x="170" y="515" class="body">vendor_members = access control list that maps auth.users to vendors and roles</text>
+
+  <rect x="120" y="630" width="680" height="620" class="box"/>
+  <text x="170" y="700" class="h1">TENANT AND ACCESS</text>
+  <line x1="170" y1="735" x2="750" y2="735" class="thin"/>
+  <text x="170" y="800" class="mono-bold">vendors</text>
+  <text x="200" y="845" class="mono">id, name, slug, plan, status</text>
+  <text x="200" y="885" class="mono">logo_asset_id, created_at</text>
+  <line x1="170" y1="925" x2="750" y2="925" class="thin"/>
+  <text x="170" y="985" class="mono-bold">profiles</text>
+  <text x="200" y="1030" class="mono">id references auth.users(id)</text>
+  <text x="200" y="1070" class="mono">full_name, phone, created_at</text>
+  <line x1="170" y1="1110" x2="750" y2="1110" class="thin"/>
+  <text x="170" y="1170" class="mono-bold">vendor_members</text>
+  <text x="200" y="1215" class="mono">id, vendor_id, user_id</text>
+
+  <rect x="860" y="630" width="680" height="620" class="soft"/>
+  <text x="910" y="700" class="h1">OPERATIONS</text>
+  <line x1="910" y1="735" x2="1490" y2="735" class="thin"/>
+  <text x="910" y="800" class="mono-bold">menu_categories</text>
+  <text x="940" y="845" class="mono">id, vendor_id, name, sort_order</text>
+  <line x1="910" y1="885" x2="1490" y2="885" class="thin"/>
+  <text x="910" y="945" class="mono-bold">menu_items</text>
+  <text x="940" y="990" class="mono">vendor_id, category_id, name</text>
+  <text x="940" y="1030" class="mono">price, cost_price, image_asset_id</text>
+  <text x="940" y="1070" class="mono">is_available, is_archived</text>
+  <line x1="910" y1="1110" x2="1490" y2="1110" class="thin"/>
+  <text x="910" y="1170" class="mono-bold">orders / order_items</text>
+  <text x="940" y="1215" class="mono">vendor_id, status, totals, item lines</text>
+
+  <rect x="1600" y="630" width="680" height="620" class="box"/>
+  <text x="1650" y="700" class="h1">STORAGE AND AUDIT</text>
+  <line x1="1650" y1="735" x2="2230" y2="735" class="thin"/>
+  <text x="1650" y="800" class="mono-bold">media_assets</text>
+  <text x="1680" y="845" class="mono">vendor_id, bucket, path, kind</text>
+  <text x="1680" y="885" class="mono">mime_type, width, height, size_bytes</text>
+  <line x1="1650" y1="925" x2="2230" y2="925" class="thin"/>
+  <text x="1650" y="985" class="mono-bold">storage paths</text>
+  <text x="1680" y="1030" class="mono">vendors/{vendor_id}/logos/...</text>
+  <text x="1680" y="1070" class="mono">vendors/{vendor_id}/menu-items/...</text>
+  <text x="1680" y="1110" class="mono">vendors/{vendor_id}/members/...</text>
+  <line x1="1650" y1="1150" x2="2230" y2="1150" class="thin"/>
+  <text x="1650" y="1210" class="mono-bold">audit_logs</text>
+
+  <rect x="120" y="1340" width="1050" height="700" class="soft"/>
+  <text x="170" y="1410" class="h1">INVENTORY</text>
+  <line x1="170" y1="1445" x2="1120" y2="1445" class="thin"/>
+  <text x="170" y="1510" class="mono-bold">stock_items</text>
+  <text x="200" y="1555" class="mono">id, vendor_id, name, unit</text>
+  <text x="200" y="1595" class="mono">current_quantity, reorder_level, cost_per_unit</text>
+  <line x1="170" y1="1635" x2="1120" y2="1635" class="thin"/>
+  <text x="170" y="1695" class="mono-bold">stock_movements</text>
+  <text x="200" y="1740" class="mono">vendor_id, stock_item_id, change_quantity</text>
+  <text x="200" y="1780" class="mono">reason, reference_type, reference_id, created_at</text>
+  <line x1="170" y1="1820" x2="1120" y2="1820" class="thin"/>
+  <text x="170" y="1880" class="mono-bold">menu_item_ingredients</text>
+  <text x="200" y="1925" class="mono">vendor_id, menu_item_id, stock_item_id</text>
+  <text x="200" y="1965" class="mono">quantity_required</text>
+
+  <rect x="1230" y="1340" width="1050" height="700" class="box"/>
+  <text x="1280" y="1410" class="h1">FINANCE AND LEDGER</text>
+  <line x1="1280" y1="1445" x2="2230" y2="1445" class="thin"/>
+  <text x="1280" y="1510" class="mono-bold">parties</text>
+  <text x="1310" y="1555" class="mono">id, vendor_id, name, phone, type</text>
+  <line x1="1280" y1="1595" x2="2230" y2="1595" class="thin"/>
+  <text x="1280" y="1655" class="mono-bold">ledger_entries</text>
+  <text x="1310" y="1700" class="mono">vendor_id, party_id, direction</text>
+  <text x="1310" y="1740" class="mono">amount, note, reference_type, reference_id</text>
+  <line x1="1280" y1="1780" x2="2230" y2="1780" class="thin"/>
+  <text x="1280" y="1840" class="mono-bold">expenses</text>
+  <text x="1310" y="1885" class="mono">vendor_id, category, amount, note, date</text>
+  <line x1="1280" y1="1925" x2="2230" y2="1925" class="thin"/>
+  <text x="1280" y="1985" class="mono-bold">daily_profit_summary view</text>
+
+  <rect x="120" y="2130" width="2160" height="730" class="box"/>
+  <text x="170" y="2200" class="h1">RLS POLICY PATTERN</text>
+  <line x1="170" y1="2235" x2="2230" y2="2235" class="thin"/>
+  <text x="170" y="2300" class="body">For every tenant-owned table:</text>
+  <text x="210" y="2360" class="mono">row.vendor_id must match an active vendor_members row for auth.uid()</text>
+  <text x="170" y="2440" class="body">For privileged writes:</text>
+  <text x="210" y="2500" class="mono">role must be owner, admin, manager, cashier, kitchen, or accountant as appropriate</text>
+  <text x="170" y="2580" class="body">For public customer ordering:</text>
+  <text x="210" y="2640" class="mono">keep vendor staff tables protected; expose only limited public read/write endpoints</text>
+  <text x="170" y="2720" class="body">For storage:</text>
+  <text x="210" y="2780" class="mono">object path begins with vendors/{vendor_id}/ and policies check membership</text>
+
+  <line x1="120" y1="2880" x2="2280" y2="2880" class="line"/>
+  <text x="120" y="2945" class="h2">Security rule:</text>
+  <text x="340" y="2945" class="body">vendorSlug is not trusted for authorization; Postgres RLS is the final enforcement layer.</text>
+  <text x="120" y="3010" class="small">Single Supabase project is acceptable when tenant isolation, RLS tests, audit logs, and backup/export flows are treated as core features.</text>
+</svg>

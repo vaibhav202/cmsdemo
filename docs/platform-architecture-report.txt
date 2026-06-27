@@ -1,0 +1,915 @@
+CANTEEN/CAFE MANAGEMENT SAAS - ARCHITECTURE AND LAUNCH REPORT
+================================================================
+
+Document purpose:
+- Summarize the planned transition from demo application to production-ready SaaS.
+- Cover business model, legal/trust concerns, Supabase structure, tech stack, project structure, phases, and challenges.
+- Keep the document text-first so it can be shared, reviewed, or converted into formal docs later.
+
+Current project status:
+- Current app type: Vite demo/prototype.
+- Target app type: NextJS full-stack app hosted on Vercel.
+- Current data mode: local JSON mocks and local image assets.
+- Current routing: flat demo routes.
+- Current backend: none.
+- Current database: none.
+- Current auth: none.
+- Current target: production SaaS for local canteen/cafe vendors, starting in Pune.
+
+Short glossary:
+- B2B: business-to-business.
+- SaaS: subscription software delivered online.
+- PWA: installable web app that can behave like a mobile app.
+- RLS: Row Level Security; database-level access rules.
+- SSR: server-side rendering/session handling before page output.
+- API route: backend endpoint inside the NextJS app.
+- Tenant: one vendor workspace/account.
+- vendor_id: database key that separates one vendor's data from another.
+- vendor_members: table that maps users to vendor roles.
+- Realtime: live updates without manual refresh.
+- WebP: efficient image format for web/mobile.
+
+
+1. BUSINESS MODEL
+=================
+
+Business model:
+- B2B subscription SaaS.
+- Vendors pay subscription fees for software access.
+- No ads.
+- No hidden monetization.
+- No customer payment handling in the first launch phase.
+- No food marketplace positioning.
+- No lending/credit/financial-product positioning.
+
+Recommended positioning:
+- "Canteen/cafe management software for local vendors."
+
+Avoid positioning as:
+- Food delivery platform.
+- Payment platform.
+- Marketplace.
+- Credit or lending app.
+- Data monetization platform.
+
+Initial market:
+- Pune local vendors.
+- Start with a small private pilot.
+- Focus on vendors who can use a phone-first PWA.
+
+Play Store strategy:
+- Do not publish to Play Store as the first milestone.
+- Start as a web/PWA app.
+- Add Capacitor and Play Store distribution after real usage is proven.
+- Reason: Play Store has cost, verification, review, privacy disclosure, and account deletion requirements.
+
+Hosting strategy:
+- Host the NextJS app on Vercel.
+- Reason: Vercel is the native deployment platform for NextJS and keeps early deployment friction low.
+
+
+2. PRODUCT PRINCIPLES
+=====================
+
+Core principles:
+- Mobile-first.
+- Simple onboarding.
+- Vendor operations should be abstract and easy.
+- Staff should only see dashboards relevant to their role.
+- Vendor data must be isolated.
+- Legal and privacy promises must match the actual system.
+- No feature should require manual technical work by vendors.
+
+Image handling principle:
+- Vendor selects image.
+- App previews it.
+- Backend validates and normalizes it.
+- Sharp converts/resizes/compresses it.
+- Supabase Storage stores the optimized image.
+- Vendor never manually compresses, resizes, crops, or converts files.
+
+Security principle:
+- Frontend checks are for user experience.
+- Backend validation is mandatory.
+- Supabase RLS is the final data access enforcement layer.
+
+
+3. CORE USER TYPES
+==================
+
+Platform owner:
+- You or your internal admin account.
+- Manages platform operations.
+- Should not casually browse vendor data.
+- Any access to vendor data should be logged.
+
+Vendor owner:
+- Owns the cafe/canteen account.
+- Can manage plan, members, menu, reports, and settings.
+
+Vendor admin:
+- Can manage most vendor operations.
+- May not have billing ownership depending on future subscription design.
+
+Manager:
+- Can manage orders, menu, stock, and staff workflows.
+
+Cashier:
+- Can create orders and confirm counter payments.
+
+Kitchen/staff:
+- Can view and progress kitchen queue.
+
+Accountant:
+- Can view khatabook, expenses, and profit/loss reports.
+
+Customer:
+- May not need login initially.
+- Customer ordering can remain public or semi-public depending on vendor use case.
+
+
+4. TENANT MODEL
+===============
+
+Primary tenant key:
+- vendor_id
+
+Meaning:
+- vendor_id is the tenant/workspace/root business boundary.
+- It is the top-level ownership key for business data.
+
+Do not use as tenant key:
+- vendor_membership_id
+
+Reason:
+- Membership represents one user's relationship with one vendor.
+- It is for roles and access control.
+- It should not define ownership of business rows like orders or menu items.
+
+Mental model:
+- vendors = root folders.
+- vendor_members = access control list.
+- business tables = files inside the vendor workspace.
+- RLS = filesystem permission checker.
+
+URL slug:
+- vendorSlug is useful for routes.
+- vendorSlug is not trusted for security.
+- RLS must use vendor_id and auth.uid().
+
+
+5. SUPABASE STRUCTURE
+=====================
+
+Supabase project strategy:
+- Use one Supabase project.
+- Use one shared PostgreSQL schema.
+- Use vendor_id for tenant isolation.
+- Use RLS on all exposed tenant-owned tables.
+
+Core access tables:
+- vendors
+- profiles
+- vendor_members
+
+Recommended vendor table:
+- id
+- name
+- slug
+- plan
+- status
+- logo_asset_id
+- created_at
+- updated_at
+
+Recommended profiles table:
+- id references auth.users(id)
+- full_name
+- phone
+- created_at
+- updated_at
+
+Recommended vendor_members table:
+- id
+- vendor_id
+- user_id
+- role
+- status
+- avatar_asset_id
+- created_at
+- updated_at
+
+Recommended member roles:
+- owner
+- admin
+- manager
+- cashier
+- kitchen
+- accountant
+
+Recommended member statuses:
+- active
+- invited
+- disabled
+
+
+6. OPERATIONAL TABLES
+=====================
+
+Menu categories:
+- id
+- vendor_id
+- name
+- sort_order
+- created_at
+- updated_at
+
+Menu items:
+- id
+- vendor_id
+- category_id
+- name
+- description
+- price
+- cost_price
+- image_asset_id
+- is_available
+- is_archived
+- created_by
+- created_at
+- updated_at
+
+Orders:
+- id
+- vendor_id
+- order_no
+- created_by
+- customer_name
+- status
+- payment_status
+- payment_mode
+- subtotal
+- discount
+- tax
+- total
+- note
+- created_at
+- updated_at
+
+Order items:
+- id
+- vendor_id
+- order_id
+- menu_item_id
+- quantity
+- price_at_time
+- cost_at_time
+- created_at
+
+Reason to include vendor_id on order_items:
+- Makes RLS easier.
+- Makes reporting easier.
+- Makes indexing easier.
+- Reduces expensive joins for tenant checks.
+
+
+7. INVENTORY TABLES
+===================
+
+Important distinction:
+- Menu item is what vendor sells.
+- Stock item is what vendor consumes.
+
+Example:
+- Menu item: Veg Sandwich.
+- Stock items: bread, cheese, chutney, vegetables.
+
+Stock items:
+- id
+- vendor_id
+- name
+- unit
+- current_quantity
+- reorder_level
+- cost_per_unit
+- created_at
+- updated_at
+
+Menu item ingredients:
+- id
+- vendor_id
+- menu_item_id
+- stock_item_id
+- quantity_required
+
+Stock movements:
+- id
+- vendor_id
+- stock_item_id
+- change_quantity
+- reason
+- reference_type
+- reference_id
+- created_by
+- created_at
+
+Stocking suggestions:
+- Should be based on sales velocity, current quantity, reorder level, and ingredient requirements.
+- Do not build this before menu/orders/inventory data is stable.
+
+
+8. KHATABOOK AND FINANCE TABLES
+===============================
+
+Khatabook design principle:
+- Treat it as a ledger.
+- Do not position it as lending, credit scoring, financing, or debt recovery.
+
+Parties:
+- id
+- vendor_id
+- name
+- phone
+- type
+- created_at
+
+Party types:
+- customer
+- supplier
+- staff
+- other
+
+Ledger entries:
+- id
+- vendor_id
+- party_id
+- direction
+- amount
+- note
+- reference_type
+- reference_id
+- created_by
+- created_at
+
+Ledger directions:
+- debit
+- credit
+
+Expenses:
+- id
+- vendor_id
+- category
+- amount
+- note
+- date
+- created_by
+- created_at
+
+Profit/loss summary:
+- Prefer SQL views or server-side report queries.
+- Initial report can be daily and monthly.
+
+Daily profit summary fields:
+- vendor_id
+- date
+- gross_sales
+- item_cost
+- discounts
+- expenses
+- net_profit
+
+
+9. STORAGE STRUCTURE
+====================
+
+Storage purpose:
+- Store optimized images.
+- Do not store images directly in PostgreSQL.
+- PostgreSQL stores metadata and references.
+
+Recommended table:
+- media_assets
+
+media_assets columns:
+- id
+- vendor_id
+- bucket
+- path
+- kind
+- mime_type
+- width
+- height
+- size_bytes
+- created_by
+- created_at
+- deleted_at
+
+Recommended buckets:
+- vendor-public-assets
+- vendor-private-assets
+
+Public assets:
+- vendor logo
+- food/menu item images
+
+Private assets:
+- employee avatars
+- internal documents later
+
+Recommended storage paths:
+- vendors/{vendor_id}/logos/{asset_id}.webp
+- vendors/{vendor_id}/menu-items/{menu_item_id}/{asset_id}.webp
+- vendors/{vendor_id}/members/{member_id}/{asset_id}.webp
+
+Recommended references:
+- vendors.logo_asset_id -> media_assets.id
+- menu_items.image_asset_id -> media_assets.id
+- vendor_members.avatar_asset_id -> media_assets.id
+
+Why avatar_asset_id belongs on vendor_members:
+- One user can later belong to multiple vendors.
+- Their identity/profile may be shared.
+- Their role-specific avatar or staff image can be vendor-specific.
+
+
+10. IMAGE NORMALIZATION
+=======================
+
+Library:
+- sharp
+
+Where it runs:
+- NextJS server route or server action.
+- Never in the browser.
+
+Upload flow:
+- Client selects image.
+- Client shows preview.
+- NextJS API receives file.
+- Server verifies session.
+- Server verifies vendor membership.
+- Server verifies role permission.
+- Server validates MIME type and size.
+- Sharp resizes/crops/compresses/converts image.
+- Server uploads final WebP to Supabase Storage.
+- Server inserts media_assets row.
+- Server links media_assets row to vendor/menu/member record.
+
+Suggested formats:
+- Accept JPG, PNG, WebP.
+- Store WebP.
+
+Suggested output rules:
+- Vendor logo: 512 x 512 WebP, max around 150 KB.
+- Employee avatar: 512 x 512 WebP, max around 120 KB.
+- Menu item image: 1024 x 768 or square WebP, max around 250 KB.
+
+Vendor experience:
+- Vendor should only see "Upload image".
+- System handles optimization quietly.
+
+
+11. RLS SECURITY MODEL
+======================
+
+RLS requirement:
+- Enable RLS on all exposed tables.
+
+Base policy idea:
+- A user can access a row only if an active vendor_members row exists for:
+  - vendor_members.user_id = auth.uid()
+  - vendor_members.vendor_id = row.vendor_id
+  - vendor_members.status = active
+
+Role policy idea:
+- Writes depend on role.
+
+Example access by role:
+- owner: full access.
+- admin: most vendor operations.
+- manager: menu, stock, orders, reports.
+- cashier: orders and payment confirmation.
+- kitchen: order queue and status progression.
+- accountant: khatabook, expenses, profit/loss.
+
+Important RLS rule:
+- Do not rely on frontend route guards for security.
+- Route guards improve UX only.
+- RLS prevents actual cross-vendor data access.
+
+Testing requirement:
+- Test that vendor A cannot read vendor B data.
+- Test that vendor A cannot write vendor B data.
+- Test each role can only perform allowed actions.
+- Test disabled members lose access.
+- Test unauthenticated users cannot access staff/vendor tables.
+
+
+12. AUTH AND ROUTING
+====================
+
+Recommended production routes:
+- /login
+- /terms
+- /privacy
+- /app/[vendorSlug]/order
+- /app/[vendorSlug]/kitchen
+- /app/[vendorSlug]/queue
+- /app/[vendorSlug]/control
+- /app/[vendorSlug]/inventory
+- /app/[vendorSlug]/khatabook
+- /app/[vendorSlug]/reports
+
+Auth stack:
+- Supabase Auth.
+- NextJS server-side auth using Supabase SSR helpers.
+- Cookie-based session handling.
+
+Route protection:
+- Middleware or server layout checks session.
+- Vendor layout loads vendor by slug.
+- Vendor layout verifies active membership.
+- Dashboard pages verify role permission.
+
+Customer ordering:
+- Can remain open or semi-open initially.
+- Vendor staff dashboards must be protected first.
+
+
+13. REALTIME
+============
+
+Realtime use cases:
+- Kitchen order updates.
+- Queue token display.
+- Staff dashboard updates.
+- Admin order monitoring.
+
+Initial approach:
+- Supabase Realtime Postgres Changes.
+
+Potential scaling concern:
+- Per-user RLS checks on realtime changes can become heavier at scale.
+
+Future approach:
+- Use server-side broadcast channels if direct Postgres Changes becomes inefficient.
+
+Lifecycle concerns:
+- Mobile app resume/pause.
+- Network loss.
+- Reconnect state.
+- Duplicate subscriptions.
+- Stale queue display.
+
+
+14. TECH STACK
+==============
+
+Frontend:
+- NextJS App Router (file-based routing and layouts).
+- TypeScript (typed JavaScript).
+- TailwindCSS (utility CSS framework).
+- Shadcn UI (component patterns built on Tailwind).
+
+Backend:
+- NextJS route handlers/server actions (backend logic inside the app).
+- Vercel hosting (deployment platform for NextJS).
+- Supabase PostgreSQL (managed relational database).
+- Supabase Auth (login/session system).
+- Supabase Storage (file storage).
+- Supabase Realtime (live database updates).
+
+Validation:
+- Zod (schema validation).
+- React Hook Form (form state and validation helper).
+
+Image processing:
+- Sharp (server-side image resizing/compression).
+
+Database:
+- PostgreSQL through Supabase.
+- RLS policies.
+- SQL migrations.
+
+Mobile:
+- PWA first (mobile-friendly installable web app).
+- Capacitor later (wrap web app as Android app).
+- Play Store only after real usage is proven.
+
+Testing:
+- Unit tests for utilities and permissions.
+- Integration tests for server routes.
+- SQL/RLS tests for tenant isolation.
+- Manual device tests for mobile workflows.
+
+
+15. PROJECT DIRECTORY STRUCTURE
+===============================
+
+Recommended structure:
+
+src/
+  app/
+    (public)/
+      login/
+      terms/
+      privacy/
+    app/
+      [vendorSlug]/
+        layout.tsx
+        order/
+        kitchen/
+        queue/
+        control/
+        inventory/
+        khatabook/
+        reports/
+    api/
+      uploads/
+      webhooks/
+  components/
+    ui/
+    layout/
+    orders/
+    menu/
+    inventory/
+    ledger/
+  features/
+    auth/
+    vendors/
+    orders/
+    menu/
+    storage/
+    reports/
+  lib/
+    supabase/
+      browser.ts
+      server.ts
+      admin.ts
+    validation/
+    permissions/
+    constants/
+  db/
+    migrations/
+    seed/
+    policies/
+
+Directory responsibilities:
+- app: pages, layouts, route handlers.
+- components: reusable UI.
+- features: business/domain logic.
+- lib: infrastructure clients and shared helpers.
+- db: schema, migrations, seed data, policies.
+
+
+16. LEGAL AND TRUST ITEMS
+=========================
+
+Documents needed before public paid launch:
+- Terms of Service.
+- Privacy Policy.
+- Vendor Agreement.
+- Data Processing terms.
+- Refund/Cancellation Policy.
+- Acceptable Use Policy.
+- Support/SLA policy.
+
+Documents for private pilot:
+- Simple pilot agreement.
+- Basic privacy policy.
+- Basic terms.
+- Support contact.
+- Clear pricing after pilot.
+
+Professional review:
+- Draft yourself first if needed.
+- Lawyer should review legal documents before paid/public launch.
+- CA should advise on tax, invoicing, GST, business structure, and accounting.
+
+FSSAI:
+- Vendor is responsible for food quality and food license/registration.
+- Your app should not present itself as the food seller.
+- Vendor agreement should include FSSAI responsibility clause.
+
+Privacy:
+- Explain what data is collected.
+- Explain why it is collected.
+- Explain where it is stored.
+- Explain who can access it.
+- Explain retention/deletion/export process.
+- Provide support/grievance contact.
+
+Google Play later:
+- Privacy policy required.
+- Data Safety form required.
+- Account deletion path required if users create accounts.
+- App review may require demo credentials.
+
+
+17. SECURITY AND TRUST FLOWS
+============================
+
+Must-have security flows:
+- Login.
+- Forgot password.
+- Session refresh.
+- Vendor membership check.
+- Role-based dashboard access.
+- Employee deactivation.
+- Vendor data export.
+- Vendor account deletion/deactivation process.
+- Audit logs.
+- RLS tests.
+- Backup checks.
+- Support contact.
+
+Platform admin access:
+- Should be limited.
+- Should be logged.
+- Should be documented in privacy/vendor terms.
+- Should not be casual browsing.
+
+Security incident plan:
+- Identify issue.
+- Disable affected access if required.
+- Preserve logs.
+- Notify affected vendors if required.
+- Fix root cause.
+- Document action.
+
+
+18. PHASED ROADMAP
+==================
+
+Phase 0 - Current demo:
+- Keep existing Vite app as UX reference.
+- Do not bolt production auth into demo if rewriting to NextJS.
+
+Phase 1 - Production foundation:
+- Create NextJS app.
+- Add TailwindCSS and Shadcn UI.
+- Add TypeScript.
+- Add Supabase SSR clients.
+- Add login page.
+- Add vendor layout.
+- Add role-based route guards.
+
+Phase 2 - Database foundation:
+- Create vendors, profiles, vendor_members.
+- Create role/status enums.
+- Add RLS policies.
+- Add seed data.
+- Add RLS tests.
+
+Phase 3 - Dashboard separation:
+- Move order, kitchen, queue, and control dashboards behind protected routes.
+- Keep mock data temporarily if needed.
+- Verify role-based access.
+
+Phase 4 - Supabase operations:
+- Replace menu mocks with menu tables.
+- Replace order mocks with order tables.
+- Add order creation and status updates.
+- Add realtime queue.
+
+Phase 5 - Storage:
+- Add media_assets.
+- Add buckets.
+- Add storage policies.
+- Add Sharp upload route.
+- Add logo, food image, and avatar uploads.
+
+Phase 6 - Trust and pilot readiness:
+- Add basic legal pages.
+- Add support contact.
+- Add vendor settings.
+- Add audit logs.
+- Add export flow.
+- Run private Pune pilot.
+
+Phase 7 - Business features:
+- Add khatabook.
+- Add expenses.
+- Add inventory.
+- Add profit/loss summaries.
+- Add stocking suggestions.
+
+Phase 8 - Mobile packaging:
+- Improve PWA behavior.
+- Add Capacitor.
+- Test Android lifecycle and storage.
+- Consider Play Store after real vendor usage.
+
+
+19. MAIN CHALLENGES
+===================
+
+Technical challenges:
+- Correct tenant isolation.
+- RLS policy complexity.
+- Role permission design.
+- Realtime consistency.
+- Image upload validation.
+- Mobile network instability.
+- Data migration from mocks to Supabase.
+- Avoiding oversized client-side state hooks.
+
+Product challenges:
+- Keeping vendor onboarding simple.
+- Training non-technical vendors.
+- Avoiding feature overload.
+- Making mobile workflows fast enough.
+- Supporting vendors without becoming full-time manual support.
+
+Legal/trust challenges:
+- Privacy policy accuracy.
+- Vendor data ownership clarity.
+- Admin access transparency.
+- FSSAI responsibility boundary.
+- Refund/cancellation clarity.
+- GST/invoicing structure.
+- Future Play Store compliance.
+
+Business challenges:
+- Pricing for small vendors.
+- Local sales effort.
+- Support expectations.
+- Churn if vendors do not use it daily.
+- Handling feature requests without losing focus.
+
+
+20. DECISIONS MADE SO FAR
+=========================
+
+Confirmed:
+- Subscription-only SaaS.
+- No ads.
+- No hidden monetization.
+- Pune-first local rollout.
+- PWA/web first.
+- Play Store later.
+- One Supabase project.
+- vendor_id as tenant key.
+- vendor_members for roles and access.
+- NextJS migration.
+- TailwindCSS + Shadcn UI.
+- Supabase Storage for images.
+- Sharp for automatic image normalization.
+- RLS as mandatory security layer.
+
+Open decisions:
+- Exact subscription pricing.
+- Whether customers need login.
+- Whether orders are staff-only or customer-facing at MVP.
+- Whether vendors can invite staff themselves in MVP.
+- Exact refund terms.
+- Exact pilot duration.
+- Business registration timing.
+- GST timing based on CA advice.
+
+
+21. RECOMMENDED NEXT STEP
+=========================
+
+Immediate next step:
+- Create the NextJS production foundation.
+
+First implementation slice:
+- Login page.
+- Supabase SSR client setup.
+- Mock vendor membership.
+- Vendor-scoped routes.
+- Role-based route access.
+- Dashboard separation.
+
+Do not start yet:
+- Khatabook.
+- Profit/loss.
+- Inventory suggestions.
+- Play Store packaging.
+- Complex public customer auth.
+
+Reason:
+- Tenant security and role separation are the foundation.
+- Every later feature depends on this foundation being correct.
+
+
+22. FINAL SUMMARY
+=================
+
+The app should evolve from a demo into a local-first B2B SaaS platform.
+The strongest foundation is:
+
+- NextJS for app and server validation.
+- Supabase for Auth, PostgreSQL, Storage, and Realtime.
+- vendor_id for tenant isolation.
+- vendor_members for employee/member access.
+- RLS for security enforcement.
+- Sharp for automatic image normalization.
+- PWA first for low-cost mobile access.
+- Legal pages and vendor agreements before paid public launch.
+
+The main risk is not coding difficulty.
+The main risk is launching without trust, tenant isolation, support boundaries, legal clarity, and operational discipline.
+
+Build the foundation first, test it repeatedly, then add features.
