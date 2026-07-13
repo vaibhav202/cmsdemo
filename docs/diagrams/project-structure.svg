@@ -39,7 +39,7 @@
     <path d="M202 462 H212" class="line"/>
     <text x="252" y="516" class="mono"><tspan class="file">layout.tsx</tspan></text>
     <text x="252" y="558" class="mono"><tspan class="file">order/</tspan> <tspan class="file">kitchen/</tspan> <tspan class="file">queue/</tspan> <tspan class="file">control/</tspan></text>
-    <text x="252" y="600" class="mono"><tspan class="file">inventory/</tspan> <tspan class="file">khatabook/</tspan> <tspan class="file">reports/</tspan></text>
+    <text x="252" y="600" class="mono"><tspan class="file">inventory/</tspan> <tspan class="file">ledger/</tspan> <tspan class="file">reports/</tspan></text>
 
     <text x="214" y="660" class="mono"><tspan class="folder">api/</tspan></text>
     <path d="M202 650 H212" class="line"/>

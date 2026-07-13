@@ -43,7 +43,7 @@
   <text x="330" y="1180" class="mono">queue/</text>
   <text x="330" y="1240" class="mono">control/</text>
   <text x="330" y="1300" class="mono">inventory/</text>
-  <text x="330" y="1360" class="mono">khatabook/</text>
+  <text x="330" y="1360" class="mono">ledger/</text>
   <text x="330" y="1420" class="mono">reports/</text>
 
   <text x="250" y="1510" class="mono">api/</text>
@@ -115,7 +115,7 @@
   <text x="1510" y="2545" class="body">6. Replace mocks with Supabase tables.</text>
   <text x="1510" y="2600" class="body">7. Add image upload normalization.</text>
   <text x="1510" y="2655" class="body">8. Add realtime queue.</text>
-  <text x="1510" y="2710" class="body">9. Add inventory, khatabook, reports.</text>
+  <text x="1510" y="2710" class="body">9. Add inventory, ledger, reports.</text>
 
   <line x1="120" y1="3100" x2="2280" y2="3100" class="line"/>
   <text x="120" y="3160" class="h2">Primary goal:</text>

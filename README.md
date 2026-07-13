@@ -1,35 +1,90 @@
-# Canteen Management System Demo
+# CMS Platform
 
-React + Vite demo for a canteen management flow with role-based views:
+CMS Platform is a mobile-first, multi-vendor operations workspace for cafes,
+canteens, and small food-service businesses. It brings counter orders, kitchen
+workflow, queue handling, menu availability, inventory, ledger entries, and
+reports into one role-aware vendor workspace.
 
-- `Order` (customer)
-- `Kitchen` (staff)
-- `Control` (admin)
-- `Queue` (token monitor)
+The project is in active development and is not production-ready yet. The current
+workspace uses temporary presentation authentication and Supabase preview policies.
+Supabase Auth memberships and production RLS verification are required before a
+real vendor is onboarded.
 
-## Features
+## Stack
 
-- Mobile-first order UI with search, filters, cart sheet, and quick `Order now`
-- Staff order progression with undo toast support
-- Admin menu controls with availability/archive toggles
-- Queue monitor with fullscreen mode and live token states
-- Light and dark themes
+- Next.js 16 canary with the App Router and TypeScript
+- React 19
+- shadcn/ui Nova with Radix primitives
+- Tailwind CSS v4
+- Supabase PostgreSQL, Storage, Realtime, and planned Auth memberships
+- Vercel for web deployment and Capacitor as the later Android path
 
-## Run Locally
+## Local Development
+
+Requirements:
+
+- Node.js 20 or newer
+- npm
+- A Supabase project containing the expected schema
+
+Create `.env.local` from `.env.example` and provide:
+
+```text
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+```
+
+Then run:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build production bundle:
+Open `http://localhost:3000`. For a USB-connected Android device, use:
 
 ```bash
+adb reverse tcp:3000 tcp:3000
+```
+
+The same app is then available on the phone at `http://127.0.0.1:3000`.
+
+## Checks
+
+```bash
+npm run lint
+npx tsc --noEmit
 npm run build
 ```
 
-Preview production build:
+## Architecture
 
-```bash
-npm run preview
+Every tenant-owned business row is scoped by `vendor_id`. A `vendor_members` row
+defines which user belongs to a vendor, their role, and whether the membership is
+active. Route checks must never replace Supabase RLS.
+
+Main application routes live under:
+
+```text
+/app/[vendorSlug]/order
+/app/[vendorSlug]/kitchen
+/app/[vendorSlug]/queue
+/app/[vendorSlug]/control
+/app/[vendorSlug]/inventory
+/app/[vendorSlug]/ledger
+/app/[vendorSlug]/reports
 ```
+
+## Documentation
+
+- [Product specification](docs/product-spec.md)
+- [Platform architecture report](docs/platform-architecture-report.txt)
+- [SDLC and agentic roadmap](docs/sdlc-agentic-roadmap.txt)
+- [UI style guide](docs/ui-style-guide.md)
+- [Live development handoff](docs/live-development-log.txt)
+- [Architecture diagrams](docs/diagrams/README.md)
+- [Supabase project notes](supabase/README.md)
+
+Agent entry points are kept intentionally small: `AGENTS.md` is canonical,
+`CLAUDE.md` points to it for compatibility, and `.agents/skills/` contains installed
+upstream skills rather than project documentation.

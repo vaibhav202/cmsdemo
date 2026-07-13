@@ -38,7 +38,7 @@ Priority order:
 3. Vendor dashboard separation.
 4. Core daily workflows.
 5. Pilot feedback.
-6. Khatabook, inventory, and reports.
+6. Ledger, inventory, and reports.
 7. Mobile packaging.
 8. Paid launch operations.
 
@@ -288,7 +288,7 @@ Target routes:
 - /app/[vendorSlug]/queue
 - /app/[vendorSlug]/control
 - /app/[vendorSlug]/inventory
-- /app/[vendorSlug]/khatabook
+- /app/[vendorSlug]/ledger
 - /app/[vendorSlug]/reports
 
 Work items:
@@ -488,14 +488,14 @@ Goal:
 - Add value features after core operations are stable.
 
 Features:
-- Khatabook.
+- Ledger.
 - Expenses.
 - Inventory.
 - Profit/loss summary.
 - Stocking suggestions.
 
 Order:
-1. Khatabook ledger.
+1. Ledger ledger.
 2. Expenses.
 3. Basic profit/loss summary.
 4. Stock items.
@@ -814,7 +814,7 @@ Vendor isolation:
 Roles:
 - Owner can access all intended dashboards.
 - Cashier cannot access admin-only pages.
-- Kitchen cannot access khatabook.
+- Kitchen cannot access ledger.
 - Accountant cannot manage kitchen queue unless allowed.
 
 Orders:
@@ -985,7 +985,7 @@ Recommended order:
 7. Add realtime queue.
 8. Add Storage and Sharp image upload.
 9. Prepare private Pune pilot.
-10. Add khatabook, expenses, inventory, and reports.
+10. Add ledger, expenses, inventory, and reports.
 11. Package with Capacitor later if real usage justifies it.
 12. Prepare Play Store only after web/PWA product is stable.
 

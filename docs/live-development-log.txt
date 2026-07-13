@@ -1,0 +1,141 @@
+CMS PLATFORM - LIVE DEVELOPMENT HANDOFF
+=======================================
+
+STATUS
+------
+State: Active development
+Last updated: 2026-07-14 (Asia/Kolkata)
+Current stack: Next.js 16 canary, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
+
+PURPOSE
+-------
+This file is the current implementation handoff for developers and coding models.
+Read it before changing the project. Update it after every implementation task that
+changes files, verification status, blockers, database state, or the next recommended work.
+
+CURRENT UI DIRECTION
+--------------------
+- Platform identity remains charcoal and operational.
+- Vendor accent is runtime data from Supabase and is limited to primary actions,
+  focus rings, vendor marks, and subtle surface tinting.
+- Heading font is a runtime vendor setting: Geist Sans or local Libre Baskerville.
+- Glass surfaces use translucency, accent-derived gradients, normal borders,
+  inset highlights, and restrained shadows.
+- Backdrop blur is prohibited.
+- Light, Dark, and System modes use next-themes and semantic shadcn tokens.
+- The vendor workspace background receives a 2.5% accent mix, half the leading
+  glass-surface tint strength.
+- Mobile navigation uses shadcn/Radix bottom Sheets from a fixed two-action bar.
+
+LATEST CHANGES
+--------------
+- Connected vendor accent to shadcn primary buttons and focus-ring tokens.
+- Added automatic dark/light foreground selection for arbitrary vendor accent colors.
+- Fixed runtime heading-font propagation through --heading-font-family.
+- Added local Libre Baskerville through next/font/local.
+- Added accent-aware glass treatment to Cards, Sheets, Drawers, desktop top bar,
+  and mobile navigation without backdrop blur. The final gradient mixes the runtime
+  vendor accent at 5% into the leading edge and 1% into the trailing edge.
+- Corrected desktop shell alignment with a shared 72 px sidebar/top-bar header height.
+- Moved the sidebar divider onto the fixed-height header itself; no separate separator
+  contributes an extra pixel below the seam.
+- Increased the vendor identity control height and tightened line heights so the
+  workspace location is not clipped; its collapsed avatar remains 32 px and centered.
+- Established shell stacking: sidebar z-20, sticky top bar z-30,
+  mobile navigation z-40, shadcn overlays z-50.
+- Added Light, Dark, and System controls to the desktop top bar and mobile Account Sheet.
+- Added a vendor-tinted workspace background at 2.5%, half the leading glass tint.
+- Replaced the wide mobile Control availability table with a two-column item/status
+  treatment and 44 px icon action while preserving the full desktop table.
+- Restored mobile navigation as a fixed bottom bar with `z-40`, safe-area offset,
+  and `pb-28` reserved on dashboard content.
+- Added an accent-aware vertical fade behind the fixed mobile navigation. It blends
+  the vendor accent at 8% into the platform background at the bottom and transitions
+  to transparent without blur or blocked pointer events.
+- Added container-owned trailing spacing below the dynamic counter-order item grid,
+  keeping the final item card separated from the Active orders section on phones.
+- Corrected the vendor avatar sizing contract so it is 40 px when the sidebar is
+  expanded and exactly 32 px inside the collapsed icon slot without clipping.
+- Consolidated MVP and role rules into `docs/product-spec.md`, replaced the default
+  Next.js README, and removed duplicate agent packs, installation archives, and
+  unused starter assets in preparation for GitHub publication.
+- Mobile Menu and Account Sheets were verified in Firefox over ADB.
+- Order forms keep scroll position and use a 10-second pre-insert undo window.
+- Appearance presets, HEX/RGB/HSL input, native picker, and heading selection persist to Supabase.
+- Added immediate counter-menu search by item name or category using shadcn InputGroup.
+- Rebuilt Inventory around ingredient creation, stock-in/stock-out recording,
+  reorder levels, a live stock register, and recent movement history.
+- Added owner/admin/manager capability checks and tenant validation to inventory
+  Server Actions; kitchen remains view-only until its configurable permission is approved.
+- Added a Supabase migration with temporary preview insert policies and atomic,
+  `SECURITY INVOKER` ingredient/movement functions. It is applied to the remote
+  CMS Platform project and recorded in migration history.
+
+DATABASE TEST STATE
+-------------------
+- Two orders created during ADB timing verification could not be deleted by the
+  publishable role because RLS correctly denies delete.
+- Those rows are neutralized as status=cancelled, payment_status=refunded, total=0.
+- Token numbers: 138 and 139.
+
+VERIFICATION
+------------
+- npm run lint: passed after the latest shell, dark-mode, and mobile-table changes.
+- npx tsc --noEmit: passed after the latest shell, dark-mode, and mobile-table changes.
+- npm run build: passed after repository cleanup and the prior mobile navigation-row change.
+- npm run lint and npx tsc --noEmit: passed after the order-grid trailing-spacing
+  and collapsed vendor-avatar fixes.
+- npm run lint and npx tsc --noEmit: passed after restoring the fixed mobile
+  navigation layout.
+- npm run lint and npx tsc --noEmit: passed after counter search and inventory management.
+- npm run lint and npx tsc --noEmit: passed after anchoring inventory form
+  footers to the bottom of equal-height desktop cards.
+- Headless Firefox 1440x900: accent tint, Serif headings, expanded desktop seam,
+  complete sidebar location, and top-bar stacking verified.
+- Headless Firefox 430x932: mobile glass tint, Serif headings, cards, navigation,
+  and the compact availability treatment verified without horizontal clipping.
+- Headless Firefox 430x932: the fixed navigation fade transitions smoothly from
+  transparent above the bar to the opaque vendor tint at the viewport bottom.
+- Mobile dashboard content reserves bottom space for the fixed navigation surface.
+- Headless Firefox 430x4200 Order view: the dynamic menu grid retains a full trailing
+  spacing unit after its final item before the Active orders section.
+- Headless Firefox 430x1200 Order view: search control, result count, item cards,
+  and fixed navigation render without horizontal clipping.
+- Headless Firefox 430x2200 Inventory view: ingredient forms, movement controls,
+  stock register, and movement history render without horizontal clipping.
+- Headless Firefox 430x1100 Inventory view: the controlled unit selector renders
+  its Kilograms default and the fixed navigation remains usable.
+- Remote anonymous inventory test: created an ingredient at 2 kg, recorded -0.5 kg,
+  received 1.5 kg, and verified opening plus movement logs. All verification rows
+  were removed afterward.
+- Supabase database advisors: no issues after inventory policy/RPC migration.
+- Supabase migration history: `20260713202753` matches locally and remotely.
+- Actual Android Firefox: Menu Sheet, Account Sheet, close controls, account-card
+  border, custom appearance persistence, and local serif preview verified.
+- Actual Android Firefox over adb reverse: Account Sheet theme control verified;
+  System followed the phone's dark setting, Light applied immediately, and System
+  restored dark mode. Mobile availability actions remained visible and tappable.
+- Fresh-profile Firefox login-route hydration check produced no warning. A warning
+  seen once in the pre-existing Android tab was not reproducible after clean navigation.
+- Search confirmed no blur/backdrop-filter usage remains under src/.
+- Repository cleanup preserved canonical architecture reports/diagrams and upstream
+  agent skills while removing exact duplicate copies.
+
+OPEN RISKS / NEXT WORK
+----------------------
+- Recheck the restored fixed mobile navigation on Android Firefox when the phone is
+  connected again.
+- Verify the revised desktop seam once more in the collapsed sidebar state.
+- Dashboard sales and counts currently derive from the latest 20 fetched orders,
+  not a database aggregate. Replace this with tenant-scoped aggregate queries or RPCs.
+- Replace temporary workspace credentials with Supabase Auth memberships before production.
+- Add database migrations and RLS policies to source control; the current remote schema
+  is not represented by migration SQL in supabase/.
+
+MODEL HANDOFF CHECKLIST
+-----------------------
+1. Read AGENTS.md, this file, and docs/ui-style-guide.md.
+2. Read relevant Next.js canary docs from node_modules/next/dist/docs/.
+3. Read the project skill that applies to the requested task.
+4. Inspect existing components and preserve unrelated worktree changes.
+5. Update this file with changed files, test results, blockers, and next work.

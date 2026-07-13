@@ -7,13 +7,14 @@ Document purpose:
 - Keep the document text-first so it can be shared, reviewed, or converted into formal docs later.
 
 Current project status:
-- Current app type: Vite demo/prototype.
-- Target app type: NextJS full-stack app hosted on Vercel.
-- Current data mode: local JSON mocks and local image assets.
-- Current routing: flat demo routes.
-- Current backend: none.
-- Current database: none.
-- Current auth: none.
+- Current app type: Next.js App Router application in active development.
+- Hosting target: Vercel.
+- Current data mode: Supabase-backed vendor, menu, order, stock, and ledger data.
+- Current routing: vendor-scoped dashboard routes under /app/[vendorSlug].
+- Current backend: Next.js server actions and Supabase query helpers.
+- Current database: Supabase PostgreSQL with RLS and Realtime configuration.
+- Current auth: temporary presentation cookie; Supabase Auth memberships are required
+  before production onboarding.
 - Current target: production SaaS for local canteen/cafe vendors, starting in Pune.
 
 Short glossary:
@@ -121,7 +122,7 @@ Kitchen/staff:
 - Can view and progress kitchen queue.
 
 Accountant:
-- Can view khatabook, expenses, and profit/loss reports.
+- Can view ledger, expenses, and profit/loss reports.
 
 Customer:
 - May not need login initially.
@@ -321,7 +322,7 @@ Stocking suggestions:
 8. KHATABOOK AND FINANCE TABLES
 ===============================
 
-Khatabook design principle:
+Ledger design principle:
 - Treat it as a ledger.
 - Do not position it as lending, credit scoring, financing, or debt recovery.
 
@@ -490,7 +491,7 @@ Example access by role:
 - manager: menu, stock, orders, reports.
 - cashier: orders and payment confirmation.
 - kitchen: order queue and status progression.
-- accountant: khatabook, expenses, profit/loss.
+- accountant: ledger, expenses, profit/loss.
 
 Important RLS rule:
 - Do not rely on frontend route guards for security.
@@ -517,7 +518,7 @@ Recommended production routes:
 - /app/[vendorSlug]/queue
 - /app/[vendorSlug]/control
 - /app/[vendorSlug]/inventory
-- /app/[vendorSlug]/khatabook
+- /app/[vendorSlug]/ledger
 - /app/[vendorSlug]/reports
 
 Auth stack:
@@ -622,7 +623,7 @@ src/
         queue/
         control/
         inventory/
-        khatabook/
+        ledger/
         reports/
     api/
       uploads/
@@ -788,7 +789,7 @@ Phase 6 - Trust and pilot readiness:
 - Run private Pune pilot.
 
 Phase 7 - Business features:
-- Add khatabook.
+- Add ledger.
 - Add expenses.
 - Add inventory.
 - Add profit/loss summaries.
@@ -883,7 +884,7 @@ First implementation slice:
 - Dashboard separation.
 
 Do not start yet:
-- Khatabook.
+- Ledger.
 - Profit/loss.
 - Inventory suggestions.
 - Play Store packaging.
