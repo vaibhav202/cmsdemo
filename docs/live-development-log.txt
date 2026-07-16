@@ -62,6 +62,9 @@ LATEST CHANGES
 - Installed exact `next-intl` and ICU-parser versions. Installation required npm's
   legacy peer-resolution mode because the current Next.js canary prerelease does not
   satisfy `next-intl`'s stable `^16.0.0` semver range; the production build passes.
+- Added a committed project `.npmrc` with `legacy-peer-deps=true` so clean local and
+  Vercel npm installs reproduce that verified resolution. This fixes Vercel's ERESOLVE
+  failure before the build while the project remains on Next.js 16.3.0-canary.69.
 - Connected vendor accent to shadcn primary buttons and focus-ring tokens.
 - Added automatic dark/light foreground selection for arbitrary vendor accent colors.
 - Fixed runtime heading-font propagation through --heading-font-family.
@@ -113,6 +116,10 @@ DATABASE TEST STATE
 
 VERIFICATION
 ------------
+- Clean temporary dependency install using only `package.json`, `package-lock.json`,
+  and the committed `.npmrc`: `npm config get legacy-peer-deps` returned `true` and
+  `npm install --ignore-scripts --no-audit --no-fund` installed 701 packages without
+  the Vercel-reported ERESOLVE conflict.
 - npm run i18n:check: passed; 320 messages validated across four locales.
 - npm run lint: passed after the complete localization extraction.
 - npx tsc --noEmit: passed after the complete localization extraction.
