@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -36,6 +37,7 @@ export function VendorSidebar({
   vendorInitial,
 }: VendorSidebarProps) {
   const pathname = usePathname()
+  const t = useTranslations("Shell")
 
   return (
     <Sidebar collapsible="icon">
@@ -73,7 +75,7 @@ export function VendorSidebar({
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("workspace")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => {

@@ -1,5 +1,6 @@
 import { toggleMenuItemAction } from "@/app/actions/workspace-operations"
 import { PackageCheck, PackageX } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -34,7 +35,7 @@ import {
 import { normalizeVendorAccent } from "@/lib/brand"
 import type { MenuItemWithCategory, Vendor } from "@/lib/supabase/types"
 
-import { formatCurrency } from "../shared/format"
+import { useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 import { VendorAppearanceForm } from "./vendor-appearance-form"
 
@@ -42,14 +43,19 @@ function AvailabilityAction({
   compact = false,
   inStock,
   menuItemId,
+  menuItemName,
   vendorSlug,
 }: {
   compact?: boolean
   inStock: boolean
   menuItemId: string
+  menuItemName: string
   vendorSlug: string
 }) {
-  const label = inStock ? "Mark unavailable" : "Mark in stock"
+  const t = useTranslations("Control")
+  const label = inStock
+    ? t("markUnavailable", { item: menuItemName })
+    : t("markAvailable", { item: menuItemName })
   const Icon = inStock ? PackageX : PackageCheck
 
   const form = (
@@ -88,6 +94,9 @@ export function ControlDashboard({
   vendor: Vendor
   vendorSlug: string
 }) {
+  const t = useTranslations("Control")
+  const order = useTranslations("Order")
+  const format = useDashboardFormats()
   const currentAccent = normalizeVendorAccent(vendor.brand_color)
   const currentHeadingFont = vendor.heading_font === "serif" ? "serif" : "sans"
 
@@ -95,28 +104,30 @@ export function ControlDashboard({
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Menu items"
-          note="Visible in counter orders"
-          value={String(menuItems.length)}
+          label={t("metrics.items")}
+          note={t("metrics.itemsNote")}
+          value={format.integer(menuItems.length)}
         />
         <MetricCard
-          label="In stock"
-          note="Visible to counter staff"
-          value={String(menuItems.filter((item) => item.in_stock).length)}
+          label={t("metrics.inStock")}
+          note={t("metrics.inStockNote")}
+          value={format.integer(
+            menuItems.filter((item) => item.in_stock).length
+          )}
         />
         <MetricCard
-          label="Unavailable"
-          note="Hidden from ordering"
-          value={String(menuItems.filter((item) => !item.in_stock).length)}
+          label={t("metrics.unavailable")}
+          note={t("metrics.unavailableNote")}
+          value={format.integer(
+            menuItems.filter((item) => !item.in_stock).length
+          )}
         />
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Menu availability</CardTitle>
-          <CardDescription>
-            Toggle items during rush hours without editing the whole menu.
-          </CardDescription>
+          <CardTitle>{t("availabilityTitle")}</CardTitle>
+          <CardDescription>{t("availabilityDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           {menuItems.length ? (
@@ -125,8 +136,10 @@ export function ControlDashboard({
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Item</TableHead>
-                      <TableHead className="text-right">Availability</TableHead>
+                      <TableHead>{t("itemColumn")}</TableHead>
+                      <TableHead className="text-right">
+                        {t("availabilityColumn")}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -135,18 +148,20 @@ export function ControlDashboard({
                         <TableCell className="whitespace-normal">
                           <p className="font-medium">{item.name}</p>
                           <p className="text-xs text-muted-foreground">
-                            {item.menu_categories?.name ?? "Menu"} · {formatCurrency(Number(item.price))}
+                            {item.menu_categories?.name ?? order("menuFallback")} ·{" "}
+                            {format.currency(Number(item.price))}
                           </p>
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center justify-end gap-2">
                             <Badge variant={item.in_stock ? "secondary" : "outline"}>
-                              {item.in_stock ? "In stock" : "Off"}
+                              {item.in_stock ? order("inStock") : order("off")}
                             </Badge>
                             <AvailabilityAction
                               compact
                               inStock={item.in_stock}
                               menuItemId={item.id}
+                              menuItemName={item.name}
                               vendorSlug={vendorSlug}
                             />
                           </div>
@@ -161,28 +176,33 @@ export function ControlDashboard({
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Item</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Action</TableHead>
+                      <TableHead>{t("itemColumn")}</TableHead>
+                      <TableHead>{t("categoryColumn")}</TableHead>
+                      <TableHead>{t("priceColumn")}</TableHead>
+                      <TableHead>{t("statusColumn")}</TableHead>
+                      <TableHead className="text-right">
+                        {t("actionColumn")}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {menuItems.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell className="font-medium">{item.name}</TableCell>
-                        <TableCell>{item.menu_categories?.name ?? "Menu"}</TableCell>
-                        <TableCell>{formatCurrency(Number(item.price))}</TableCell>
+                        <TableCell>
+                          {item.menu_categories?.name ?? order("menuFallback")}
+                        </TableCell>
+                        <TableCell>{format.currency(Number(item.price))}</TableCell>
                         <TableCell>
                           <Badge variant={item.in_stock ? "secondary" : "outline"}>
-                            {item.in_stock ? "In stock" : "Off"}
+                            {item.in_stock ? order("inStock") : order("off")}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-right">
                           <AvailabilityAction
                             inStock={item.in_stock}
                             menuItemId={item.id}
+                            menuItemName={item.name}
                             vendorSlug={vendorSlug}
                           />
                         </TableCell>
@@ -195,10 +215,8 @@ export function ControlDashboard({
           ) : (
             <Empty>
               <EmptyHeader>
-                <EmptyTitle>No menu items</EmptyTitle>
-                <EmptyDescription>
-                  Add menu items before managing availability.
-                </EmptyDescription>
+                <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
+                <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
               </EmptyHeader>
             </Empty>
           )}
@@ -208,11 +226,8 @@ export function ControlDashboard({
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card>
           <CardHeader>
-            <CardTitle>Brand appearance</CardTitle>
-            <CardDescription>
-              Apply a focused vendor accent and heading style without replacing
-              the platform identity.
-            </CardDescription>
+            <CardTitle>{t("appearanceTitle")}</CardTitle>
+            <CardDescription>{t("appearanceDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
             <VendorAppearanceForm
@@ -227,7 +242,7 @@ export function ControlDashboard({
 
         <Card>
           <CardHeader>
-            <CardTitle>Workspace mark</CardTitle>
+            <CardTitle>{t("workspaceMark")}</CardTitle>
             <CardDescription>{vendor.name}</CardDescription>
             <CardAction>
               <Avatar size="lg">
@@ -239,9 +254,7 @@ export function ControlDashboard({
           </CardHeader>
           <CardContent>
             <p className="text-sm leading-6 text-muted-foreground">
-              The accent is reserved for vendor identity and selected
-              operational highlights. Navigation, cards, and core controls keep
-              the platform appearance consistent.
+              {t("workspaceMarkDescription")}
             </p>
           </CardContent>
         </Card>

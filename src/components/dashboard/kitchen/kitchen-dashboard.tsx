@@ -4,8 +4,10 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { useTranslations } from "next-intl"
 import type { OrderWithItems } from "@/lib/supabase/types"
 
+import { useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 import { OrderCard } from "../shared/order-card"
 
@@ -16,6 +18,8 @@ export function KitchenDashboard({
   orders: OrderWithItems[]
   vendorSlug: string
 }) {
+  const t = useTranslations("Kitchen")
+  const format = useDashboardFormats()
   const kitchenOrders = orders.filter((order) =>
     ["paid", "preparing", "ready"].includes(order.status)
   )
@@ -24,19 +28,25 @@ export function KitchenDashboard({
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Waiting"
-          note="Paid orders not started"
-          value={String(orders.filter((order) => order.status === "paid").length)}
+          label={t("waiting")}
+          note={t("waitingNote")}
+          value={format.integer(
+            orders.filter((order) => order.status === "paid").length
+          )}
         />
         <MetricCard
-          label="Preparing"
-          note="Kitchen is working on these"
-          value={String(orders.filter((order) => order.status === "preparing").length)}
+          label={t("preparing")}
+          note={t("preparingNote")}
+          value={format.integer(
+            orders.filter((order) => order.status === "preparing").length
+          )}
         />
         <MetricCard
-          label="Ready"
-          note="Can be handed over"
-          value={String(orders.filter((order) => order.status === "ready").length)}
+          label={t("ready")}
+          note={t("readyNote")}
+          value={format.integer(
+            orders.filter((order) => order.status === "ready").length
+          )}
         />
       </div>
       {kitchenOrders.length ? (
@@ -48,10 +58,8 @@ export function KitchenDashboard({
       ) : (
         <Empty>
           <EmptyHeader>
-            <EmptyTitle>No kitchen orders</EmptyTitle>
-            <EmptyDescription>
-              Paid counter orders will appear here for preparation.
-            </EmptyDescription>
+            <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
+            <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
           </EmptyHeader>
         </Empty>
       )}

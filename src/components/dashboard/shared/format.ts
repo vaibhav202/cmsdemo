@@ -1,29 +1,37 @@
+import { useFormatter } from "next-intl"
+
 import type { OrderWithItems } from "@/lib/supabase/types"
 
 type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
 
-const currency = new Intl.NumberFormat("en-IN", {
-  currency: "INR",
-  maximumFractionDigits: 0,
-  style: "currency",
-})
+const orderStatusMessageKeys = {
+  paid: "orderStatus.paid",
+  preparing: "orderStatus.preparing",
+  ready: "orderStatus.ready",
+  completed: "orderStatus.completed",
+  cancelled: "orderStatus.cancelled",
+} as const
 
-export const statusLabel: Record<string, string> = {
-  paid: "Paid",
-  preparing: "Preparing",
-  ready: "Ready",
-  completed: "Completed",
-  cancelled: "Cancelled",
+export function getOrderStatusMessageKey(status: string) {
+  return orderStatusMessageKeys[
+    status as keyof typeof orderStatusMessageKeys
+  ]
 }
 
-export const nextStatusLabel: Record<string, string> = {
-  paid: "Send to kitchen",
-  preparing: "Mark ready",
-  ready: "Complete",
-}
+export function useDashboardFormats() {
+  const format = useFormatter()
 
-export function formatCurrency(value: number) {
-  return currency.format(value)
+  return {
+    currency(value: number) {
+      return format.number(value, "currency")
+    },
+    integer(value: number) {
+      return format.number(value, "integer")
+    },
+    quantity(value: number) {
+      return format.number(value, "quantity")
+    },
+  }
 }
 
 export function getStatusVariant(status: string): BadgeVariant {

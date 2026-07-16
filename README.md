@@ -3,7 +3,9 @@
 CMS Platform is a mobile-first, multi-vendor operations workspace for cafes,
 canteens, and small food-service businesses. It brings counter orders, kitchen
 workflow, queue handling, menu availability, inventory, ledger entries, and
-reports into one role-aware vendor workspace.
+reports into one role-aware vendor workspace. The staff interface is Marathi-first
+for the Maharashtra pilot, with English, Hindi, and Gujarati also supported. Displayed
+numbers, currency, dates, and times use the selected language's numeral system.
 
 The project is in active development and is not production-ready yet. The current
 workspace uses temporary presentation authentication and Supabase preview policies.
@@ -15,6 +17,7 @@ real vendor is onboarded.
 - Next.js 16 canary with the App Router and TypeScript
 - React 19
 - shadcn/ui Nova with Radix primitives
+- next-intl with locale-aware React Server Components
 - Tailwind CSS v4
 - Supabase PostgreSQL, Storage, Realtime, and planned Auth memberships
 - Vercel for web deployment and Capacitor as the later Android path
@@ -52,6 +55,7 @@ The same app is then available on the phone at `http://127.0.0.1:3000`.
 ## Checks
 
 ```bash
+npm run i18n:check
 npm run lint
 npx tsc --noEmit
 npm run build
@@ -81,6 +85,7 @@ Main application routes live under:
 - [Platform architecture report](docs/platform-architecture-report.txt)
 - [SDLC and agentic roadmap](docs/sdlc-agentic-roadmap.txt)
 - [UI style guide](docs/ui-style-guide.md)
+- [Localization guide](docs/localization-guide.md)
 - [Live development handoff](docs/live-development-log.txt)
 - [Architecture diagrams](docs/diagrams/README.md)
 - [Supabase project notes](supabase/README.md)

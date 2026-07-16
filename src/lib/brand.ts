@@ -26,14 +26,6 @@ export const headingFontOptions = [
   { name: "Serif", value: "serif" },
 ] as const
 
-export function getHeadingFontValue(font: string | null | undefined) {
-  if (font === "serif") {
-    return "var(--font-libre-baskerville)"
-  }
-
-  return "var(--font-geist-sans)"
-}
-
 export function normalizeVendorAccent(color: string | null | undefined) {
   if (!color || !/^#[0-9a-f]{6}$/i.test(color)) {
     return vendorAccentOptions[0].value

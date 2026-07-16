@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react"
 import { Save } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import {
@@ -55,6 +56,7 @@ export function VendorAppearanceForm({
   vendorId,
   vendorSlug,
 }: VendorAppearanceFormProps) {
+  const t = useTranslations("Control")
   const [state, action, pending] = useActionState(
     updateVendorIdentityAction,
     initialState
@@ -99,7 +101,9 @@ export function VendorAppearanceForm({
 
       <FieldGroup className="grid gap-3 sm:grid-cols-[6rem_minmax(0,1fr)]">
         <Field>
-          <FieldLabel htmlFor="brandColorPicker">Picker</FieldLabel>
+          <FieldLabel htmlFor="brandColorPicker">
+            {t("pickerLabel")}
+          </FieldLabel>
           <Input
             className="h-10 p-1"
             id="brandColorPicker"
@@ -114,7 +118,9 @@ export function VendorAppearanceForm({
           />
         </Field>
         <Field data-invalid={state.status === "error"}>
-          <FieldLabel htmlFor="brandColorCustom">HEX, RGB, or HSL</FieldLabel>
+          <FieldLabel htmlFor="brandColorCustom">
+            {t("customLabel")}
+          </FieldLabel>
           <Input
             aria-invalid={state.status === "error"}
             id="brandColorCustom"
@@ -130,27 +136,29 @@ export function VendorAppearanceForm({
                 setPickerColor(parsedColor)
               }
             }}
-            placeholder="#27272a, rgb(39 39 42), hsl(240 4% 16%)"
+            placeholder={t("customPlaceholder")}
             value={customColor}
           />
         </Field>
       </FieldGroup>
 
       <Field>
-        <FieldLabel htmlFor="headingFont">Heading font</FieldLabel>
+        <FieldLabel htmlFor="headingFont">{t("headingLabel")}</FieldLabel>
         <Select
           name="headingFont"
           onValueChange={setHeadingFont}
           value={headingFont}
         >
           <SelectTrigger className="w-full" id="headingFont">
-            <SelectValue placeholder="Select heading font" />
+            <SelectValue placeholder={t("headingPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {headingFontOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.name}
+                  {option.value === "serif"
+                    ? t("headingSerif")
+                    : t("headingSans")}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -162,7 +170,7 @@ export function VendorAppearanceForm({
             headingFont === "serif" ? "font-heading-serif" : "font-sans"
           )}
         >
-          City Canteen heading preview
+          {t("preview")}
         </FieldDescription>
       </Field>
 
@@ -175,7 +183,7 @@ export function VendorAppearanceForm({
 
       <Button disabled={pending} type="submit">
         <Save data-icon="inline-start" />
-        {pending ? "Saving appearance" : "Save appearance"}
+        {pending ? t("saving") : t("save")}
       </Button>
     </form>
   )

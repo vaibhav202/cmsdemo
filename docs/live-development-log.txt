@@ -4,7 +4,7 @@ CMS PLATFORM - LIVE DEVELOPMENT HANDOFF
 STATUS
 ------
 State: Active development
-Last updated: 2026-07-14 (Asia/Kolkata)
+Last updated: 2026-07-16 (Asia/Kolkata)
 Current stack: Next.js 16 canary, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
 
 PURPOSE
@@ -26,9 +26,42 @@ CURRENT UI DIRECTION
 - The vendor workspace background receives a 2.5% accent mix, half the leading
   glass-surface tint strength.
 - Mobile navigation uses shadcn/Radix bottom Sheets from a fixed two-action bar.
+- The staff interface is Marathi-first with English, Hindi, and Gujarati support.
+  Language and theme preferences are both available before authentication.
 
 LATEST CHANGES
 --------------
+- Added `next-intl` request configuration for stable, non-prefixed routes with locale
+  resolution in this order: validated language cookie, `Accept-Language`, Marathi.
+- Added complete namespaced message catalogs for Marathi, English, Hindi, and Gujarati.
+  Marathi is the product default; the three Indic-language catalogs still need the
+  native review gates documented in `docs/localization-guide.md`.
+- Localized the login flow, vendor shell, dashboard modules, form feedback, status
+  labels, inventory, ledger, reports, and user-safe Server Action errors. Vendor-entered
+  and database-provided business content remains unchanged.
+- Added language controls to the login page, desktop top bar, and mobile Account Sheet.
+  The final control is a shadcn DropdownMenu with a localized "Select your language"
+  label and DropdownMenuRadioGroup; language selection no longer opens a dedicated
+  Sheet or displays a permanent four-button grid. Selection persists in an HTTP-only
+  same-site cookie and refreshes Server Components without adding locale segments.
+- Added the existing Light, Dark, and System control to the login page so appearance
+  can be selected before authentication.
+- Added locale-aware Noto Sans/Serif Devanagari and Gujarati fonts while retaining Geist
+  for Latin UI.
+- Changed displayed numerals to follow the selected language: Marathi and Hindi use
+  Devanagari digits, Gujarati uses Gujarati digits, and English uses Latin digits.
+  Named next-intl formats cover integers, quantities, currency, dates, and times;
+  previously raw order counts and line-item quantities now use those formats as well.
+- Reworked plural-count messages to use an explicitly formatted value and added named
+  number formatting to inventory quantities, avoiding ICU/default-digit mismatches.
+- Expanded `docs/localization-guide.md` with the canonical file structure and a complete
+  future-locale workflow covering product approval, config, catalogs, loaders, fonts,
+  numeral systems, validation, visual coverage, native review, and documentation.
+- Added `npm run i18n:check`, which verifies JSON shape, English key parity, non-empty
+  values, ICU syntax, and ICU argument parity across all 320 messages.
+- Installed exact `next-intl` and ICU-parser versions. Installation required npm's
+  legacy peer-resolution mode because the current Next.js canary prerelease does not
+  satisfy `next-intl`'s stable `^16.0.0` semver range; the production build passes.
 - Connected vendor accent to shadcn primary buttons and focus-ring tokens.
 - Added automatic dark/light foreground selection for arbitrary vendor accent colors.
 - Fixed runtime heading-font propagation through --heading-font-family.
@@ -80,6 +113,28 @@ DATABASE TEST STATE
 
 VERIFICATION
 ------------
+- npm run i18n:check: passed; 320 messages validated across four locales.
+- npm run lint: passed after the complete localization extraction.
+- npx tsc --noEmit: passed after the complete localization extraction.
+- npm run build: passed with Next.js 16.3.0-canary.69 after allowing the build to
+  download and bundle the configured Google Fonts.
+- Production-server smoke test: `mr-IN`, `en-IN`, `hi-IN`, and `gu-IN`
+  `Accept-Language` requests returned matching `html lang` values, translated titles,
+  and a rendered login form.
+- Locale precedence smoke test: the Gujarati cookie overrode a Marathi browser header;
+  an unsupported French header fell back to Marathi.
+- npm run i18n:check, npm run lint, npx tsc --noEmit, and npm run build: passed after
+  replacing the language Sheet with the shadcn dropdown and adding login theme controls.
+- Production HTML check at `/login`: English response retained `lang=en-IN`, exposed
+  the localized `Select your language` accessible label, and rendered the English
+  language trigger. A new automated Firefox screenshot was attempted but the local
+  headless compositor did not produce an image, so this is not recorded as a visual pass.
+- npm run i18n:check, npm run lint, npx tsc --noEmit, and npm run build: passed after
+  enabling locale-specific numeral systems and removing raw dashboard number rendering.
+- Authenticated production-server smoke test: all four Order dashboard responses retained
+  their matching HTML language and rendered the configured digits. Currency samples were
+  Marathi `₹७८५`, Hindi `₹७८५`, Gujarati `₹૭૮૫`, and English `₹785`; Indic responses also
+  contained native digits in other formatted dashboard values.
 - npm run lint: passed after the latest shell, dark-mode, and mobile-table changes.
 - npx tsc --noEmit: passed after the latest shell, dark-mode, and mobile-table changes.
 - npm run build: passed after repository cleanup and the prior mobile navigation-row change.
@@ -123,6 +178,16 @@ VERIFICATION
 
 OPEN RISKS / NEXT WORK
 ----------------------
+- Complete native-speaker review of Marathi across all phone-first operational flows;
+  this is a release gate, not an optional copy edit.
+- Complete native review of the Hindi and Gujarati drafts before describing them as
+  production-quality translations.
+- Visually test long Marathi, Hindi, and Gujarati labels at desktop and phone viewports,
+  including Android Firefox. Include native digit clarity in tokens, quantities,
+  currency, dates, times, and editable numeric fields. This implementation pass verified
+  rendered server HTML, but did not perform a new screenshot or physical-device pass.
+- Persist locale to the authenticated staff profile when profile-backed preferences are
+  introduced. The current one-year cookie is intentionally device-local.
 - Recheck the restored fixed mobile navigation on Android Firefox when the phone is
   connected again.
 - Verify the revised desktop seam once more in the collapsed sidebar state.

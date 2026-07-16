@@ -1,4 +1,5 @@
 import { CheckCircle2, Database, LockKeyhole } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   Card,
@@ -10,15 +11,15 @@ import {
 import type { VendorRole } from "@/lib/permissions"
 
 export function WorkspaceInfoCards({ role }: { role: VendorRole }) {
+  const t = useTranslations("Module.info")
+  const common = useTranslations("Common")
+
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       <Card>
         <CardHeader>
-          <CardTitle>Connected workspace</CardTitle>
-          <CardDescription>
-            Orders, menu availability, stock, ledger, and reports update from
-            the same source of truth.
-          </CardDescription>
+          <CardTitle>{t("connectedTitle")}</CardTitle>
+          <CardDescription>{t("connectedDescription")}</CardDescription>
           <CardAction>
             <Database />
           </CardAction>
@@ -26,10 +27,11 @@ export function WorkspaceInfoCards({ role }: { role: VendorRole }) {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Staff permissions</CardTitle>
+          <CardTitle>{t("permissionsTitle")}</CardTitle>
           <CardDescription>
-            Current role: {role}. Navigation and actions are scoped to the work
-            this role should perform.
+            {t("permissionsDescription", {
+              role: common(`roles.${role}`),
+            })}
           </CardDescription>
           <CardAction>
             <LockKeyhole />
@@ -38,11 +40,8 @@ export function WorkspaceInfoCards({ role }: { role: VendorRole }) {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Daily operations</CardTitle>
-          <CardDescription>
-            Orders, queue, menu, stock, ledger, and owner reports stay in one
-            vendor workspace.
-          </CardDescription>
+          <CardTitle>{t("operationsTitle")}</CardTitle>
+          <CardDescription>{t("operationsDescription")}</CardDescription>
           <CardAction>
             <CheckCircle2 />
           </CardAction>

@@ -1,4 +1,6 @@
 import { AlertTriangle } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { getLocale } from "next-intl/server"
 
 import { ControlDashboard } from "@/components/dashboard/control/control-dashboard"
 import { InventoryDashboard } from "@/components/dashboard/inventory/inventory-dashboard"
@@ -25,7 +27,6 @@ import {
 } from "@/lib/permissions"
 import { getVendorDashboardData } from "@/lib/supabase/queries"
 import { getCurrentWorkspaceSession } from "@/lib/workspace-auth"
-import { moduleLabels } from "@/lib/workspace-data"
 
 type ModulePageProps = {
   module: ModuleKey
@@ -33,19 +34,15 @@ type ModulePageProps = {
 }
 
 function AccessDenied({ module }: { module: ModuleKey }) {
-  const label = moduleLabels[module]
+  const t = useTranslations("Module")
 
   return (
     <section className="mx-auto flex max-w-3xl flex-col gap-4">
-      <Badge variant="destructive">Access denied</Badge>
+      <Badge variant="destructive">{t("accessDenied")}</Badge>
       <Card>
         <CardHeader>
-          <CardTitle>{label.title}</CardTitle>
-          <CardDescription>
-            This staff role does not have access to this dashboard. Role
-            separation keeps each team member focused on the work they are
-            allowed to perform.
-          </CardDescription>
+          <CardTitle>{t(`${module}.title`)}</CardTitle>
+          <CardDescription>{t("accessDeniedDescription")}</CardDescription>
           <CardAction>
             <AlertTriangle />
           </CardAction>
@@ -62,10 +59,13 @@ export async function ModulePage({ module, vendorSlug }: ModulePageProps) {
     return <AccessDenied module={module} />
   }
 
-  const data = await getVendorDashboardData(vendorSlug)
+  const [data, locale] = await Promise.all([
+    getVendorDashboardData(vendorSlug),
+    getLocale(),
+  ])
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6" key={locale}>
       <DashboardHeader module={module} vendorName={data.vendor.name} />
 
       {module === "order" ? (

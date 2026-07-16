@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { RefreshCw } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -22,6 +23,9 @@ export default function WorkspaceError({
   error,
   retry,
 }: WorkspaceErrorProps) {
+  const t = useTranslations("WorkspaceError")
+  const common = useTranslations("Common.actions")
+
   useEffect(() => {
     console.error(error)
   }, [error])
@@ -30,21 +34,18 @@ export default function WorkspaceError({
     <main className="grid min-h-svh place-items-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Workspace unavailable</CardTitle>
-          <CardDescription>
-            The platform could not connect to the workspace database. Check the
-            Supabase project status and connection settings, then try again.
-          </CardDescription>
+          <CardTitle>{t("title")}</CardTitle>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Your session is still active. No order or account data was changed.
+            {t("unchanged")}
           </p>
         </CardContent>
         <CardFooter>
           <Button onClick={retry}>
             <RefreshCw data-icon="inline-start" />
-            Try again
+            {common("tryAgain")}
           </Button>
         </CardFooter>
       </Card>

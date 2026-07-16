@@ -2,6 +2,7 @@
 
 import { useActionState } from "react"
 import { KeyRound, LogIn, Mail } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { loginAction, type LoginState } from "@/app/actions/auth"
 import { Button } from "@/components/ui/button"
@@ -25,13 +26,14 @@ const initialState: LoginState = {}
 
 export function LoginForm({ next }: LoginFormProps) {
   const [state, action, pending] = useActionState(loginAction, initialState)
+  const t = useTranslations("Auth.form")
 
   return (
     <form action={action} className="flex flex-col gap-5">
       <input name="next" type="hidden" value={next ?? ""} />
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email">{t("email")}</FieldLabel>
           <InputGroup className="h-10">
             <InputGroupAddon>
               <Mail />
@@ -41,13 +43,13 @@ export function LoginForm({ next }: LoginFormProps) {
               defaultValue={state.email}
               id="email"
               name="email"
-              placeholder="owner@citycanteen.in"
+              placeholder={t("emailPlaceholder")}
               type="email"
             />
           </InputGroup>
         </Field>
         <Field>
-          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldLabel htmlFor="password">{t("password")}</FieldLabel>
           <InputGroup className="h-10">
             <InputGroupAddon>
               <KeyRound />
@@ -56,7 +58,7 @@ export function LoginForm({ next }: LoginFormProps) {
               autoComplete="current-password"
               id="password"
               name="password"
-              placeholder="Owner@2026"
+              placeholder={t("passwordPlaceholder")}
               type="password"
             />
           </InputGroup>
@@ -65,7 +67,7 @@ export function LoginForm({ next }: LoginFormProps) {
       {state.error ? <FieldError>{state.error}</FieldError> : null}
       <Button className="h-10 w-full" disabled={pending} type="submit">
         <LogIn data-icon="inline-start" />
-        {pending ? "Signing in..." : "Sign in"}
+        {pending ? t("pending") : t("submit")}
       </Button>
     </form>
   )

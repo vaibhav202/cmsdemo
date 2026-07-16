@@ -1,4 +1,4 @@
-import type { MembershipStatus, ModuleKey, VendorRole } from "@/lib/permissions"
+import type { MembershipStatus, VendorRole } from "@/lib/permissions"
 
 export const workspaceVendor = {
   id: "vendor_pune_001",
@@ -52,40 +52,3 @@ export const workspaceAccounts: WorkspaceAccount[] = [
     status: "active",
   },
 ]
-
-export const moduleLabels: Record<
-  ModuleKey,
-  {
-    title: string
-    description: string
-  }
-> = {
-  order: {
-    title: "Order Dashboard",
-    description: "Create counter orders, confirm payment, and hand off tickets.",
-  },
-  kitchen: {
-    title: "Kitchen Dashboard",
-    description: "Track items that need preparation and move orders forward.",
-  },
-  queue: {
-    title: "Queue Dashboard",
-    description: "Show live order status for staff or customer-facing screens.",
-  },
-  control: {
-    title: "Control Dashboard",
-    description: "Manage menu, staff access, vendor settings, and audit checks.",
-  },
-  inventory: {
-    title: "Inventory",
-    description: "Monitor stock quantity, low-stock warnings, and daily usage.",
-  },
-  ledger: {
-    title: "Ledger",
-    description: "Track receivables, payables, expenses, and settlement notes.",
-  },
-  reports: {
-    title: "Reports",
-    description: "Review sales, estimated margins, completed orders, and stock alerts.",
-  },
-}

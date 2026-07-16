@@ -1,0 +1,408 @@
+{
+  "Metadata": {
+    "title": "CMS Platform",
+    "titleTemplate": "{page} | CMS Platform",
+    "description": "ऑर्डर, रसोई, स्टॉक, बहीखाता और रिपोर्ट एक ही कार्यक्षेत्र में।",
+    "loginTitle": "साइन इन"
+  },
+  "Common": {
+    "language": "भाषा",
+    "chooseLanguage": "भाषा चुनें",
+    "chooseLanguageDescription": "प्लेटफ़ॉर्म को अपनी सबसे सुविधाजनक भाषा में इस्तेमाल करें।",
+    "languageChanged": "भाषा बदल दी गई",
+    "languageChangeFailed": "भाषा बदली नहीं जा सकी।",
+    "languages": {
+      "mr-IN": "मराठी",
+      "en-IN": "English",
+      "hi-IN": "हिंदी",
+      "gu-IN": "ગુજરાતી"
+    },
+    "actions": {
+      "signOut": "साइन आउट",
+      "tryAgain": "फिर कोशिश करें",
+      "close": "बंद करें",
+      "toggleSidebar": "साइडबार खोलें या बंद करें",
+      "clearSearch": "मेनू खोज साफ़ करें",
+      "undo": "वापस लें"
+    },
+    "theme": {
+      "title": "दिखावट",
+      "description": "लाइट, डार्क या डिवाइस सेटिंग",
+      "controlLabel": "दिखावट की थीम",
+      "light": "लाइट",
+      "dark": "डार्क",
+      "system": "सिस्टम",
+      "optionLabel": "{theme} थीम"
+    },
+    "roles": {
+      "owner": "मालिक",
+      "admin": "एडमिन",
+      "manager": "मैनेजर",
+      "cashier": "कैशियर",
+      "kitchen": "रसोई",
+      "accountant": "लेखाकार"
+    },
+    "membership": {
+      "active": "सक्रिय",
+      "invited": "आमंत्रित",
+      "disabled": "निष्क्रिय"
+    },
+    "orderStatus": {
+      "paid": "भुगतान हुआ",
+      "preparing": "तैयार हो रहा है",
+      "ready": "तैयार",
+      "completed": "पूरा",
+      "cancelled": "रद्द"
+    },
+    "units": {
+      "kg": "किलोग्राम",
+      "g": "ग्राम",
+      "l": "लीटर",
+      "ml": "मिलीलीटर",
+      "pcs": "पीस",
+      "pack": "पैक"
+    },
+    "stockMovement": {
+      "in": "स्टॉक जमा",
+      "out": "स्टॉक निकासी"
+    },
+    "accessibility": {
+      "mobileSidebarTitle": "साइडबार",
+      "mobileSidebarDescription": "मोबाइल साइडबार दिखाता है।"
+    }
+  },
+  "Auth": {
+    "tagline": "रेस्टोरेंट का कामकाज, सहज प्रवाह में।",
+    "workspaceEyebrow": "{vendor} कार्यक्षेत्र",
+    "productBadge": "रेस्टोरेंट संचालन कार्यक्षेत्र",
+    "hero": "फ़ोन या कंप्यूटर से ऑर्डर, रसोई की कतार, स्टॉक और हिसाब संभालें।",
+    "description": "{tagline} काउंटर, रसोई, मालिक और लेखा टीम के अलग-अलग दृश्य हर सदस्य को अपने काम पर केंद्रित रखते हैं।",
+    "features": {
+      "counterLabel": "दैनिक काउंटर",
+      "counterValue": "ऑर्डर और टोकन",
+      "kitchenLabel": "रसोई",
+      "kitchenValue": "लाइव तैयारी प्रवाह",
+      "ownerLabel": "मालिक दृश्य",
+      "ownerValue": "मेनू, स्टॉक, रिपोर्ट"
+    },
+    "cardTitle": "साइन इन",
+    "cardDescription": "आपको दिए गए कार्यक्षेत्र क्रेडेंशियल इस्तेमाल करें।",
+    "rolesTitle": "कार्यक्षेत्र भूमिकाएँ",
+    "rolesDescription": "कर्मचारी की भूमिका के अनुसार पहुँच बदलती है।",
+    "userColumn": "उपयोगकर्ता",
+    "roleColumn": "भूमिका",
+    "form": {
+      "email": "ईमेल",
+      "emailPlaceholder": "owner@citycanteen.in",
+      "password": "पासवर्ड",
+      "passwordPlaceholder": "Owner@2026",
+      "submit": "साइन इन",
+      "pending": "साइन इन हो रहा है...",
+      "invalidCredentials": "क्रेडेंशियल गलत हैं या सदस्यता निष्क्रिय है।"
+    }
+  },
+  "Shell": {
+    "workspaceNavigation": "कार्यक्षेत्र नेविगेशन",
+    "workspace": "कार्यक्षेत्र",
+    "currentPage": "मौजूदा पेज",
+    "openMenu": "मेनू खोलें",
+    "menuTitle": "मेनू",
+    "menuDescription": "कार्यक्षेत्र डैशबोर्ड चुनें",
+    "openAccount": "खाता खोलें",
+    "accountTitle": "खाता",
+    "accountDescription": "मौजूदा उपयोगकर्ता, भूमिका और सत्र की कार्रवाइयाँ",
+    "roleLabel": "भूमिका: {role}",
+    "statusLabel": "स्थिति: {status}"
+  },
+  "Module": {
+    "order": {
+      "title": "ऑर्डर डैशबोर्ड",
+      "shortTitle": "ऑर्डर",
+      "description": "काउंटर ऑर्डर बनाएँ, भुगतान की पुष्टि करें और टिकट आगे भेजें।"
+    },
+    "kitchen": {
+      "title": "रसोई डैशबोर्ड",
+      "shortTitle": "रसोई",
+      "description": "तैयार किए जाने वाले आइटम देखें और ऑर्डर आगे बढ़ाएँ।"
+    },
+    "queue": {
+      "title": "कतार डैशबोर्ड",
+      "shortTitle": "कतार",
+      "description": "कर्मचारी या ग्राहक स्क्रीन पर ऑर्डर की लाइव स्थिति दिखाएँ।"
+    },
+    "control": {
+      "title": "नियंत्रण डैशबोर्ड",
+      "shortTitle": "नियंत्रण",
+      "description": "मेनू, कर्मचारी पहुँच, विक्रेता सेटिंग और ऑडिट जाँच संभालें।"
+    },
+    "inventory": {
+      "title": "स्टॉक",
+      "shortTitle": "स्टॉक",
+      "description": "स्टॉक मात्रा, कम स्टॉक चेतावनी और दैनिक उपयोग देखें।"
+    },
+    "ledger": {
+      "title": "बहीखाता",
+      "shortTitle": "बहीखाता",
+      "description": "प्राप्य, देय, खर्च और निपटान नोट संभालें।"
+    },
+    "reports": {
+      "title": "रिपोर्ट",
+      "shortTitle": "रिपोर्ट",
+      "description": "बिक्री, अनुमानित मार्जिन, पूरे ऑर्डर और स्टॉक चेतावनी देखें।"
+    },
+    "accessDenied": "पहुँच अस्वीकृत",
+    "accessDeniedDescription": "इस कर्मचारी भूमिका को इस डैशबोर्ड की पहुँच नहीं है। भूमिकाओं का अलगाव हर सदस्य को केवल अनुमत काम पर केंद्रित रखता है।",
+    "info": {
+      "connectedTitle": "जुड़ा हुआ कार्यक्षेत्र",
+      "connectedDescription": "ऑर्डर, मेनू उपलब्धता, स्टॉक, बहीखाता और रिपोर्ट एक ही स्रोत से अपडेट होते हैं।",
+      "permissionsTitle": "कर्मचारी अनुमतियाँ",
+      "permissionsDescription": "मौजूदा भूमिका: {role}। नेविगेशन और कार्रवाइयाँ इस भूमिका के अनुमत काम तक सीमित हैं।",
+      "operationsTitle": "दैनिक संचालन",
+      "operationsDescription": "ऑर्डर, कतार, मेनू, स्टॉक, बहीखाता और मालिक रिपोर्ट एक ही विक्रेता कार्यक्षेत्र में रहते हैं।"
+    }
+  },
+  "Order": {
+    "metrics": {
+      "sales": "काउंटर बिक्री",
+      "salesNote": "भुगतान किए गए काउंटर ऑर्डर",
+      "active": "सक्रिय टोकन",
+      "activeNote": "भुगतान, तैयारी या तैयार स्थिति में",
+      "available": "उपलब्ध आइटम",
+      "availableNote": "मेनू आइटम जो अभी स्टॉक में हैं"
+    },
+    "activeOrders": "सक्रिय ऑर्डर",
+    "emptyTitle": "कोई सक्रिय ऑर्डर नहीं",
+    "emptyDescription": "वापस लेने की अवधि के बाद नए भुगतान किए गए ऑर्डर यहाँ दिखेंगे।",
+    "createTitle": "काउंटर ऑर्डर बनाएँ",
+    "createDescription": "एक आइटम जल्दी जोड़ें, भुगतान की पुष्टि करें और लाइव कतार में भेजें।",
+    "searchLabel": "मेनू खोजें",
+    "searchPlaceholder": "आइटम या श्रेणी खोजें",
+    "resultCount": "{count, plural, =0 {कोई आइटम नहीं} =1 {{formattedCount} आइटम} other {{formattedCount} आइटम}}",
+    "noMatchTitle": "कोई मिलता-जुलता आइटम नहीं",
+    "noMatchDescription": "दूसरा आइटम नाम या मेनू श्रेणी खोजें।",
+    "menuFallback": "मेनू",
+    "inStock": "स्टॉक में",
+    "off": "बंद",
+    "counterDefault": "काउंटर",
+    "customer": "ग्राहक",
+    "quantity": "मात्रा",
+    "addOrder": "ऑर्डर जोड़ें",
+    "undoAvailable": "वापस ले सकते हैं",
+    "creating": "बन रहा है",
+    "nextStatus": {
+      "paid": "रसोई में भेजें",
+      "preparing": "तैयार चिह्नित करें",
+      "ready": "पूरा करें"
+    },
+    "feedback": {
+      "createdTitle": "ऑर्डर कतार में भेजा गया",
+      "createdDescription": "वापस लेने की अवधि के बाद {item} का ऑर्डर बनाया गया।",
+      "failedTitle": "ऑर्डर नहीं बनाया जा सका",
+      "cancelledTitle": "ऑर्डर रद्द किया गया",
+      "cancelledDescription": "{item} को कतार में नहीं भेजा गया।",
+      "scheduledTitle": "ऑर्डर 10 सेकंड में बनाया जाएगा",
+      "scheduledDescription": "अगर यह काउंटर ऑर्डर गलती से चुना गया है तो अभी वापस लें।"
+    },
+    "errors": {
+      "generic": "ऑर्डर नहीं बनाया जा सका।",
+      "role": "यह भूमिका काउंटर ऑर्डर नहीं बना सकती।",
+      "quantity": "मात्रा 1 से 20 के बीच होनी चाहिए।",
+      "unavailable": "मेनू आइटम उपलब्ध नहीं है।",
+      "create": "ऑर्डर नहीं बनाया जा सका।"
+    }
+  },
+  "Kitchen": {
+    "waiting": "प्रतीक्षा में",
+    "waitingNote": "भुगतान वाले ऑर्डर जिन पर काम शुरू नहीं हुआ",
+    "preparing": "तैयार हो रहा है",
+    "preparingNote": "रसोई इन पर काम कर रही है",
+    "ready": "तैयार",
+    "readyNote": "ग्राहक को दिया जा सकता है",
+    "emptyTitle": "रसोई का कोई ऑर्डर नहीं",
+    "emptyDescription": "भुगतान किए गए काउंटर ऑर्डर तैयारी के लिए यहाँ दिखेंगे।",
+    "statusRoleError": "यह भूमिका ऑर्डर की स्थिति नहीं बदल सकती।",
+    "statusUpdateError": "ऑर्डर की स्थिति अपडेट नहीं हो सकी।"
+  },
+  "Queue": {
+    "inQueue": "कतार में",
+    "inQueueNote": "कर्मचारी या ग्राहक स्क्रीन पर दिखाई देते हैं",
+    "readyNow": "अभी तैयार",
+    "readyNowNote": "लेने की प्रतीक्षा में टोकन",
+    "latestToken": "नवीनतम टोकन",
+    "latestTokenNote": "काउंटर क्रम",
+    "emptyTitle": "कोई दिखाई देने वाली कतार नहीं",
+    "emptyDescription": "भुगतान, तैयारी और तैयार ऑर्डर यहाँ दिखेंगे।",
+    "token": "टोकन #{token, number, integer}",
+    "counterFallback": "काउंटर"
+  },
+  "Control": {
+    "metrics": {
+      "items": "मेनू आइटम",
+      "itemsNote": "काउंटर ऑर्डर में दिखाई देते हैं",
+      "inStock": "स्टॉक में",
+      "inStockNote": "काउंटर कर्मचारियों को दिखाई देते हैं",
+      "unavailable": "अनुपलब्ध",
+      "unavailableNote": "ऑर्डर से छिपे हुए"
+    },
+    "availabilityTitle": "मेनू उपलब्धता",
+    "availabilityDescription": "व्यस्त समय में पूरा मेनू संपादित किए बिना आइटम चालू या बंद करें।",
+    "availabilityColumn": "उपलब्धता",
+    "itemColumn": "आइटम",
+    "categoryColumn": "श्रेणी",
+    "priceColumn": "कीमत",
+    "statusColumn": "स्थिति",
+    "actionColumn": "कार्रवाई",
+    "markAvailable": "{item} को स्टॉक में चिह्नित करें",
+    "markUnavailable": "{item} को अनुपलब्ध चिह्नित करें",
+    "emptyTitle": "कोई मेनू आइटम नहीं",
+    "emptyDescription": "उपलब्धता संभालने से पहले मेनू आइटम जोड़ें।",
+    "appearanceTitle": "ब्रांड दिखावट",
+    "appearanceDescription": "प्लेटफ़ॉर्म की पहचान बनाए रखते हुए विक्रेता रंग और शीर्षक शैली लागू करें।",
+    "workspaceMark": "कार्यक्षेत्र चिह्न",
+    "workspaceMarkDescription": "रंग केवल विक्रेता पहचान और चुने हुए संचालन संकेतों के लिए है। नेविगेशन, कार्ड और मुख्य नियंत्रण प्लेटफ़ॉर्म की दिखावट बनाए रखते हैं।",
+    "accentTitle": "प्रमुख रंग",
+    "accentDescription": "मुख्य कार्रवाइयों, फ़ोकस रिंग, विक्रेता चिह्न और हल्के सतही रंग के लिए।",
+    "pickerLabel": "रंग चयन",
+    "customLabel": "HEX, RGB या HSL",
+    "customPlaceholder": "#27272a, rgb(39 39 42), hsl(240 4% 16%)",
+    "customDescription": "HEX, RGB या HSL इस्तेमाल करें। पढ़ने योग्य अग्रभूमि रंग अपने आप चुना जाता है।",
+    "headingLabel": "शीर्षक फ़ॉन्ट",
+    "headingPlaceholder": "शीर्षक फ़ॉन्ट चुनें",
+    "headingSans": "सैन्स",
+    "headingSerif": "सेरिफ़",
+    "preview": "City Canteen शीर्षक नमूना",
+    "save": "दिखावट सहेजें",
+    "saving": "दिखावट सहेजी जा रही है",
+    "custom": "कस्टम",
+    "accentNames": {
+      "Charcoal": "चारकोल",
+      "Graphite": "ग्रेफाइट",
+      "Slate": "स्लेट",
+      "Forest": "फॉरेस्ट",
+      "Indigo": "इंडिगो",
+      "Maroon": "मरून"
+    },
+    "errors": {
+      "role": "यह भूमिका कार्यक्षेत्र की दिखावट नहीं बदल सकती।",
+      "color": "यह ब्रांड रंग समर्थित नहीं है।",
+      "invalidColor": "मान्य HEX, RGB या HSL ब्रांड रंग इस्तेमाल करें।",
+      "font": "यह शीर्षक फ़ॉन्ट समर्थित नहीं है।",
+      "save": "कार्यक्षेत्र की दिखावट सहेजी नहीं जा सकी।",
+      "denied": "इस कार्यक्षेत्र ने दिखावट बदलने की अनुमति नहीं दी।",
+      "availabilityRole": "यह भूमिका मेनू उपलब्धता नहीं बदल सकती।",
+      "availabilitySave": "मेनू उपलब्धता नहीं बदली जा सकी।"
+    },
+    "saved": "कार्यक्षेत्र की दिखावट सहेजी गई।"
+  },
+  "Inventory": {
+    "metrics": {
+      "ingredients": "सामग्री",
+      "ingredientsNote": "स्टॉक रजिस्टर में ट्रैक की गई",
+      "low": "कम स्टॉक",
+      "lowNote": "रीऑर्डर स्तर पर या उससे नीचे",
+      "healthy": "पर्याप्त स्टॉक",
+      "healthyNote": "रीऑर्डर स्तर से ऊपर"
+    },
+    "addTitle": "सामग्री जोड़ें",
+    "addDescription": "स्टॉक सामग्री और उसकी रीऑर्डर सीमा बनाएँ।",
+    "ingredient": "सामग्री",
+    "ingredientPlaceholder": "खाना पकाने का तेल",
+    "unit": "इकाई",
+    "chooseUnit": "इकाई चुनें",
+    "measurementUnit": "माप की इकाई",
+    "openingQuantity": "शुरुआती मात्रा",
+    "reorderAt": "रीऑर्डर स्तर",
+    "add": "सामग्री जोड़ें",
+    "adding": "सामग्री जोड़ी जा रही है",
+    "movementTitle": "स्टॉक गतिविधि दर्ज करें",
+    "movementDescription": "खरीद जोड़ें या सामग्री का उपयोग और बर्बादी दर्ज करें।",
+    "chooseIngredient": "सामग्री चुनें",
+    "stockRegisterGroup": "स्टॉक रजिस्टर",
+    "movement": "गतिविधि",
+    "movementAria": "स्टॉक गतिविधि का प्रकार",
+    "quantity": "मात्रा",
+    "reason": "कारण",
+    "purchasePlaceholder": "आपूर्तिकर्ता से खरीद",
+    "usagePlaceholder": "रसोई में उपयोग",
+    "movementRule": "स्टॉक निकासी से सामग्री की मात्रा शून्य से कम नहीं हो सकती।",
+    "record": "गतिविधि दर्ज करें",
+    "recording": "गतिविधि दर्ज हो रही है",
+    "registerTitle": "स्टॉक रजिस्टर",
+    "registerDescription": "हर सामग्री की मौजूदा मात्रा और रीऑर्डर सीमा।",
+    "currentColumn": "मौजूदा",
+    "reorderColumn": "रीऑर्डर स्तर",
+    "statusColumn": "स्थिति",
+    "low": "कम",
+    "ok": "ठीक",
+    "emptyRegisterTitle": "कोई सामग्री नहीं",
+    "emptyRegisterDescription": "स्टॉक ट्रैक करना शुरू करने के लिए पहली सामग्री जोड़ें।",
+    "historyTitle": "हाल की गतिविधियाँ",
+    "historyDescription": "नवीनतम खरीद, उपयोग, बर्बादी और शुरुआती शेष।",
+    "changeColumn": "बदलाव",
+    "reasonColumn": "कारण",
+    "recordedColumn": "दर्ज किया गया",
+    "removedIngredient": "हटाई गई सामग्री",
+    "emptyHistoryTitle": "कोई स्टॉक गतिविधि नहीं",
+    "emptyHistoryDescription": "खरीद और सामग्री का उपयोग यहाँ दिखाई देगा।",
+    "errors": {
+      "manageRole": "यह भूमिका स्टॉक सामग्री नहीं जोड़ सकती।",
+      "movementRole": "यह भूमिका स्टॉक गतिविधि दर्ज नहीं कर सकती।",
+      "workspace": "यह स्टॉक आपके कार्यक्षेत्र का नहीं है।",
+      "name": "सामग्री का नाम 2 से 80 अक्षरों के बीच रखें।",
+      "unit": "समर्थित स्टॉक इकाई चुनें।",
+      "quantityRange": "मात्रा 0 से 1,000,000 के बीच होनी चाहिए।",
+      "verify": "यह स्टॉक कार्यक्षेत्र सत्यापित नहीं हो सका।",
+      "check": "स्टॉक रजिस्टर जाँचा नहीं जा सका।",
+      "duplicate": "{name} पहले से स्टॉक रजिस्टर में है।",
+      "add": "सामग्री जोड़ी नहीं जा सकी।",
+      "movementType": "चुनें कि स्टॉक अंदर आ रहा है या बाहर जा रहा है।",
+      "movementQuantity": "गतिविधि की मात्रा शून्य से अधिक होनी चाहिए।",
+      "reason": "3 से 120 अक्षरों के बीच कारण लिखें।",
+      "notFound": "इस कार्यक्षेत्र में सामग्री नहीं मिली।",
+      "insufficient": "{name} की केवल {quantity, number, quantity} {unit} मात्रा उपलब्ध है।",
+      "movementResult": "स्टॉक गतिविधि से अपडेट की गई सामग्री नहीं मिली।",
+      "movement": "स्टॉक गतिविधि दर्ज नहीं की जा सकी।"
+    },
+    "feedback": {
+      "added": "{name} स्टॉक में जोड़ा गया।",
+      "updated": "{name} की मात्रा {quantity, number, quantity} {unit} हो गई।"
+    }
+  },
+  "Ledger": {
+    "receivable": "प्राप्य",
+    "receivableNote": "मिलने वाली राशि",
+    "payable": "देय/खर्च",
+    "payableNote": "चुकाने वाली राशि",
+    "open": "खुली प्रविष्टियाँ",
+    "openNote": "बहीखाता रिकॉर्ड",
+    "title": "बहीखाता प्रविष्टियाँ",
+    "description": "कार्यक्षेत्र की प्राप्य, देय और खर्च प्रविष्टियाँ।",
+    "noteColumn": "विवरण",
+    "typeColumn": "प्रकार",
+    "dueColumn": "देय तारीख",
+    "amountColumn": "राशि",
+    "entryTypes": {
+      "receivable": "प्राप्य",
+      "payable": "देय",
+      "expense": "खर्च"
+    },
+    "today": "आज",
+    "emptyTitle": "कोई बहीखाता प्रविष्टि नहीं",
+    "emptyDescription": "हिसाब रखने के लिए प्राप्य, देय या खर्च प्रविष्टियाँ जोड़ें।"
+  },
+  "Reports": {
+    "sales": "बिक्री",
+    "salesNote": "भुगतान किए गए काउंटर ऑर्डर",
+    "profit": "अनुमानित सकल लाभ",
+    "profitNote": "आइटम की लागत कीमत पर आधारित",
+    "completed": "पूरे ऑर्डर",
+    "stockNote": "{count, plural, =0 {कोई स्टॉक आइटम कम नहीं} =1 {{formattedCount} स्टॉक आइटम कम} other {{formattedCount} स्टॉक आइटम कम}}",
+    "title": "मालिक सारांश",
+    "description": "बिक्री, अनुमानित लागत, सकल लाभ, ऑर्डर संख्या और स्टॉक चेतावनी दैनिक काउंटर और रसोई के काम से जुड़े रहते हैं।"
+  },
+  "WorkspaceError": {
+    "title": "कार्यक्षेत्र उपलब्ध नहीं है",
+    "description": "प्लेटफ़ॉर्म कार्यक्षेत्र डेटाबेस से नहीं जुड़ सका। Supabase प्रोजेक्ट की स्थिति और कनेक्शन सेटिंग जाँचकर फिर कोशिश करें।",
+    "unchanged": "आपका सत्र अभी सक्रिय है। किसी ऑर्डर या खाते का डेटा नहीं बदला गया।"
+  }
+}

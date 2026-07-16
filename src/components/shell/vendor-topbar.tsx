@@ -1,8 +1,10 @@
 "use client"
 
 import { LogOut } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { logoutAction } from "@/app/actions/auth"
+import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -23,6 +25,8 @@ export function VendorTopbar({
   user,
   vendorInitial,
 }: VendorTopbarProps) {
+  const common = useTranslations("Common")
+
   return (
     <header className="glass-surface hidden h-18 shrink-0 border-b px-4 md:sticky md:top-0 md:z-30 md:block md:px-6">
       <div className="flex h-full flex-wrap items-center justify-between gap-3">
@@ -39,13 +43,14 @@ export function VendorTopbar({
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <LanguageMenu compact />
           <ThemeModeControl />
           <LiveClock initialIso={initialClockIso} />
-          <Badge variant="secondary">{user.role}</Badge>
+          <Badge variant="secondary">{common(`roles.${user.role}`)}</Badge>
           <form action={logoutAction}>
             <Button size="icon" type="submit" variant="outline">
               <LogOut />
-              <span className="sr-only">Sign out</span>
+              <span className="sr-only">{common("actions.signOut")}</span>
             </Button>
           </form>
         </div>

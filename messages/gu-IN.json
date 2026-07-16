@@ -1,0 +1,408 @@
+{
+  "Metadata": {
+    "title": "CMS Platform",
+    "titleTemplate": "{page} | CMS Platform",
+    "description": "ઓર્ડર, રસોડું, જથ્થો, ખાતાવહી અને અહેવાલ એક જ કાર્યક્ષેત્રમાં.",
+    "loginTitle": "સાઇન ઇન"
+  },
+  "Common": {
+    "language": "ભાષા",
+    "chooseLanguage": "ભાષા પસંદ કરો",
+    "chooseLanguageDescription": "પ્લેટફોર્મને તમને સૌથી અનુકૂળ ભાષામાં વાપરો.",
+    "languageChanged": "ભાષા બદલાઈ",
+    "languageChangeFailed": "ભાષા બદલી શકાઈ નહીં.",
+    "languages": {
+      "mr-IN": "मराठी",
+      "en-IN": "English",
+      "hi-IN": "हिंदी",
+      "gu-IN": "ગુજરાતી"
+    },
+    "actions": {
+      "signOut": "સાઇન આઉટ",
+      "tryAgain": "ફરી પ્રયાસ કરો",
+      "close": "બંધ કરો",
+      "toggleSidebar": "બાજુનું મેનૂ ખોલો અથવા બંધ કરો",
+      "clearSearch": "મેનૂ શોધ સાફ કરો",
+      "undo": "પાછું લો"
+    },
+    "theme": {
+      "title": "દેખાવ",
+      "description": "લાઇટ, ડાર્ક અથવા ડિવાઇસ સેટિંગ",
+      "controlLabel": "દેખાવની થીમ",
+      "light": "લાઇટ",
+      "dark": "ડાર્ક",
+      "system": "સિસ્ટમ",
+      "optionLabel": "{theme} થીમ"
+    },
+    "roles": {
+      "owner": "માલિક",
+      "admin": "એડમિન",
+      "manager": "મેનેજર",
+      "cashier": "કેશિયર",
+      "kitchen": "રસોડું",
+      "accountant": "હિસાબનીશ"
+    },
+    "membership": {
+      "active": "સક્રિય",
+      "invited": "આમંત્રિત",
+      "disabled": "નિષ્ક્રિય"
+    },
+    "orderStatus": {
+      "paid": "ચૂકવેલ",
+      "preparing": "તૈયાર થઈ રહ્યો છે",
+      "ready": "તૈયાર",
+      "completed": "પૂર્ણ",
+      "cancelled": "રદ"
+    },
+    "units": {
+      "kg": "કિલોગ્રામ",
+      "g": "ગ્રામ",
+      "l": "લિટર",
+      "ml": "મિલિલિટર",
+      "pcs": "નંગ",
+      "pack": "પેક"
+    },
+    "stockMovement": {
+      "in": "જથ્થો ઉમેરો",
+      "out": "જથ્થો વાપરો"
+    },
+    "accessibility": {
+      "mobileSidebarTitle": "બાજુનું મેનૂ",
+      "mobileSidebarDescription": "મોબાઇલનું બાજુનું મેનૂ બતાવે છે."
+    }
+  },
+  "Auth": {
+    "tagline": "રેસ્ટોરન્ટનું સંચાલન, સરળ પ્રવાહમાં.",
+    "workspaceEyebrow": "{vendor} કાર્યક્ષેત્ર",
+    "productBadge": "રેસ્ટોરન્ટ સંચાલન કાર્યક્ષેત્ર",
+    "hero": "ફોન અથવા કમ્પ્યુટરથી ઓર્ડર, રસોડાની કતાર, જથ્થો અને હિસાબ સંભાળો.",
+    "description": "{tagline} કાઉન્ટર, રસોડું, માલિક અને હિસાબ ટીમના અલગ દૃશ્યો દરેકને તેમના કામ પર કેન્દ્રિત રાખે છે.",
+    "features": {
+      "counterLabel": "દૈનિક કાઉન્ટર",
+      "counterValue": "ઓર્ડર અને ટોકન",
+      "kitchenLabel": "રસોડું",
+      "kitchenValue": "જીવંત તૈયારી પ્રવાહ",
+      "ownerLabel": "માલિક દૃશ્ય",
+      "ownerValue": "મેનૂ, જથ્થો, અહેવાલ"
+    },
+    "cardTitle": "સાઇન ઇન",
+    "cardDescription": "તમને આપેલી કાર્યક્ષેત્ર લૉગિન માહિતી વાપરો.",
+    "rolesTitle": "કાર્યક્ષેત્ર ભૂમિકાઓ",
+    "rolesDescription": "કર્મચારીની ભૂમિકા પ્રમાણે પ્રવેશ બદલાય છે.",
+    "userColumn": "વપરાશકર્તા",
+    "roleColumn": "ભૂમિકા",
+    "form": {
+      "email": "ઇમેઇલ",
+      "emailPlaceholder": "owner@citycanteen.in",
+      "password": "પાસવર્ડ",
+      "passwordPlaceholder": "Owner@2026",
+      "submit": "સાઇન ઇન",
+      "pending": "સાઇન ઇન થઈ રહ્યું છે...",
+      "invalidCredentials": "લૉગિન માહિતી ખોટી છે અથવા સભ્યપદ નિષ્ક્રિય છે."
+    }
+  },
+  "Shell": {
+    "workspaceNavigation": "કાર્યક્ષેત્ર નેવિગેશન",
+    "workspace": "કાર્યક્ષેત્ર",
+    "currentPage": "વર્તમાન પાનું",
+    "openMenu": "મેનૂ ખોલો",
+    "menuTitle": "મેનૂ",
+    "menuDescription": "કાર્યક્ષેત્ર ડૅશબોર્ડ પસંદ કરો",
+    "openAccount": "ખાતું ખોલો",
+    "accountTitle": "ખાતું",
+    "accountDescription": "વર્તમાન વપરાશકર્તા, ભૂમિકા અને સત્રની ક્રિયાઓ",
+    "roleLabel": "ભૂમિકા: {role}",
+    "statusLabel": "સ્થિતિ: {status}"
+  },
+  "Module": {
+    "order": {
+      "title": "ઓર્ડર ડૅશબોર્ડ",
+      "shortTitle": "ઓર્ડર",
+      "description": "કાઉન્ટર ઓર્ડર બનાવો, ચુકવણીની ખાતરી કરો અને ટિકિટ આગળ મોકલો."
+    },
+    "kitchen": {
+      "title": "રસોડું ડૅશબોર્ડ",
+      "shortTitle": "રસોડું",
+      "description": "તૈયાર કરવાના પદાર્થો જુઓ અને ઓર્ડર આગળ વધારો."
+    },
+    "queue": {
+      "title": "કતાર ડૅશબોર્ડ",
+      "shortTitle": "કતાર",
+      "description": "કર્મચારી અથવા ગ્રાહક સ્ક્રીન પર ઓર્ડરની જીવંત સ્થિતિ બતાવો."
+    },
+    "control": {
+      "title": "નિયંત્રણ ડૅશબોર્ડ",
+      "shortTitle": "નિયંત્રણ",
+      "description": "મેનૂ, કર્મચારી પ્રવેશ, વિક્રેતા સેટિંગ અને ઓડિટ તપાસ સંભાળો."
+    },
+    "inventory": {
+      "title": "જથ્થો",
+      "shortTitle": "જથ્થો",
+      "description": "જથ્થાની માત્રા, ઓછા જથ્થાની ચેતવણી અને દૈનિક વપરાશ જુઓ."
+    },
+    "ledger": {
+      "title": "ખાતાવહી",
+      "shortTitle": "ખાતાવહી",
+      "description": "લેણું, દેવું, ખર્ચ અને પતાવટની નોંધો સંભાળો."
+    },
+    "reports": {
+      "title": "અહેવાલ",
+      "shortTitle": "અહેવાલ",
+      "description": "વેચાણ, અંદાજિત નફો, પૂર્ણ ઓર્ડર અને જથ્થાની ચેતવણી જુઓ."
+    },
+    "accessDenied": "પ્રવેશ નકારાયો",
+    "accessDeniedDescription": "આ કર્મચારી ભૂમિકાને આ ડૅશબોર્ડનો પ્રવેશ નથી. ભૂમિકાઓ અલગ રાખવાથી દરેક સભ્ય માત્ર મંજૂર કામ પર ધ્યાન આપે છે.",
+    "info": {
+      "connectedTitle": "જોડાયેલ કાર્યક્ષેત્ર",
+      "connectedDescription": "ઓર્ડર, મેનૂ ઉપલબ્ધતા, જથ્થો, ખાતાવહી અને અહેવાલ એક જ માહિતી સ્ત્રોતથી અપડેટ થાય છે.",
+      "permissionsTitle": "કર્મચારી પરવાનગીઓ",
+      "permissionsDescription": "વર્તમાન ભૂમિકા: {role}. નેવિગેશન અને ક્રિયાઓ આ ભૂમિકાને મંજૂર કામ સુધી મર્યાદિત છે.",
+      "operationsTitle": "દૈનિક સંચાલન",
+      "operationsDescription": "ઓર્ડર, કતાર, મેનૂ, જથ્થો, ખાતાવહી અને માલિકના અહેવાલ એક જ વિક્રેતા કાર્યક્ષેત્રમાં રહે છે."
+    }
+  },
+  "Order": {
+    "metrics": {
+      "sales": "કાઉન્ટર વેચાણ",
+      "salesNote": "ચૂકવાયેલા કાઉન્ટર ઓર્ડર",
+      "active": "સક્રિય ટોકન",
+      "activeNote": "ચૂકવેલ, તૈયાર થતા અથવા તૈયાર",
+      "available": "ઉપલબ્ધ પદાર્થો",
+      "availableNote": "હાલ જથ્થામાં રહેલા મેનૂ પદાર્થો"
+    },
+    "activeOrders": "સક્રિય ઓર્ડર",
+    "emptyTitle": "કોઈ સક્રિય ઓર્ડર નથી",
+    "emptyDescription": "પાછું લેવાની મુદત પછી નવા ચૂકવાયેલા ઓર્ડર અહીં દેખાશે.",
+    "createTitle": "કાઉન્ટર ઓર્ડર બનાવો",
+    "createDescription": "એક પદાર્થ ઝડપથી ઉમેરો, ચુકવણીની ખાતરી કરો અને જીવંત કતારમાં મોકલો.",
+    "searchLabel": "મેનૂ શોધો",
+    "searchPlaceholder": "પદાર્થ અથવા શ્રેણી શોધો",
+    "resultCount": "{count, plural, =0 {કોઈ પદાર્થ નથી} =1 {{formattedCount} પદાર્થ} other {{formattedCount} પદાર્થો}}",
+    "noMatchTitle": "કોઈ મેળ ખાતો પદાર્થ નથી",
+    "noMatchDescription": "બીજું પદાર્થ નામ અથવા મેનૂ શ્રેણી શોધો.",
+    "menuFallback": "મેનૂ",
+    "inStock": "જથ્થામાં",
+    "off": "બંધ",
+    "counterDefault": "કાઉન્ટર",
+    "customer": "ગ્રાહક",
+    "quantity": "માત્રા",
+    "addOrder": "ઓર્ડર ઉમેરો",
+    "undoAvailable": "પાછું લઈ શકો છો",
+    "creating": "બની રહ્યો છે",
+    "nextStatus": {
+      "paid": "રસોડામાં મોકલો",
+      "preparing": "તૈયાર તરીકે નોંધો",
+      "ready": "પૂર્ણ કરો"
+    },
+    "feedback": {
+      "createdTitle": "ઓર્ડર કતારમાં મોકલાયો",
+      "createdDescription": "પાછું લેવાની મુદત પછી {item} નો ઓર્ડર બનાવાયો.",
+      "failedTitle": "ઓર્ડર બનાવી શકાયો નહીં",
+      "cancelledTitle": "ઓર્ડર રદ થયો",
+      "cancelledDescription": "{item} કતારમાં મોકલાયો નથી.",
+      "scheduledTitle": "ઓર્ડર 10 સેકન્ડમાં બનશે",
+      "scheduledDescription": "જો આ કાઉન્ટર ઓર્ડર ભૂલથી પસંદ થયો હોય તો હમણાં પાછો લો."
+    },
+    "errors": {
+      "generic": "ઓર્ડર બનાવી શકાયો નહીં.",
+      "role": "આ ભૂમિકા કાઉન્ટર ઓર્ડર બનાવી શકતી નથી.",
+      "quantity": "માત્રા 1 થી 20 વચ્ચે હોવી જોઈએ.",
+      "unavailable": "મેનૂ પદાર્થ ઉપલબ્ધ નથી.",
+      "create": "ઓર્ડર બનાવી શકાયો નહીં."
+    }
+  },
+  "Kitchen": {
+    "waiting": "રાહમાં",
+    "waitingNote": "ચૂકવાયેલા પરંતુ શરૂ ન થયેલા ઓર્ડર",
+    "preparing": "તૈયાર થઈ રહ્યો છે",
+    "preparingNote": "રસોડું આ ઓર્ડર પર કામ કરે છે",
+    "ready": "તૈયાર",
+    "readyNote": "ગ્રાહકને આપી શકાય છે",
+    "emptyTitle": "રસોડા માટે કોઈ ઓર્ડર નથી",
+    "emptyDescription": "ચૂકવાયેલા કાઉન્ટર ઓર્ડર તૈયારી માટે અહીં દેખાશે.",
+    "statusRoleError": "આ ભૂમિકા ઓર્ડરની સ્થિતિ બદલી શકતી નથી.",
+    "statusUpdateError": "ઓર્ડરની સ્થિતિ અપડેટ થઈ શકી નહીં."
+  },
+  "Queue": {
+    "inQueue": "કતારમાં",
+    "inQueueNote": "કર્મચારી અથવા ગ્રાહક સ્ક્રીન પર દેખાતા",
+    "readyNow": "હમણાં તૈયાર",
+    "readyNowNote": "લેવા માટે રાહ જોતા ટોકન",
+    "latestToken": "નવું ટોકન",
+    "latestTokenNote": "કાઉન્ટર ક્રમ",
+    "emptyTitle": "દેખાતી કતાર નથી",
+    "emptyDescription": "ચૂકવાયેલા, તૈયાર થતા અને તૈયાર ઓર્ડર અહીં દેખાશે.",
+    "token": "ટોકન #{token, number, integer}",
+    "counterFallback": "કાઉન્ટર"
+  },
+  "Control": {
+    "metrics": {
+      "items": "મેનૂ પદાર્થો",
+      "itemsNote": "કાઉન્ટર ઓર્ડરમાં દેખાતા",
+      "inStock": "જથ્થામાં",
+      "inStockNote": "કાઉન્ટર કર્મચારીઓને દેખાતા",
+      "unavailable": "અનુપલબ્ધ",
+      "unavailableNote": "ઓર્ડરથી છુપાયેલા"
+    },
+    "availabilityTitle": "મેનૂ ઉપલબ્ધતા",
+    "availabilityDescription": "ભીડના સમયે આખું મેનૂ સંપાદિત કર્યા વિના પદાર્થ ચાલુ અથવા બંધ કરો.",
+    "availabilityColumn": "ઉપલબ્ધતા",
+    "itemColumn": "પદાર્થ",
+    "categoryColumn": "શ્રેણી",
+    "priceColumn": "કિંમત",
+    "statusColumn": "સ્થિતિ",
+    "actionColumn": "ક્રિયા",
+    "markAvailable": "{item} ને જથ્થામાં બતાવો",
+    "markUnavailable": "{item} ને અનુપલબ્ધ બતાવો",
+    "emptyTitle": "કોઈ મેનૂ પદાર્થ નથી",
+    "emptyDescription": "ઉપલબ્ધતા સંભાળતા પહેલાં મેનૂ પદાર્થ ઉમેરો.",
+    "appearanceTitle": "બ્રાન્ડ દેખાવ",
+    "appearanceDescription": "પ્લેટફોર્મની ઓળખ જાળવીને વિક્રેતાનો રંગ અને મથાળાની શૈલી લાગુ કરો.",
+    "workspaceMark": "કાર્યક્ષેત્ર ચિહ્ન",
+    "workspaceMarkDescription": "રંગ વિક્રેતાની ઓળખ અને પસંદ કરેલા સંચાલન સંકેતો માટે જ વપરાય છે. નેવિગેશન, કાર્ડ અને મુખ્ય નિયંત્રણો પ્લેટફોર્મનો દેખાવ જાળવે છે.",
+    "accentTitle": "પ્રમુખ રંગ",
+    "accentDescription": "મુખ્ય ક્રિયાઓ, ફોકસ રિંગ, વિક્રેતા ચિહ્ન અને હળવા સપાટી રંગ માટે.",
+    "pickerLabel": "રંગ પસંદગી",
+    "customLabel": "HEX, RGB અથવા HSL",
+    "customPlaceholder": "#27272a, rgb(39 39 42), hsl(240 4% 16%)",
+    "customDescription": "HEX, RGB અથવા HSL વાપરો. વાંચી શકાય એવો આગળનો રંગ આપમેળે પસંદ થાય છે.",
+    "headingLabel": "મથાળાનો ફોન્ટ",
+    "headingPlaceholder": "મથાળાનો ફોન્ટ પસંદ કરો",
+    "headingSans": "સૅન્સ",
+    "headingSerif": "સેરિફ",
+    "preview": "City Canteen મથાળાનો નમૂનો",
+    "save": "દેખાવ સાચવો",
+    "saving": "દેખાવ સાચવાઈ રહ્યો છે",
+    "custom": "પસંદગીનો",
+    "accentNames": {
+      "Charcoal": "ચારકોલ",
+      "Graphite": "ગ્રેફાઇટ",
+      "Slate": "સ્લેટ",
+      "Forest": "ફોરેસ્ટ",
+      "Indigo": "ઇન્ડિગો",
+      "Maroon": "મરૂન"
+    },
+    "errors": {
+      "role": "આ ભૂમિકા કાર્યક્ષેત્રનો દેખાવ બદલી શકતી નથી.",
+      "color": "આ બ્રાન્ડ રંગ સમર્થિત નથી.",
+      "invalidColor": "માન્ય HEX, RGB અથવા HSL બ્રાન્ડ રંગ વાપરો.",
+      "font": "આ મથાળાનો ફોન્ટ સમર્થિત નથી.",
+      "save": "કાર્યક્ષેત્રનો દેખાવ સાચવી શકાયો નહીં.",
+      "denied": "આ કાર્યક્ષેત્રે દેખાવ બદલવાની પરવાનગી આપી નથી.",
+      "availabilityRole": "આ ભૂમિકા મેનૂ ઉપલબ્ધતા બદલી શકતી નથી.",
+      "availabilitySave": "મેનૂ ઉપલબ્ધતા બદલી શકાઈ નહીં."
+    },
+    "saved": "કાર્યક્ષેત્રનો દેખાવ સાચવાયો."
+  },
+  "Inventory": {
+    "metrics": {
+      "ingredients": "સામગ્રી",
+      "ingredientsNote": "જથ્થા રજિસ્ટરમાં માપેલી",
+      "low": "ઓછો જથ્થો",
+      "lowNote": "ફરી મંગાવવાની સપાટી પર અથવા નીચે",
+      "healthy": "પૂરતો જથ્થો",
+      "healthyNote": "ફરી મંગાવવાની સપાટીથી ઉપર"
+    },
+    "addTitle": "સામગ્રી ઉમેરો",
+    "addDescription": "જથ્થાની સામગ્રી અને તેની ફરી મંગાવવાની મર્યાદા બનાવો.",
+    "ingredient": "સામગ્રી",
+    "ingredientPlaceholder": "રસોઈનું તેલ",
+    "unit": "એકમ",
+    "chooseUnit": "એકમ પસંદ કરો",
+    "measurementUnit": "માપનો એકમ",
+    "openingQuantity": "શરૂઆતની માત્રા",
+    "reorderAt": "ફરી મંગાવવાની સપાટી",
+    "add": "સામગ્રી ઉમેરો",
+    "adding": "સામગ્રી ઉમેરાઈ રહી છે",
+    "movementTitle": "જથ્થાની હિલચાલ નોંધો",
+    "movementDescription": "ખરીદી ઉમેરો અથવા સામગ્રીનો વપરાશ અને બગાડ નોંધો.",
+    "chooseIngredient": "સામગ્રી પસંદ કરો",
+    "stockRegisterGroup": "જથ્થા રજિસ્ટર",
+    "movement": "હિલચાલ",
+    "movementAria": "જથ્થાની હિલચાલનો પ્રકાર",
+    "quantity": "માત્રા",
+    "reason": "કારણ",
+    "purchasePlaceholder": "સપ્લાયર પાસેથી ખરીદી",
+    "usagePlaceholder": "રસોડામાં વપરાશ",
+    "movementRule": "જથ્થો કાઢ્યા પછી સામગ્રીની માત્રા શૂન્યથી ઓછી થઈ શકતી નથી.",
+    "record": "હિલચાલ નોંધો",
+    "recording": "હિલચાલ નોંધાઈ રહી છે",
+    "registerTitle": "જથ્થા રજિસ્ટર",
+    "registerDescription": "દરેક સામગ્રીની હાલની માત્રા અને ફરી મંગાવવાની મર્યાદા.",
+    "currentColumn": "હાલની",
+    "reorderColumn": "ફરી મંગાવવાની સપાટી",
+    "statusColumn": "સ્થિતિ",
+    "low": "ઓછો",
+    "ok": "બરાબર",
+    "emptyRegisterTitle": "કોઈ સામગ્રી નથી",
+    "emptyRegisterDescription": "જથ્થો માપવાનું શરૂ કરવા પ્રથમ સામગ્રી ઉમેરો.",
+    "historyTitle": "તાજેતરની હિલચાલ",
+    "historyDescription": "તાજેતરની ખરીદી, વપરાશ, બગાડ અને શરૂઆતની બાકી.",
+    "changeColumn": "ફેરફાર",
+    "reasonColumn": "કારણ",
+    "recordedColumn": "નોંધાયું",
+    "removedIngredient": "દૂર કરેલી સામગ્રી",
+    "emptyHistoryTitle": "જથ્થાની કોઈ હિલચાલ નથી",
+    "emptyHistoryDescription": "ખરીદી અને સામગ્રીનો વપરાશ અહીં દેખાશે.",
+    "errors": {
+      "manageRole": "આ ભૂમિકા જથ્થામાં સામગ્રી ઉમેરી શકતી નથી.",
+      "movementRole": "આ ભૂમિકા જથ્થાની હિલચાલ નોંધી શકતી નથી.",
+      "workspace": "આ જથ્થો તમારા કાર્યક્ષેત્રનો નથી.",
+      "name": "સામગ્રીનું નામ 2 થી 80 અક્ષર વચ્ચે રાખો.",
+      "unit": "સમર્થિત જથ્થા એકમ પસંદ કરો.",
+      "quantityRange": "માત્રા 0 થી 1,000,000 વચ્ચે હોવી જોઈએ.",
+      "verify": "આ જથ્થા કાર્યક્ષેત્રની ચકાસણી થઈ શકી નહીં.",
+      "check": "જથ્થા રજિસ્ટર તપાસી શકાયું નહીં.",
+      "duplicate": "{name} પહેલેથી જ જથ્થા રજિસ્ટરમાં છે.",
+      "add": "સામગ્રી ઉમેરી શકાઈ નહીં.",
+      "movementType": "જથ્થો અંદર આવી રહ્યો છે કે બહાર જઈ રહ્યો છે તે પસંદ કરો.",
+      "movementQuantity": "હિલચાલની માત્રા શૂન્યથી વધુ હોવી જોઈએ.",
+      "reason": "3 થી 120 અક્ષર વચ્ચે કારણ લખો.",
+      "notFound": "આ કાર્યક્ષેત્રમાં સામગ્રી મળી નથી.",
+      "insufficient": "{name} ની માત્ર {quantity, number, quantity} {unit} માત્રા ઉપલબ્ધ છે.",
+      "movementResult": "જથ્થાની હિલચાલ પછી અપડેટ થયેલી સામગ્રી મળી નથી.",
+      "movement": "જથ્થાની હિલચાલ નોંધી શકાઈ નહીં."
+    },
+    "feedback": {
+      "added": "{name} જથ્થામાં ઉમેરાયું.",
+      "updated": "{name} ની માત્રા {quantity, number, quantity} {unit} થઈ."
+    }
+  },
+  "Ledger": {
+    "receivable": "લેણું",
+    "receivableNote": "મળવાની અપેક્ષિત રકમ",
+    "payable": "દેવું/ખર્ચ",
+    "payableNote": "ચૂકવવાની રકમ",
+    "open": "ખુલ્લી નોંધો",
+    "openNote": "ખાતાવહી નોંધો",
+    "title": "ખાતાવહી નોંધો",
+    "description": "કાર્યક્ષેત્રની લેવાની, દેવાની અને ખર્ચની નોંધો.",
+    "noteColumn": "વિગત",
+    "typeColumn": "પ્રકાર",
+    "dueColumn": "ચૂકવણી તારીખ",
+    "amountColumn": "રકમ",
+    "entryTypes": {
+      "receivable": "લેણું",
+      "payable": "દેવું",
+      "expense": "ખર્ચ"
+    },
+    "today": "આજે",
+    "emptyTitle": "ખાતાવહીમાં કોઈ નોંધ નથી",
+    "emptyDescription": "હિસાબ રાખવા લેવાની, દેવાની અથવા ખર્ચની નોંધ ઉમેરો."
+  },
+  "Reports": {
+    "sales": "વેચાણ",
+    "salesNote": "ચૂકવાયેલા કાઉન્ટર ઓર્ડર",
+    "profit": "અંદાજિત કુલ નફો",
+    "profitNote": "પદાર્થની કિંમત પર આધારિત",
+    "completed": "પૂર્ણ ઓર્ડર",
+    "stockNote": "{count, plural, =0 {કોઈ જથ્થો ઓછો નથી} =1 {{formattedCount} પદાર્થનો જથ્થો ઓછો} other {{formattedCount} પદાર્થોનો જથ્થો ઓછો}}",
+    "title": "માલિક સારાંશ",
+    "description": "વેચાણ, અંદાજિત ખર્ચ, કુલ નફો, ઓર્ડરની સંખ્યા અને જથ્થાની ચેતવણી દૈનિક કાઉન્ટર અને રસોડાના કામ સાથે જોડાયેલા રહે છે."
+  },
+  "WorkspaceError": {
+    "title": "કાર્યક્ષેત્ર ઉપલબ્ધ નથી",
+    "description": "પ્લેટફોર્મ કાર્યક્ષેત્રના ડેટાબેઝ સાથે જોડાઈ શક્યું નહીં. Supabase પ્રોજેક્ટની સ્થિતિ અને જોડાણ સેટિંગ તપાસીને ફરી પ્રયાસ કરો.",
+    "unchanged": "તમારું સત્ર હજી સક્રિય છે. કોઈ ઓર્ડર અથવા ખાતાની માહિતી બદલાઈ નથી."
+  }
+}

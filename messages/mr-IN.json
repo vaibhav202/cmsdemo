@@ -1,0 +1,408 @@
+{
+  "Metadata": {
+    "title": "CMS Platform",
+    "titleTemplate": "{page} | CMS Platform",
+    "description": "ऑर्डर, स्वयंपाकघर, साठा, खातेवही आणि अहवाल एकाच कार्यक्षेत्रात.",
+    "loginTitle": "साइन इन"
+  },
+  "Common": {
+    "language": "भाषा",
+    "chooseLanguage": "भाषा निवडा",
+    "chooseLanguageDescription": "तुम्हाला सर्वात सोयीची वाटणारी भाषा वापरा.",
+    "languageChanged": "भाषा बदलली",
+    "languageChangeFailed": "भाषा बदलता आली नाही.",
+    "languages": {
+      "mr-IN": "मराठी",
+      "en-IN": "English",
+      "hi-IN": "हिंदी",
+      "gu-IN": "ગુજરાતી"
+    },
+    "actions": {
+      "signOut": "साइन आउट",
+      "tryAgain": "पुन्हा प्रयत्न करा",
+      "close": "बंद करा",
+      "toggleSidebar": "बाजूचा मेनू उघडा किंवा बंद करा",
+      "clearSearch": "मेनू शोध साफ करा",
+      "undo": "मागे घ्या"
+    },
+    "theme": {
+      "title": "दिसण्याची पद्धत",
+      "description": "उजळ, गडद किंवा डिव्हाइसची सेटिंग",
+      "controlLabel": "दिसण्याची थीम",
+      "light": "उजळ",
+      "dark": "गडद",
+      "system": "सिस्टम",
+      "optionLabel": "{theme} थीम"
+    },
+    "roles": {
+      "owner": "मालक",
+      "admin": "प्रशासक",
+      "manager": "व्यवस्थापक",
+      "cashier": "कॅशियर",
+      "kitchen": "स्वयंपाकघर",
+      "accountant": "लेखापाल"
+    },
+    "membership": {
+      "active": "सक्रिय",
+      "invited": "आमंत्रित",
+      "disabled": "निष्क्रिय"
+    },
+    "orderStatus": {
+      "paid": "पैसे भरले",
+      "preparing": "तयार होत आहे",
+      "ready": "तयार",
+      "completed": "पूर्ण",
+      "cancelled": "रद्द"
+    },
+    "units": {
+      "kg": "किलोग्रॅम",
+      "g": "ग्रॅम",
+      "l": "लिटर",
+      "ml": "मिलिलिटर",
+      "pcs": "नग",
+      "pack": "पॅक"
+    },
+    "stockMovement": {
+      "in": "साठा जमा",
+      "out": "साठा वापर"
+    },
+    "accessibility": {
+      "mobileSidebarTitle": "बाजूचा मेनू",
+      "mobileSidebarDescription": "मोबाइलवरील बाजूचा मेनू दाखवतो."
+    }
+  },
+  "Auth": {
+    "tagline": "रेस्टॉरंटचे कामकाज, सुरळीत प्रवाहात.",
+    "workspaceEyebrow": "{vendor} कार्यक्षेत्र",
+    "productBadge": "रेस्टॉरंट कामकाज कार्यक्षेत्र",
+    "hero": "फोन किंवा संगणकावरून ऑर्डर, स्वयंपाकघरातील रांग, साठा आणि हिशोब सांभाळा.",
+    "description": "{tagline} काउंटर, स्वयंपाकघर, मालक आणि लेखा पथकासाठी स्वतंत्र दृश्ये प्रत्येकाला त्यांच्या कामावर लक्ष केंद्रित करू देतात.",
+    "features": {
+      "counterLabel": "दैनंदिन काउंटर",
+      "counterValue": "ऑर्डर आणि टोकन",
+      "kitchenLabel": "स्वयंपाकघर",
+      "kitchenValue": "थेट तयारीचा प्रवाह",
+      "ownerLabel": "मालक दृश्य",
+      "ownerValue": "मेनू, साठा, अहवाल"
+    },
+    "cardTitle": "साइन इन",
+    "cardDescription": "तुम्हाला दिलेली कार्यक्षेत्राची लॉगिन माहिती वापरा.",
+    "rolesTitle": "कार्यक्षेत्रातील भूमिका",
+    "rolesDescription": "कर्मचाऱ्याच्या भूमिकेनुसार प्रवेश बदलतो.",
+    "userColumn": "वापरकर्ता",
+    "roleColumn": "भूमिका",
+    "form": {
+      "email": "ईमेल",
+      "emailPlaceholder": "owner@citycanteen.in",
+      "password": "पासवर्ड",
+      "passwordPlaceholder": "Owner@2026",
+      "submit": "साइन इन",
+      "pending": "साइन इन होत आहे...",
+      "invalidCredentials": "लॉगिन माहिती चुकीची आहे किंवा सदस्यत्व निष्क्रिय आहे."
+    }
+  },
+  "Shell": {
+    "workspaceNavigation": "कार्यक्षेत्र नेव्हिगेशन",
+    "workspace": "कार्यक्षेत्र",
+    "currentPage": "सध्याचे पृष्ठ",
+    "openMenu": "मेनू उघडा",
+    "menuTitle": "मेनू",
+    "menuDescription": "कार्यक्षेत्राचा डॅशबोर्ड निवडा",
+    "openAccount": "खाते उघडा",
+    "accountTitle": "खाते",
+    "accountDescription": "सध्याचा वापरकर्ता, भूमिका आणि सत्राचे पर्याय",
+    "roleLabel": "भूमिका: {role}",
+    "statusLabel": "स्थिती: {status}"
+  },
+  "Module": {
+    "order": {
+      "title": "ऑर्डर डॅशबोर्ड",
+      "shortTitle": "ऑर्डर",
+      "description": "काउंटर ऑर्डर तयार करा, पैसे मिळाल्याची नोंद करा आणि तिकीट पुढे पाठवा."
+    },
+    "kitchen": {
+      "title": "स्वयंपाकघर डॅशबोर्ड",
+      "shortTitle": "स्वयंपाकघर",
+      "description": "तयार करायचे पदार्थ पाहा आणि ऑर्डरची स्थिती पुढे न्या."
+    },
+    "queue": {
+      "title": "रांग डॅशबोर्ड",
+      "shortTitle": "रांग",
+      "description": "कर्मचारी किंवा ग्राहक स्क्रीनवर ऑर्डरची थेट स्थिती दाखवा."
+    },
+    "control": {
+      "title": "नियंत्रण डॅशबोर्ड",
+      "shortTitle": "नियंत्रण",
+      "description": "मेनू, कर्मचारी प्रवेश, विक्रेता सेटिंग आणि तपासणी नोंदी सांभाळा."
+    },
+    "inventory": {
+      "title": "साठा",
+      "shortTitle": "साठा",
+      "description": "साठ्याचे प्रमाण, कमी साठ्याचे इशारे आणि दैनंदिन वापर पाहा."
+    },
+    "ledger": {
+      "title": "खातेवही",
+      "shortTitle": "खातेवही",
+      "description": "येणी, देणी, खर्च आणि सेटलमेंटच्या नोंदी ठेवा."
+    },
+    "reports": {
+      "title": "अहवाल",
+      "shortTitle": "अहवाल",
+      "description": "विक्री, अंदाजित नफा, पूर्ण ऑर्डर आणि साठ्याचे इशारे पाहा."
+    },
+    "accessDenied": "प्रवेश नाकारला",
+    "accessDeniedDescription": "या कर्मचाऱ्याच्या भूमिकेला हा डॅशबोर्ड वापरण्याची परवानगी नाही. भूमिका वेगळ्या ठेवल्यामुळे प्रत्येक सदस्य फक्त त्याला परवानगी असलेल्या कामावर लक्ष केंद्रित करतो.",
+    "info": {
+      "connectedTitle": "जोडलेले कार्यक्षेत्र",
+      "connectedDescription": "ऑर्डर, मेनू उपलब्धता, साठा, खातेवही आणि अहवाल एकाच माहिती स्रोतावरून अद्ययावत होतात.",
+      "permissionsTitle": "कर्मचारी परवानग्या",
+      "permissionsDescription": "सध्याची भूमिका: {role}. नेव्हिगेशन आणि कृती या भूमिकेला परवानगी असलेल्या कामापुरत्याच मर्यादित आहेत.",
+      "operationsTitle": "दैनंदिन कामकाज",
+      "operationsDescription": "ऑर्डर, रांग, मेनू, साठा, खातेवही आणि मालकाचे अहवाल एकाच विक्रेता कार्यक्षेत्रात राहतात."
+    }
+  },
+  "Order": {
+    "metrics": {
+      "sales": "काउंटर विक्री",
+      "salesNote": "पैसे मिळालेल्या काउंटर ऑर्डर",
+      "active": "सक्रिय टोकन",
+      "activeNote": "पैसे भरलेले, तयार होत असलेले किंवा तयार",
+      "available": "उपलब्ध पदार्थ",
+      "availableNote": "सध्या साठ्यात असलेले मेनू पदार्थ"
+    },
+    "activeOrders": "सक्रिय ऑर्डर",
+    "emptyTitle": "सक्रिय ऑर्डर नाहीत",
+    "emptyDescription": "मागे घेण्याची वेळ संपल्यानंतर नवीन ऑर्डर येथे दिसतील.",
+    "createTitle": "काउंटर ऑर्डर तयार करा",
+    "createDescription": "पदार्थ पटकन जोडा, पैसे मिळाल्याची नोंद करा आणि थेट रांगेत पाठवा.",
+    "searchLabel": "मेनूमध्ये शोधा",
+    "searchPlaceholder": "पदार्थ किंवा प्रकार शोधा",
+    "resultCount": "{count, plural, =0 {एकही पदार्थ नाही} =1 {{formattedCount} पदार्थ} other {{formattedCount} पदार्थ}}",
+    "noMatchTitle": "जुळणारे पदार्थ नाहीत",
+    "noMatchDescription": "दुसरे पदार्थाचे नाव किंवा मेनू प्रकार शोधून पाहा.",
+    "menuFallback": "मेनू",
+    "inStock": "साठ्यात",
+    "off": "बंद",
+    "counterDefault": "काउंटर",
+    "customer": "ग्राहक",
+    "quantity": "संख्या",
+    "addOrder": "ऑर्डर जोडा",
+    "undoAvailable": "मागे घेता येईल",
+    "creating": "तयार होत आहे",
+    "nextStatus": {
+      "paid": "स्वयंपाकघरात पाठवा",
+      "preparing": "तयार म्हणून नोंदवा",
+      "ready": "पूर्ण करा"
+    },
+    "feedback": {
+      "createdTitle": "ऑर्डर रांगेत पाठवली",
+      "createdDescription": "मागे घेण्याची वेळ संपल्यानंतर {item} ची ऑर्डर तयार झाली.",
+      "failedTitle": "ऑर्डर तयार झाली नाही",
+      "cancelledTitle": "ऑर्डर रद्द केली",
+      "cancelledDescription": "{item} रांगेत पाठवले गेले नाही.",
+      "scheduledTitle": "ऑर्डर 10 सेकंदांत तयार होईल",
+      "scheduledDescription": "चुकून काउंटर ऑर्डर निवडली असल्यास आत्ताच मागे घ्या."
+    },
+    "errors": {
+      "generic": "ऑर्डर तयार करता आली नाही.",
+      "role": "या भूमिकेला काउंटर ऑर्डर तयार करता येत नाही.",
+      "quantity": "संख्या 1 ते 20 दरम्यान असावी.",
+      "unavailable": "हा मेनू पदार्थ उपलब्ध नाही.",
+      "create": "ऑर्डर तयार करता आली नाही."
+    }
+  },
+  "Kitchen": {
+    "waiting": "प्रतीक्षेत",
+    "waitingNote": "काम सुरू न झालेल्या भरलेल्या ऑर्डर",
+    "preparing": "तयार होत आहे",
+    "preparingNote": "स्वयंपाकघरात काम सुरू आहे",
+    "ready": "तयार",
+    "readyNote": "ग्राहकाला देता येईल",
+    "emptyTitle": "स्वयंपाकघरासाठी ऑर्डर नाहीत",
+    "emptyDescription": "पैसे भरलेल्या काउंटर ऑर्डर तयारीसाठी येथे दिसतील.",
+    "statusRoleError": "या भूमिकेला ऑर्डरची स्थिती बदलता येत नाही.",
+    "statusUpdateError": "ऑर्डरची स्थिती अद्ययावत करता आली नाही."
+  },
+  "Queue": {
+    "inQueue": "रांगेत",
+    "inQueueNote": "कर्मचारी किंवा ग्राहक स्क्रीनवर दिसणाऱ्या",
+    "readyNow": "आता तयार",
+    "readyNowNote": "घेण्यासाठी प्रतीक्षेत असलेली टोकन",
+    "latestToken": "नवीनतम टोकन",
+    "latestTokenNote": "काउंटर क्रम",
+    "emptyTitle": "दिसणारी रांग नाही",
+    "emptyDescription": "पैसे भरलेल्या, तयार होत असलेल्या आणि तयार ऑर्डर येथे दिसतील.",
+    "token": "टोकन #{token, number, integer}",
+    "counterFallback": "काउंटर"
+  },
+  "Control": {
+    "metrics": {
+      "items": "मेनू पदार्थ",
+      "itemsNote": "काउंटर ऑर्डरमध्ये दिसणारे",
+      "inStock": "साठ्यात",
+      "inStockNote": "काउंटर कर्मचाऱ्यांना दिसणारे",
+      "unavailable": "अनुपलब्ध",
+      "unavailableNote": "ऑर्डरमधून लपवलेले"
+    },
+    "availabilityTitle": "मेनू उपलब्धता",
+    "availabilityDescription": "गर्दीच्या वेळी संपूर्ण मेनू न बदलता पदार्थ सुरू किंवा बंद करा.",
+    "availabilityColumn": "उपलब्धता",
+    "itemColumn": "पदार्थ",
+    "categoryColumn": "प्रकार",
+    "priceColumn": "किंमत",
+    "statusColumn": "स्थिती",
+    "actionColumn": "कृती",
+    "markAvailable": "{item} साठ्यात दाखवा",
+    "markUnavailable": "{item} अनुपलब्ध दाखवा",
+    "emptyTitle": "मेनू पदार्थ नाहीत",
+    "emptyDescription": "उपलब्धता सांभाळण्यापूर्वी मेनू पदार्थ जोडा.",
+    "appearanceTitle": "ब्रँडचे स्वरूप",
+    "appearanceDescription": "प्लॅटफॉर्मची ओळख कायम ठेवून विक्रेत्याचा रंग आणि शीर्षक शैली वापरा.",
+    "workspaceMark": "कार्यक्षेत्र चिन्ह",
+    "workspaceMarkDescription": "हा रंग विक्रेत्याची ओळख आणि निवडक कामकाज ठळक करण्यापुरता वापरला जातो. नेव्हिगेशन, कार्ड आणि मुख्य नियंत्रणे प्लॅटफॉर्मचे स्वरूप कायम ठेवतात.",
+    "accentTitle": "ठळक रंग",
+    "accentDescription": "मुख्य कृती, फोकस रिंग, विक्रेता चिन्ह आणि हलक्या पृष्ठभाग रंगासाठी वापरला जातो.",
+    "pickerLabel": "रंग निवडक",
+    "customLabel": "HEX, RGB किंवा HSL",
+    "customPlaceholder": "#27272a, rgb(39 39 42), hsl(240 4% 16%)",
+    "customDescription": "HEX, RGB किंवा HSL वापरा. वाचण्यायोग्य पुढचा रंग आपोआप निवडला जातो.",
+    "headingLabel": "शीर्षक फॉन्ट",
+    "headingPlaceholder": "शीर्षक फॉन्ट निवडा",
+    "headingSans": "सॅन्स",
+    "headingSerif": "सेरिफ",
+    "preview": "City Canteen शीर्षक नमुना",
+    "save": "स्वरूप जतन करा",
+    "saving": "स्वरूप जतन होत आहे",
+    "custom": "सानुकूल",
+    "accentNames": {
+      "Charcoal": "चारकोल",
+      "Graphite": "ग्रॅफाइट",
+      "Slate": "स्लेट",
+      "Forest": "फॉरेस्ट",
+      "Indigo": "इंडिगो",
+      "Maroon": "मरून"
+    },
+    "errors": {
+      "role": "या भूमिकेला कार्यक्षेत्राचे स्वरूप बदलता येत नाही.",
+      "color": "हा ब्रँड रंग समर्थित नाही.",
+      "invalidColor": "वैध HEX, RGB किंवा HSL ब्रँड रंग वापरा.",
+      "font": "हा शीर्षक फॉन्ट समर्थित नाही.",
+      "save": "कार्यक्षेत्राचे स्वरूप जतन करता आले नाही.",
+      "denied": "या कार्यक्षेत्राने स्वरूप बदलण्यास परवानगी दिली नाही.",
+      "availabilityRole": "या भूमिकेला मेनू उपलब्धता बदलता येत नाही.",
+      "availabilitySave": "मेनू उपलब्धता बदलता आली नाही."
+    },
+    "saved": "कार्यक्षेत्राचे स्वरूप जतन झाले."
+  },
+  "Inventory": {
+    "metrics": {
+      "ingredients": "साहित्य",
+      "ingredientsNote": "साठा नोंदवहीत मोजलेले",
+      "low": "कमी साठा",
+      "lowNote": "पुनर्भरण पातळीवर किंवा त्याखाली",
+      "healthy": "पुरेसा साठा",
+      "healthyNote": "पुनर्भरण पातळीपेक्षा जास्त"
+    },
+    "addTitle": "साहित्य जोडा",
+    "addDescription": "साठ्यातील साहित्य आणि त्याची पुनर्भरण मर्यादा तयार करा.",
+    "ingredient": "साहित्य",
+    "ingredientPlaceholder": "खाद्यतेल",
+    "unit": "एकक",
+    "chooseUnit": "एकक निवडा",
+    "measurementUnit": "मोजमापाचे एकक",
+    "openingQuantity": "सुरुवातीचे प्रमाण",
+    "reorderAt": "पुनर्भरण पातळी",
+    "add": "साहित्य जोडा",
+    "adding": "साहित्य जोडत आहे",
+    "movementTitle": "साठ्याची हालचाल नोंदवा",
+    "movementDescription": "खरेदी जमा करा किंवा साहित्याचा वापर आणि नासाडी नोंदवा.",
+    "chooseIngredient": "साहित्य निवडा",
+    "stockRegisterGroup": "साठा नोंदवही",
+    "movement": "हालचाल",
+    "movementAria": "साठा हालचालीचा प्रकार",
+    "quantity": "प्रमाण",
+    "reason": "कारण",
+    "purchasePlaceholder": "पुरवठादाराकडून खरेदी",
+    "usagePlaceholder": "स्वयंपाकघरातील वापर",
+    "movementRule": "साठ्यातून वजा केल्यावर प्रमाण शून्यापेक्षा कमी होऊ शकत नाही.",
+    "record": "हालचाल नोंदवा",
+    "recording": "हालचाल नोंदवत आहे",
+    "registerTitle": "साठा नोंदवही",
+    "registerDescription": "प्रत्येक साहित्याचे सध्याचे प्रमाण आणि पुनर्भरण मर्यादा.",
+    "currentColumn": "सध्याचे",
+    "reorderColumn": "पुनर्भरण पातळी",
+    "statusColumn": "स्थिती",
+    "low": "कमी",
+    "ok": "ठीक",
+    "emptyRegisterTitle": "साहित्य नाही",
+    "emptyRegisterDescription": "साठा मोजण्यास सुरुवात करण्यासाठी पहिले साहित्य जोडा.",
+    "historyTitle": "अलीकडील हालचाली",
+    "historyDescription": "अलीकडील खरेदी, वापर, नासाडी आणि सुरुवातीची शिल्लक.",
+    "changeColumn": "बदल",
+    "reasonColumn": "कारण",
+    "recordedColumn": "नोंदवले",
+    "removedIngredient": "काढून टाकलेले साहित्य",
+    "emptyHistoryTitle": "साठ्याची हालचाल नाही",
+    "emptyHistoryDescription": "खरेदी आणि साहित्याचा वापर येथे दिसेल.",
+    "errors": {
+      "manageRole": "या भूमिकेला साठ्यात साहित्य जोडता येत नाही.",
+      "movementRole": "या भूमिकेला साठ्याची हालचाल नोंदवता येत नाही.",
+      "workspace": "हा साठा तुमच्या कार्यक्षेत्राचा नाही.",
+      "name": "साहित्याचे नाव 2 ते 80 अक्षरांदरम्यान वापरा.",
+      "unit": "समर्थित साठा एकक निवडा.",
+      "quantityRange": "प्रमाण 0 ते 1,000,000 दरम्यान असावे.",
+      "verify": "हे साठा कार्यक्षेत्र तपासता आले नाही.",
+      "check": "साठा नोंदवही तपासता आली नाही.",
+      "duplicate": "{name} आधीच साठा नोंदवहीत आहे.",
+      "add": "साहित्य जोडता आले नाही.",
+      "movementType": "साठा जमा होत आहे की वापरला जात आहे ते निवडा.",
+      "movementQuantity": "हालचालीचे प्रमाण शून्यापेक्षा जास्त असावे.",
+      "reason": "3 ते 120 अक्षरांदरम्यान कारण लिहा.",
+      "notFound": "या कार्यक्षेत्रात साहित्य सापडले नाही.",
+      "insufficient": "{name} चे फक्त {quantity, number, quantity} {unit} उपलब्ध आहे.",
+      "movementResult": "साठा हालचालीनंतर अद्ययावत साहित्य मिळाले नाही.",
+      "movement": "साठ्याची हालचाल नोंदवता आली नाही."
+    },
+    "feedback": {
+      "added": "{name} साठ्यात जोडले.",
+      "updated": "{name} चे प्रमाण {quantity, number, quantity} {unit} झाले."
+    }
+  },
+  "Ledger": {
+    "receivable": "येणी",
+    "receivableNote": "मिळणे अपेक्षित असलेली रक्कम",
+    "payable": "देणी/खर्च",
+    "payableNote": "चुकती करायची रक्कम",
+    "open": "खुल्या नोंदी",
+    "openNote": "खातेवहीतील नोंदी",
+    "title": "खातेवही नोंदी",
+    "description": "कार्यक्षेत्रातील येणी, देणी आणि खर्चाच्या नोंदी.",
+    "noteColumn": "तपशील",
+    "typeColumn": "प्रकार",
+    "dueColumn": "देय तारीख",
+    "amountColumn": "रक्कम",
+    "entryTypes": {
+      "receivable": "येणी",
+      "payable": "देणी",
+      "expense": "खर्च"
+    },
+    "today": "आज",
+    "emptyTitle": "खातेवही नोंदी नाहीत",
+    "emptyDescription": "हिशोब ठेवण्यासाठी येणी, देणी किंवा खर्चाची नोंद जोडा."
+  },
+  "Reports": {
+    "sales": "विक्री",
+    "salesNote": "पैसे मिळालेल्या काउंटर ऑर्डर",
+    "profit": "अंदाजित एकूण नफा",
+    "profitNote": "पदार्थांच्या मूळ किमतीवर आधारित",
+    "completed": "पूर्ण ऑर्डर",
+    "stockNote": "{count, plural, =0 {कमी साठ्यातील पदार्थ नाहीत} =1 {{formattedCount} पदार्थाचा साठा कमी} other {{formattedCount} पदार्थांचा साठा कमी}}",
+    "title": "मालकाचा सारांश",
+    "description": "विक्री, अंदाजित खर्च, एकूण नफा, ऑर्डर संख्या आणि साठ्याचे इशारे दैनंदिन काउंटर व स्वयंपाकघराच्या कामाशी जोडलेले राहतात."
+  },
+  "WorkspaceError": {
+    "title": "कार्यक्षेत्र उपलब्ध नाही",
+    "description": "प्लॅटफॉर्मला कार्यक्षेत्राच्या डेटाबेसशी जोडता आले नाही. Supabase प्रकल्पाची स्थिती आणि जोडणी सेटिंग तपासून पुन्हा प्रयत्न करा.",
+    "unchanged": "तुमचे सत्र अजून सक्रिय आहे. कोणत्याही ऑर्डर किंवा खात्याची माहिती बदललेली नाही."
+  }
+}

@@ -1,6 +1,7 @@
 "use client"
 
 import { PackageMinus, PackagePlus, Plus } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useActionState, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
@@ -40,8 +41,11 @@ import {
   stockMovementOptions,
   stockUnitOptions,
   type StockMovementType,
+  type StockUnit,
 } from "@/lib/inventory"
 import type { StockItem } from "@/lib/supabase/types"
+
+import { useDashboardFormats } from "../shared/format"
 
 const initialState: InventoryMutationState = { status: "idle" }
 
@@ -84,8 +88,10 @@ function CreateIngredientForm({
   vendorId,
   vendorSlug,
 }: Pick<InventoryFormProps, "vendorId" | "vendorSlug">) {
+  const t = useTranslations("Inventory")
+  const common = useTranslations("Common")
   const formRef = useRef<HTMLFormElement>(null)
-  const [unit, setUnit] = useState("kg")
+  const [unit, setUnit] = useState<StockUnit>("kg")
   const [state, action, pending] = useActionState(
     createStockItemAction,
     initialState
@@ -104,40 +110,43 @@ function CreateIngredientForm({
         <input name="unit" type="hidden" value={unit} />
 
         <CardHeader>
-          <CardTitle>Add ingredient</CardTitle>
-          <CardDescription>
-            Create a stocked ingredient and its reorder threshold.
-          </CardDescription>
+          <CardTitle>{t("addTitle")}</CardTitle>
+          <CardDescription>{t("addDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="ingredient-name">Ingredient</FieldLabel>
+              <FieldLabel htmlFor="ingredient-name">
+                {t("ingredient")}
+              </FieldLabel>
               <Input
                 autoComplete="off"
                 id="ingredient-name"
                 maxLength={80}
                 name="name"
-                placeholder="Cooking oil"
+                placeholder={t("ingredientPlaceholder")}
                 required
               />
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="ingredient-unit">Unit</FieldLabel>
-              <Select onValueChange={setUnit} required value={unit}>
+              <FieldLabel htmlFor="ingredient-unit">{t("unit")}</FieldLabel>
+              <Select
+                onValueChange={(value) => setUnit(value as StockUnit)}
+                required
+                value={unit}
+              >
                 <SelectTrigger className="w-full" id="ingredient-unit">
                   <SelectValue>
-                    {stockUnitOptions.find((option) => option.value === unit)
-                      ?.label ?? "Choose unit"}
+                    {common(`units.${unit}`)}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Measurement unit</SelectLabel>
+                    <SelectLabel>{t("measurementUnit")}</SelectLabel>
                     {stockUnitOptions.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                        {common(`units.${option.value}`)}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -148,7 +157,7 @@ function CreateIngredientForm({
             <FieldGroup className="grid grid-cols-2 gap-3">
               <Field>
                 <FieldLabel htmlFor="ingredient-opening-quantity">
-                  Opening quantity
+                  {t("openingQuantity")}
                 </FieldLabel>
                 <Input
                   defaultValue="0"
@@ -162,7 +171,7 @@ function CreateIngredientForm({
               </Field>
               <Field>
                 <FieldLabel htmlFor="ingredient-reorder-level">
-                  Reorder at
+                  {t("reorderAt")}
                 </FieldLabel>
                 <Input
                   defaultValue="0"
@@ -182,7 +191,7 @@ function CreateIngredientForm({
         <CardFooter className="mt-auto">
           <Button className="w-full" disabled={pending} type="submit">
             <Plus data-icon="inline-start" />
-            {pending ? "Adding ingredient" : "Add ingredient"}
+            {pending ? t("adding") : t("add")}
           </Button>
         </CardFooter>
       </form>
@@ -195,6 +204,9 @@ function AdjustStockForm({
   vendorId,
   vendorSlug,
 }: InventoryFormProps) {
+  const t = useTranslations("Inventory")
+  const common = useTranslations("Common")
+  const format = useDashboardFormats()
   const formRef = useRef<HTMLFormElement>(null)
   const [movementType, setMovementType] = useState<StockMovementType>("in")
   const [state, action, pending] = useActionState(
@@ -215,25 +227,26 @@ function AdjustStockForm({
         <input name="movementType" type="hidden" value={movementType} />
 
         <CardHeader>
-          <CardTitle>Record movement</CardTitle>
-          <CardDescription>
-            Add a purchase or record ingredient usage and wastage.
-          </CardDescription>
+          <CardTitle>{t("movementTitle")}</CardTitle>
+          <CardDescription>{t("movementDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="movement-stock-item">Ingredient</FieldLabel>
+              <FieldLabel htmlFor="movement-stock-item">
+                {t("ingredient")}
+              </FieldLabel>
               <Select name="stockItemId" required>
                 <SelectTrigger className="w-full" id="movement-stock-item">
-                  <SelectValue placeholder="Choose ingredient" />
+                  <SelectValue placeholder={t("chooseIngredient")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Stock register</SelectLabel>
+                    <SelectLabel>{t("stockRegisterGroup")}</SelectLabel>
                     {stockItems.map((item) => (
                       <SelectItem key={item.id} value={item.id}>
-                        {item.name} · {item.current_qty} {item.unit}
+                        {item.name} · {format.quantity(Number(item.current_qty))}{" "}
+                        {item.unit}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -242,9 +255,9 @@ function AdjustStockForm({
             </Field>
 
             <Field>
-              <FieldLabel>Movement</FieldLabel>
+              <FieldLabel>{t("movement")}</FieldLabel>
               <ToggleGroup
-                aria-label="Stock movement type"
+                aria-label={t("movementAria")}
                 className="grid w-full grid-cols-2"
                 onValueChange={(value) => {
                   if (value === "in" || value === "out") {
@@ -263,14 +276,16 @@ function AdjustStockForm({
                     value={option.value}
                   >
                     {option.value === "in" ? <PackagePlus /> : <PackageMinus />}
-                    {option.label}
+                    {common(`stockMovement.${option.value}`)}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="movement-quantity">Quantity</FieldLabel>
+              <FieldLabel htmlFor="movement-quantity">
+                {t("quantity")}
+              </FieldLabel>
               <Input
                 id="movement-quantity"
                 min="0.001"
@@ -283,20 +298,20 @@ function AdjustStockForm({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="movement-reason">Reason</FieldLabel>
+              <FieldLabel htmlFor="movement-reason">{t("reason")}</FieldLabel>
               <Input
                 autoComplete="off"
                 id="movement-reason"
                 maxLength={120}
                 name="reason"
                 placeholder={
-                  movementType === "in" ? "Supplier purchase" : "Kitchen usage"
+                  movementType === "in"
+                    ? t("purchasePlaceholder")
+                    : t("usagePlaceholder")
                 }
                 required
               />
-              <FieldDescription>
-                Stock out cannot reduce the ingredient below zero.
-              </FieldDescription>
+              <FieldDescription>{t("movementRule")}</FieldDescription>
             </Field>
 
             <MutationMessage state={state} />
@@ -313,7 +328,7 @@ function AdjustStockForm({
             ) : (
               <PackageMinus data-icon="inline-start" />
             )}
-            {pending ? "Recording movement" : "Record movement"}
+            {pending ? t("recording") : t("record")}
           </Button>
         </CardFooter>
       </form>

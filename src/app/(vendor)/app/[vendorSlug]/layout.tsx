@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation"
+import { getLocale, getTranslations } from "next-intl/server"
 import type { CSSProperties } from "react"
 
 import { VendorShell } from "@/components/shell/vendor-shell"
 import {
   getVendorAccentForeground,
-  getHeadingFontValue,
   normalizeVendorAccent,
   platformBrand,
 } from "@/lib/brand"
-import { moduleLabels } from "@/lib/workspace-data"
+import { getLocaleHeadingFont } from "@/lib/fonts"
 import { requireWorkspaceSession } from "@/lib/workspace-auth"
 import {
   getAllowedModules,
@@ -28,6 +28,10 @@ export default async function VendorLayout({
 }: VendorLayoutProps) {
   const { vendorSlug } = await params
   const session = await requireWorkspaceSession()
+  const [locale, moduleTranslations] = await Promise.all([
+    getLocale(),
+    getTranslations("Module"),
+  ])
   let vendor
 
   try {
@@ -46,7 +50,7 @@ export default async function VendorLayout({
   const homeHref = `/app/${vendorSlug}`
   const navItems = modules.map((module) => ({
     href: getModuleHref(vendorSlug, module),
-    label: moduleLabels[module].title.replace(" Dashboard", ""),
+    label: moduleTranslations(`${module}.shortTitle`),
     module,
   }))
   const vendorAccent = normalizeVendorAccent(vendor.brand_color)
@@ -54,7 +58,7 @@ export default async function VendorLayout({
   const workspaceStyle = {
     "--background":
       "color-mix(in srgb, var(--vendor-brand) 2.5%, var(--platform-background))",
-    "--heading-font-family": getHeadingFontValue(vendor.heading_font),
+    "--heading-font-family": getLocaleHeadingFont(vendor.heading_font, locale),
     "--primary": vendorAccent,
     "--primary-foreground": vendorAccentForeground,
     "--ring": vendorAccent,

@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { advanceOrderAction } from "@/app/actions/workspace-operations"
 import { Badge } from "@/components/ui/badge"
@@ -14,10 +15,9 @@ import {
 import type { OrderWithItems } from "@/lib/supabase/types"
 
 import {
-  formatCurrency,
+  getOrderStatusMessageKey,
   getStatusVariant,
-  nextStatusLabel,
-  statusLabel,
+  useDashboardFormats,
 } from "./format"
 
 function OrderStatusAction({
@@ -27,7 +27,10 @@ function OrderStatusAction({
   order: OrderWithItems
   vendorSlug: string
 }) {
-  const label = nextStatusLabel[order.status]
+  const t = useTranslations("Order")
+  const label = ["paid", "preparing", "ready"].includes(order.status)
+    ? t(`nextStatus.${order.status as "paid" | "preparing" | "ready"}`)
+    : null
 
   if (!label) return null
 
@@ -45,11 +48,13 @@ function OrderStatusAction({
 }
 
 function OrderLineItems({ order }: { order: OrderWithItems }) {
+  const format = useDashboardFormats()
+
   return (
     <div className="flex flex-col gap-1 text-sm text-muted-foreground">
       {order.order_items.map((item) => (
         <p key={item.id}>
-          {item.quantity} x {item.item_name_snapshot}
+          {format.quantity(item.quantity)} x {item.item_name_snapshot}
         </p>
       ))}
     </div>
@@ -65,20 +70,27 @@ export function OrderCard({
   order: OrderWithItems
   vendorSlug: string
 }) {
+  const common = useTranslations("Common")
+  const queue = useTranslations("Queue")
+  const format = useDashboardFormats()
+  const statusKey = getOrderStatusMessageKey(order.status)
+
   return (
     <Card size={compact ? "sm" : "default"}>
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold">#{order.token_no}</span>
+            <span className="text-lg font-semibold">
+              #{format.integer(order.token_no)}
+            </span>
             <Badge variant={getStatusVariant(order.status)}>
-              {statusLabel[order.status] ?? order.status}
+              {statusKey ? common(statusKey) : order.status}
             </Badge>
           </div>
         </CardTitle>
         <CardDescription>
-          {order.customer_label ?? "Counter"} ·{" "}
-          {formatCurrency(Number(order.total))}
+          {order.customer_label ?? queue("counterFallback")} ·{" "}
+          {format.currency(Number(order.total))}
         </CardDescription>
         {!compact ? (
           <CardAction>

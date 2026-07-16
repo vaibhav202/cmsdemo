@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge"
+import { useTranslations } from "next-intl"
 import {
   Card,
   CardContent,
@@ -22,24 +23,27 @@ import {
 } from "@/components/ui/table"
 import type { StockItem } from "@/lib/supabase/types"
 
+import { useDashboardFormats } from "../shared/format"
+
 export function StockRegister({ stockItems }: { stockItems: StockItem[] }) {
+  const t = useTranslations("Inventory")
+  const format = useDashboardFormats()
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Stock register</CardTitle>
-        <CardDescription>
-          Live quantity and reorder threshold for each ingredient.
-        </CardDescription>
+        <CardTitle>{t("registerTitle")}</CardTitle>
+        <CardDescription>{t("registerDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         {stockItems.length ? (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Ingredient</TableHead>
-                <TableHead>Current</TableHead>
-                <TableHead>Reorder at</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t("ingredient")}</TableHead>
+                <TableHead>{t("currentColumn")}</TableHead>
+                <TableHead>{t("reorderColumn")}</TableHead>
+                <TableHead>{t("statusColumn")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -51,14 +55,14 @@ export function StockRegister({ stockItems }: { stockItems: StockItem[] }) {
                   <TableRow key={item.id}>
                     <TableCell className="font-medium">{item.name}</TableCell>
                     <TableCell>
-                      {item.current_qty} {item.unit}
+                      {format.quantity(Number(item.current_qty))} {item.unit}
                     </TableCell>
                     <TableCell>
-                      {item.reorder_level} {item.unit}
+                      {format.quantity(Number(item.reorder_level))} {item.unit}
                     </TableCell>
                     <TableCell>
                       <Badge variant={isLow ? "destructive" : "secondary"}>
-                        {isLow ? "Low" : "OK"}
+                        {isLow ? t("low") : t("ok")}
                       </Badge>
                     </TableCell>
                   </TableRow>
@@ -69,9 +73,9 @@ export function StockRegister({ stockItems }: { stockItems: StockItem[] }) {
         ) : (
           <Empty>
             <EmptyHeader>
-              <EmptyTitle>No ingredients</EmptyTitle>
+              <EmptyTitle>{t("emptyRegisterTitle")}</EmptyTitle>
               <EmptyDescription>
-                Add the first ingredient to begin tracking stock.
+                {t("emptyRegisterDescription")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>

@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge"
+import { useFormatter, useTranslations } from "next-intl"
 import {
   Card,
   CardContent,
@@ -22,10 +23,19 @@ import {
 } from "@/components/ui/table"
 import type { LedgerEntry } from "@/lib/supabase/types"
 
-import { formatCurrency } from "../shared/format"
+import { useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 
+const entryTypeKeys = {
+  receivable: "entryTypes.receivable",
+  payable: "entryTypes.payable",
+  expense: "entryTypes.expense",
+} as const
+
 export function LedgerDashboard({ entries }: { entries: LedgerEntry[] }) {
+  const t = useTranslations("Ledger")
+  const format = useDashboardFormats()
+  const intlFormat = useFormatter()
   const receivable = entries
     .filter((entry) => entry.entry_type === "receivable")
     .reduce((total, entry) => total + Number(entry.amount), 0)
@@ -37,62 +47,76 @@ export function LedgerDashboard({ entries }: { entries: LedgerEntry[] }) {
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Receivable"
-          note="Money expected"
-          value={formatCurrency(receivable)}
+          label={t("receivable")}
+          note={t("receivableNote")}
+          value={format.currency(receivable)}
         />
         <MetricCard
-          label="Payable/expense"
-          note="Money to settle"
-          value={formatCurrency(payable)}
+          label={t("payable")}
+          note={t("payableNote")}
+          value={format.currency(payable)}
         />
         <MetricCard
-          label="Open entries"
-          note="Ledger records"
-          value={String(entries.length)}
+          label={t("open")}
+          note={t("openNote")}
+          value={format.integer(entries.length)}
         />
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Ledger entries</CardTitle>
-          <CardDescription>
-            Receivable, payable, and expense entries for the workspace.
-          </CardDescription>
+          <CardTitle>{t("title")}</CardTitle>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
           {entries.length ? (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Note</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Due</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>{t("noteColumn")}</TableHead>
+                  <TableHead>{t("typeColumn")}</TableHead>
+                  <TableHead>{t("dueColumn")}</TableHead>
+                  <TableHead className="text-right">
+                    {t("amountColumn")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {entries.map((entry) => (
+                {entries.map((entry) => {
+                  const entryTypeKey =
+                    entryTypeKeys[
+                      entry.entry_type as keyof typeof entryTypeKeys
+                    ]
+
+                  return (
                   <TableRow key={entry.id}>
                     <TableCell className="font-medium">{entry.note}</TableCell>
                     <TableCell>
-                      <Badge variant="outline">{entry.entry_type}</Badge>
+                      <Badge variant="outline">
+                        {entryTypeKey ? t(entryTypeKey) : entry.entry_type}
+                      </Badge>
                     </TableCell>
-                    <TableCell>{entry.due_date ?? "today"}</TableCell>
+                    <TableCell>
+                      {entry.due_date
+                        ? intlFormat.dateTime(
+                            new Date(`${entry.due_date}T00:00:00+05:30`),
+                            "dateOnly"
+                          )
+                        : t("today")}
+                    </TableCell>
                     <TableCell className="text-right font-medium">
-                      {formatCurrency(Number(entry.amount))}
+                      {format.currency(Number(entry.amount))}
                     </TableCell>
                   </TableRow>
-                ))}
+                  )
+                })}
               </TableBody>
             </Table>
           ) : (
             <Empty>
               <EmptyHeader>
-                <EmptyTitle>No ledger entries</EmptyTitle>
-                <EmptyDescription>
-                  Add receivable, payable, or expense entries to track accounts.
-                </EmptyDescription>
+                <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
+                <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
               </EmptyHeader>
             </Empty>
           )}

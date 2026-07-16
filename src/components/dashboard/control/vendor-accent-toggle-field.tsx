@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { FieldLegend, FieldSet } from "@/components/ui/field"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import type { vendorAccentOptions } from "@/lib/brand"
@@ -18,9 +20,11 @@ export function VendorAccentToggleField({
   options,
   value,
 }: VendorAccentToggleFieldProps) {
+  const t = useTranslations("Control")
+
   return (
     <FieldSet>
-      <FieldLegend>Accent color</FieldLegend>
+      <FieldLegend>{t("accentTitle")}</FieldLegend>
       <input name="brandColorPreset" type="hidden" value={value} />
       <ToggleGroup
         className="grid w-full grid-cols-2 sm:grid-cols-3"
@@ -43,11 +47,11 @@ export function VendorAccentToggleField({
               aria-hidden="true"
               className={cn("size-4 rounded-full border", option.swatchClass)}
             />
-            {option.name}
+            {t(`accentNames.${option.name}`)}
           </ToggleGroupItem>
         ))}
         <ToggleGroupItem className="justify-start" value="custom">
-          Custom
+          {t("custom")}
         </ToggleGroupItem>
       </ToggleGroup>
     </FieldSet>

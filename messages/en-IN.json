@@ -1,0 +1,408 @@
+{
+  "Metadata": {
+    "title": "CMS Platform",
+    "titleTemplate": "{page} | CMS Platform",
+    "description": "Orders, kitchen, stock, ledger, and reports in one workspace.",
+    "loginTitle": "Sign in"
+  },
+  "Common": {
+    "language": "Language",
+    "chooseLanguage": "Select your language",
+    "chooseLanguageDescription": "Use the platform in the language that is most comfortable for you.",
+    "languageChanged": "Language changed",
+    "languageChangeFailed": "Language could not be changed.",
+    "languages": {
+      "mr-IN": "मराठी",
+      "en-IN": "English",
+      "hi-IN": "हिंदी",
+      "gu-IN": "ગુજરાતી"
+    },
+    "actions": {
+      "signOut": "Sign out",
+      "tryAgain": "Try again",
+      "close": "Close",
+      "toggleSidebar": "Toggle sidebar",
+      "clearSearch": "Clear menu search",
+      "undo": "Undo"
+    },
+    "theme": {
+      "title": "Appearance",
+      "description": "Light, dark, or device setting",
+      "controlLabel": "Appearance theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "optionLabel": "{theme} theme"
+    },
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "manager": "Manager",
+      "cashier": "Cashier",
+      "kitchen": "Kitchen",
+      "accountant": "Accountant"
+    },
+    "membership": {
+      "active": "Active",
+      "invited": "Invited",
+      "disabled": "Disabled"
+    },
+    "orderStatus": {
+      "paid": "Paid",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "units": {
+      "kg": "Kilograms",
+      "g": "Grams",
+      "l": "Litres",
+      "ml": "Millilitres",
+      "pcs": "Pieces",
+      "pack": "Packs"
+    },
+    "stockMovement": {
+      "in": "Stock in",
+      "out": "Stock out"
+    },
+    "accessibility": {
+      "mobileSidebarTitle": "Sidebar",
+      "mobileSidebarDescription": "Displays the mobile sidebar."
+    }
+  },
+  "Auth": {
+    "tagline": "Restaurant operations, kept in flow.",
+    "workspaceEyebrow": "{vendor} workspace",
+    "productBadge": "Restaurant operations workspace",
+    "hero": "Run orders, kitchen queue, stock, and accounts from phone or computer.",
+    "description": "{tagline} Separate views keep the counter, kitchen, owner, and accounts team focused on their own work.",
+    "features": {
+      "counterLabel": "Daily counter",
+      "counterValue": "Orders and tokens",
+      "kitchenLabel": "Kitchen",
+      "kitchenValue": "Live preparation flow",
+      "ownerLabel": "Owner view",
+      "ownerValue": "Menu, stock, reports"
+    },
+    "cardTitle": "Sign in",
+    "cardDescription": "Use your assigned workspace credentials.",
+    "rolesTitle": "Workspace roles",
+    "rolesDescription": "Access changes by assigned staff role.",
+    "userColumn": "User",
+    "roleColumn": "Role",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "owner@citycanteen.in",
+      "password": "Password",
+      "passwordPlaceholder": "Owner@2026",
+      "submit": "Sign in",
+      "pending": "Signing in...",
+      "invalidCredentials": "Invalid credentials or disabled membership."
+    }
+  },
+  "Shell": {
+    "workspaceNavigation": "Workspace navigation",
+    "workspace": "Workspace",
+    "currentPage": "Current page",
+    "openMenu": "Open menu",
+    "menuTitle": "Menu",
+    "menuDescription": "Choose a workspace dashboard",
+    "openAccount": "Open account",
+    "accountTitle": "Account",
+    "accountDescription": "Current user, role, and session actions",
+    "roleLabel": "Role: {role}",
+    "statusLabel": "Status: {status}"
+  },
+  "Module": {
+    "order": {
+      "title": "Order Dashboard",
+      "shortTitle": "Order",
+      "description": "Create counter orders, confirm payment, and hand off tickets."
+    },
+    "kitchen": {
+      "title": "Kitchen Dashboard",
+      "shortTitle": "Kitchen",
+      "description": "Track items that need preparation and move orders forward."
+    },
+    "queue": {
+      "title": "Queue Dashboard",
+      "shortTitle": "Queue",
+      "description": "Show live order status for staff or customer-facing screens."
+    },
+    "control": {
+      "title": "Control Dashboard",
+      "shortTitle": "Control",
+      "description": "Manage menu, staff access, vendor settings, and audit checks."
+    },
+    "inventory": {
+      "title": "Inventory",
+      "shortTitle": "Inventory",
+      "description": "Monitor stock quantity, low-stock warnings, and daily usage."
+    },
+    "ledger": {
+      "title": "Ledger",
+      "shortTitle": "Ledger",
+      "description": "Track receivables, payables, expenses, and settlement notes."
+    },
+    "reports": {
+      "title": "Reports",
+      "shortTitle": "Reports",
+      "description": "Review sales, estimated margins, completed orders, and stock alerts."
+    },
+    "accessDenied": "Access denied",
+    "accessDeniedDescription": "This staff role does not have access to this dashboard. Role separation keeps each team member focused on the work they are allowed to perform.",
+    "info": {
+      "connectedTitle": "Connected workspace",
+      "connectedDescription": "Orders, menu availability, stock, ledger, and reports update from the same source of truth.",
+      "permissionsTitle": "Staff permissions",
+      "permissionsDescription": "Current role: {role}. Navigation and actions are scoped to the work this role should perform.",
+      "operationsTitle": "Daily operations",
+      "operationsDescription": "Orders, queue, menu, stock, ledger, and owner reports stay in one vendor workspace."
+    }
+  },
+  "Order": {
+    "metrics": {
+      "sales": "Counter sales",
+      "salesNote": "Paid counter orders",
+      "active": "Active tokens",
+      "activeNote": "Paid, preparing, or ready",
+      "available": "Available items",
+      "availableNote": "Menu items currently in stock"
+    },
+    "activeOrders": "Active orders",
+    "emptyTitle": "No active orders",
+    "emptyDescription": "New paid orders will appear here after the undo window.",
+    "createTitle": "Create counter order",
+    "createDescription": "Add one item quickly, confirm paid, and send it into the live queue.",
+    "searchLabel": "Search menu",
+    "searchPlaceholder": "Search item or category",
+    "resultCount": "{count, plural, =0 {No items} =1 {{formattedCount} item} other {{formattedCount} items}}",
+    "noMatchTitle": "No matching items",
+    "noMatchDescription": "Try another item name or menu category.",
+    "menuFallback": "Menu",
+    "inStock": "In stock",
+    "off": "Off",
+    "counterDefault": "Counter",
+    "customer": "Customer",
+    "quantity": "Qty",
+    "addOrder": "Add order",
+    "undoAvailable": "Undo available",
+    "creating": "Creating",
+    "nextStatus": {
+      "paid": "Send to kitchen",
+      "preparing": "Mark ready",
+      "ready": "Complete"
+    },
+    "feedback": {
+      "createdTitle": "Order sent to queue",
+      "createdDescription": "{item} was created after the undo window.",
+      "failedTitle": "Order could not be created",
+      "cancelledTitle": "Order cancelled",
+      "cancelledDescription": "{item} was not sent to the queue.",
+      "scheduledTitle": "Order will be created in 10 seconds",
+      "scheduledDescription": "Undo now if this counter order was tapped by mistake."
+    },
+    "errors": {
+      "generic": "Unable to create order.",
+      "role": "This role cannot create counter orders.",
+      "quantity": "Quantity must be between 1 and 20.",
+      "unavailable": "Menu item is unavailable.",
+      "create": "Unable to create order."
+    }
+  },
+  "Kitchen": {
+    "waiting": "Waiting",
+    "waitingNote": "Paid orders not started",
+    "preparing": "Preparing",
+    "preparingNote": "Kitchen is working on these",
+    "ready": "Ready",
+    "readyNote": "Can be handed over",
+    "emptyTitle": "No kitchen orders",
+    "emptyDescription": "Paid counter orders will appear here for preparation.",
+    "statusRoleError": "This role cannot change order status.",
+    "statusUpdateError": "Unable to update order status."
+  },
+  "Queue": {
+    "inQueue": "In queue",
+    "inQueueNote": "Visible to staff/customer screen",
+    "readyNow": "Ready now",
+    "readyNowNote": "Tokens waiting for pickup",
+    "latestToken": "Latest token",
+    "latestTokenNote": "Counter sequence",
+    "emptyTitle": "No visible queue",
+    "emptyDescription": "Paid, preparing, and ready orders will appear here.",
+    "token": "Token #{token, number, integer}",
+    "counterFallback": "Counter"
+  },
+  "Control": {
+    "metrics": {
+      "items": "Menu items",
+      "itemsNote": "Visible in counter orders",
+      "inStock": "In stock",
+      "inStockNote": "Visible to counter staff",
+      "unavailable": "Unavailable",
+      "unavailableNote": "Hidden from ordering"
+    },
+    "availabilityTitle": "Menu availability",
+    "availabilityDescription": "Toggle items during rush hours without editing the whole menu.",
+    "availabilityColumn": "Availability",
+    "itemColumn": "Item",
+    "categoryColumn": "Category",
+    "priceColumn": "Price",
+    "statusColumn": "Status",
+    "actionColumn": "Action",
+    "markAvailable": "Mark {item} in stock",
+    "markUnavailable": "Mark {item} unavailable",
+    "emptyTitle": "No menu items",
+    "emptyDescription": "Add menu items before managing availability.",
+    "appearanceTitle": "Brand appearance",
+    "appearanceDescription": "Apply a focused vendor accent and heading style without replacing the platform identity.",
+    "workspaceMark": "Workspace mark",
+    "workspaceMarkDescription": "The accent is reserved for vendor identity and selected operational highlights. Navigation, cards, and core controls keep the platform appearance consistent.",
+    "accentTitle": "Vendor accent",
+    "accentDescription": "Used for primary actions, focus rings, vendor marks, and subtle surface tinting.",
+    "pickerLabel": "Picker",
+    "customLabel": "HEX, RGB, or HSL",
+    "customPlaceholder": "#27272a, rgb(39 39 42), hsl(240 4% 16%)",
+    "customDescription": "Use HEX, RGB, or HSL. A readable foreground is selected automatically.",
+    "headingLabel": "Heading font",
+    "headingPlaceholder": "Select heading font",
+    "headingSans": "Sans",
+    "headingSerif": "Serif",
+    "preview": "City Canteen heading preview",
+    "save": "Save appearance",
+    "saving": "Saving appearance",
+    "custom": "Custom",
+    "accentNames": {
+      "Charcoal": "Charcoal",
+      "Graphite": "Graphite",
+      "Slate": "Slate",
+      "Forest": "Forest",
+      "Indigo": "Indigo",
+      "Maroon": "Maroon"
+    },
+    "errors": {
+      "role": "This role cannot change workspace appearance.",
+      "color": "Unsupported brand color.",
+      "invalidColor": "Use a valid HEX, RGB, or HSL brand color.",
+      "font": "Unsupported heading font.",
+      "save": "Unable to save workspace appearance.",
+      "denied": "This workspace did not allow the appearance update.",
+      "availabilityRole": "This role cannot change menu availability.",
+      "availabilitySave": "Unable to change menu availability."
+    },
+    "saved": "Workspace appearance saved."
+  },
+  "Inventory": {
+    "metrics": {
+      "ingredients": "Ingredients",
+      "ingredientsNote": "Tracked in the stock register",
+      "low": "Low stock",
+      "lowNote": "At or below reorder level",
+      "healthy": "Healthy",
+      "healthyNote": "Above reorder level"
+    },
+    "addTitle": "Add ingredient",
+    "addDescription": "Create a stocked ingredient and its reorder threshold.",
+    "ingredient": "Ingredient",
+    "ingredientPlaceholder": "Cooking oil",
+    "unit": "Unit",
+    "chooseUnit": "Choose unit",
+    "measurementUnit": "Measurement unit",
+    "openingQuantity": "Opening quantity",
+    "reorderAt": "Reorder at",
+    "add": "Add ingredient",
+    "adding": "Adding ingredient",
+    "movementTitle": "Record movement",
+    "movementDescription": "Add a purchase or record ingredient usage and wastage.",
+    "chooseIngredient": "Choose ingredient",
+    "stockRegisterGroup": "Stock register",
+    "movement": "Movement",
+    "movementAria": "Stock movement type",
+    "quantity": "Quantity",
+    "reason": "Reason",
+    "purchasePlaceholder": "Supplier purchase",
+    "usagePlaceholder": "Kitchen usage",
+    "movementRule": "Stock out cannot reduce the ingredient below zero.",
+    "record": "Record movement",
+    "recording": "Recording movement",
+    "registerTitle": "Stock register",
+    "registerDescription": "Live quantity and reorder threshold for each ingredient.",
+    "currentColumn": "Current",
+    "reorderColumn": "Reorder at",
+    "statusColumn": "Status",
+    "low": "Low",
+    "ok": "OK",
+    "emptyRegisterTitle": "No ingredients",
+    "emptyRegisterDescription": "Add the first ingredient to begin tracking stock.",
+    "historyTitle": "Recent movements",
+    "historyDescription": "Latest purchases, usage, wastage, and opening balances.",
+    "changeColumn": "Change",
+    "reasonColumn": "Reason",
+    "recordedColumn": "Recorded",
+    "removedIngredient": "Removed ingredient",
+    "emptyHistoryTitle": "No stock movements",
+    "emptyHistoryDescription": "Purchases and ingredient usage will appear here.",
+    "errors": {
+      "manageRole": "This role cannot add inventory ingredients.",
+      "movementRole": "This role cannot record stock movements.",
+      "workspace": "This inventory does not belong to your workspace.",
+      "name": "Use an ingredient name between 2 and 80 characters.",
+      "unit": "Choose a supported stock unit.",
+      "quantityRange": "Quantities must be between 0 and 1,000,000.",
+      "verify": "Unable to verify this inventory workspace.",
+      "check": "Unable to check the ingredient register.",
+      "duplicate": "{name} is already in the stock register.",
+      "add": "Unable to add ingredient.",
+      "movementType": "Choose whether stock is coming in or going out.",
+      "movementQuantity": "Movement quantity must be greater than zero.",
+      "reason": "Add a reason between 3 and 120 characters.",
+      "notFound": "Ingredient not found in this workspace.",
+      "insufficient": "Only {quantity, number, quantity} {unit} of {name} is available.",
+      "movementResult": "The stock movement did not return an updated item.",
+      "movement": "Unable to record the stock movement."
+    },
+    "feedback": {
+      "added": "{name} added to inventory.",
+      "updated": "{name} updated to {quantity, number, quantity} {unit}."
+    }
+  },
+  "Ledger": {
+    "receivable": "Receivable",
+    "receivableNote": "Money expected",
+    "payable": "Payable/expense",
+    "payableNote": "Money to settle",
+    "open": "Open entries",
+    "openNote": "Ledger records",
+    "title": "Ledger entries",
+    "description": "Receivable, payable, and expense entries for the workspace.",
+    "noteColumn": "Note",
+    "typeColumn": "Type",
+    "dueColumn": "Due",
+    "amountColumn": "Amount",
+    "entryTypes": {
+      "receivable": "Receivable",
+      "payable": "Payable",
+      "expense": "Expense"
+    },
+    "today": "Today",
+    "emptyTitle": "No ledger entries",
+    "emptyDescription": "Add receivable, payable, or expense entries to track accounts."
+  },
+  "Reports": {
+    "sales": "Sales",
+    "salesNote": "Paid counter orders",
+    "profit": "Estimated gross profit",
+    "profitNote": "Based on item cost prices",
+    "completed": "Completed orders",
+    "stockNote": "{count, plural, =0 {No stock items low} =1 {{formattedCount} stock item low} other {{formattedCount} stock items low}}",
+    "title": "Owner summary",
+    "description": "Sales, estimated cost, gross profit, order count, and stock warnings stay connected with daily counter and kitchen work."
+  },
+  "WorkspaceError": {
+    "title": "Workspace unavailable",
+    "description": "The platform could not connect to the workspace database. Check the Supabase project status and connection settings, then try again.",
+    "unchanged": "Your session is still active. No order or account data was changed."
+  }
+}

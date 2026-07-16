@@ -7,7 +7,8 @@ permission files.
 ## Product Goal
 
 One real Pune vendor must be able to run menu, order, kitchen, and queue operations
-safely from a phone without cross-vendor data leakage.
+safely from a phone without cross-vendor data leakage, with a Marathi-first interface
+that does not require staff to operate the product in English.
 
 Positioning:
 
@@ -53,6 +54,51 @@ Must include:
 - Vendor logo, menu image, and staff avatar uploads normalized server-side.
 - Terms, Privacy, support contact, vendor settings, and sensitive-action audit logs.
 - Cross-vendor RLS tests, role tests, mobile workflow tests, and order lifecycle tests.
+
+## Language And Localization Contract
+
+- The staff interface supports Marathi (`mr-IN`), English (`en-IN`), Hindi (`hi-IN`),
+  and Gujarati (`gu-IN`). Marathi is the product default and the first-class launch
+  language for the Maharashtra pilot.
+- Routes remain locale-neutral. Locale-prefixed URLs are not part of the product
+  contract because staff may share operational links across language preferences.
+- Locale resolution order is the validated `cms_platform_locale` cookie, the browser
+  `Accept-Language` header, then Marathi. The cookie is device-local for the MVP;
+  authenticated profile synchronization may be added later.
+- Language selection is available through a compact popup before sign-in, in the
+  desktop top bar, and in the mobile account sheet; it must not require a dedicated
+  full-height overlay.
+- Light, Dark, and System appearance selection is also available before sign-in.
+- Platform UI copy, validation feedback, roles, statuses, dates, times, numbers, and
+  currency are localized. Vendor-entered names, menu items, customer notes, and other
+  business data are displayed exactly as entered and are never machine-translated.
+- Displayed numbers follow the selected language: Marathi and Hindi use Devanagari
+  digits, Gujarati uses Gujarati digits, and English uses Latin digits. This applies
+  to tokens, quantities, counts, prices, currency, dates, and times.
+- Technical values that must be copied or submitted exactly—IDs, route slugs, email
+  addresses, credentials, HEX/RGB/HSL colors, and underlying numeric form values—keep
+  their canonical stored representation.
+- Message files use feature namespaces and ICU arguments. English is the structural
+  reference locale; every locale must keep the same keys and argument contracts.
+- Marathi copy requires native-speaker review on the real phone workflows before the
+  pilot gate can pass. Hindi and Gujarati are supported drafts and also require native
+  review before they are presented as production-quality translations.
+
+## Future Language Expansion
+
+- Additional staff-interface languages are an allowed post-pilot expansion when there
+  is a clear vendor need and an identified native reviewer. They do not require a new
+  tenant model, route structure, or translation of vendor-entered business data.
+- Each added language must define a BCP 47 locale, native selector label, browser-language
+  mapping, numeral system, complete message catalog, appropriate Sans/Serif font coverage,
+  and native review status.
+- A new catalog must preserve the English reference namespaces, keys, ICU arguments,
+  and stored enum values. Partial catalogs and silent English fallback are not permitted
+  for a locale shown in the production language selector.
+- Changing the Marathi default or expanding localization into vendor-entered content
+  remains out of scope without explicit product approval.
+- The required file structure, implementation sequence, and verification checklist are
+  canonical in `docs/localization-guide.md` under "Adding A Future Locale."
 
 Include if time allows:
 
@@ -143,6 +189,8 @@ Pilot gate:
 
 - One test vendor completes onboarding and one complete order lifecycle.
 - Known limitations and support expectations are documented.
+- A native Marathi reviewer completes the login, order, kitchen, queue, inventory,
+  control, ledger, and reports terminology review on a representative phone viewport.
 
 ## Open Decisions
 

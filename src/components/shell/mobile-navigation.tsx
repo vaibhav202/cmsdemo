@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LogOut, Menu, UserRound, type LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import type { ReactNode } from "react"
 
 import { logoutAction } from "@/app/actions/auth"
+import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -95,6 +97,8 @@ export function MobileNavigation({
   vendorInitial,
 }: MobileNavigationProps) {
   const pathname = usePathname()
+  const t = useTranslations("Shell")
+  const common = useTranslations("Common")
   const activeItem =
     navItems.find((item) => pathname === item.href) ?? navItems[0]
 
@@ -102,10 +106,10 @@ export function MobileNavigation({
     <div className="mobile-navigation-fade pointer-events-none fixed inset-x-0 bottom-0 z-40 h-32 md:hidden">
       <div className="glass-surface pointer-events-auto absolute inset-x-3 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] mx-auto grid h-14 max-w-md grid-cols-[3rem_minmax(0,1fr)_3rem] items-center rounded-full border px-1">
           <MobileSheet
-            description={`${vendor.name} workspace navigation`}
-            title="Menu"
+            description={t("menuDescription")}
+            title={t("menuTitle")}
             triggerIcon={Menu}
-            triggerLabel="Open navigation"
+            triggerLabel={t("openMenu")}
           >
             <div className="flex flex-col gap-4">
               <SheetClose asChild>
@@ -139,7 +143,7 @@ export function MobileNavigation({
 
               <nav
                 className="flex flex-col gap-2"
-                aria-label="Workspace navigation"
+                aria-label={t("workspaceNavigation")}
               >
                 {navItems.map((item) => {
                   const Icon = navIcons[item.module]
@@ -175,15 +179,15 @@ export function MobileNavigation({
               {vendor.name}
             </p>
             <p className="truncate font-heading text-sm font-semibold">
-              {activeItem?.label ?? "Workspace"}
+              {activeItem?.label ?? t("workspace")}
             </p>
           </div>
 
           <MobileSheet
-            description="Current user, role, and session actions"
-            title="Account"
+            description={t("accountDescription")}
+            title={t("accountTitle")}
             triggerIcon={UserRound}
-            triggerLabel="Open account"
+            triggerLabel={t("openAccount")}
           >
             <div className="flex flex-col gap-3">
               <Card size="sm">
@@ -202,15 +206,19 @@ export function MobileNavigation({
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary">{user.role}</Badge>
-                    <Badge variant="outline">{user.status}</Badge>
+                    <Badge variant="secondary">
+                      {common(`roles.${user.role}`)}
+                    </Badge>
+                    <Badge variant="outline">
+                      {common(`membership.${user.status}`)}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
 
               <Card size="sm">
                 <CardHeader>
-                  <CardDescription>Workspace</CardDescription>
+                  <CardDescription>{t("workspace")}</CardDescription>
                   <CardTitle>{vendor.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -227,18 +235,32 @@ export function MobileNavigation({
 
               <Card size="sm">
                 <CardHeader>
-                  <CardTitle>Appearance</CardTitle>
-                  <CardDescription>Light, dark, or device setting</CardDescription>
+                  <CardTitle>{common("theme.title")}</CardTitle>
+                  <CardDescription>
+                    {common("theme.description")}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ThemeModeControl showLabels />
                 </CardContent>
               </Card>
 
+              <Card size="sm">
+                <CardHeader>
+                  <CardTitle>{common("language")}</CardTitle>
+                  <CardDescription>
+                    {common("chooseLanguageDescription")}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <LanguageMenu fullWidth />
+                </CardContent>
+              </Card>
+
               <form action={logoutAction}>
                 <Button className="min-h-12 w-full" type="submit" variant="outline">
                   <LogOut data-icon="inline-start" />
-                  Sign out
+                  {common("actions.signOut")}
                 </Button>
               </form>
             </div>

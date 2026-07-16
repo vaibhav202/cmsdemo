@@ -1,6 +1,7 @@
 "use client"
 
 import { Monitor, Moon, Sun, type LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
@@ -17,12 +18,11 @@ import { cn } from "@/lib/utils"
 
 const themeOptions: Array<{
   icon: LucideIcon
-  label: string
   value: "light" | "dark" | "system"
 }> = [
-  { icon: Sun, label: "Light", value: "light" },
-  { icon: Moon, label: "Dark", value: "dark" },
-  { icon: Monitor, label: "System", value: "system" },
+  { icon: Sun, value: "light" },
+  { icon: Moon, value: "dark" },
+  { icon: Monitor, value: "system" },
 ]
 
 export function ThemeModeControl({
@@ -32,6 +32,7 @@ export function ThemeModeControl({
 }) {
   const [mounted, setMounted] = useState(false)
   const { setTheme, theme } = useTheme()
+  const t = useTranslations("Common.theme")
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setMounted(true))
@@ -44,7 +45,7 @@ export function ThemeModeControl({
 
   return (
     <ToggleGroup
-      aria-label="Appearance theme"
+      aria-label={t("controlLabel")}
       className={cn(showLabels && "grid w-full grid-cols-3")}
       onValueChange={(value) => {
         if (value) setTheme(value)
@@ -54,21 +55,27 @@ export function ThemeModeControl({
       value={theme ?? "system"}
       variant="outline"
     >
-      {themeOptions.map(({ icon: Icon, label, value }) => (
-        <Tooltip key={value}>
-          <TooltipTrigger asChild>
-            <ToggleGroupItem
-              aria-label={`${label} theme`}
-              className={cn(showLabels && "w-full")}
-              value={value}
-            >
-              <Icon data-icon="inline-start" />
-              {showLabels ? label : null}
-            </ToggleGroupItem>
-          </TooltipTrigger>
-          <TooltipContent>{label} theme</TooltipContent>
-        </Tooltip>
-      ))}
+      {themeOptions.map(({ icon: Icon, value }) => {
+        const label = t(value)
+
+        return (
+          <Tooltip key={value}>
+            <TooltipTrigger asChild>
+              <ToggleGroupItem
+                aria-label={t("optionLabel", { theme: label })}
+                className={cn(showLabels && "w-full")}
+                value={value}
+              >
+                <Icon data-icon="inline-start" />
+                {showLabels ? label : null}
+              </ToggleGroupItem>
+            </TooltipTrigger>
+            <TooltipContent>
+              {t("optionLabel", { theme: label })}
+            </TooltipContent>
+          </Tooltip>
+        )
+      })}
     </ToggleGroup>
   )
 }

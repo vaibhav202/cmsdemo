@@ -13,3 +13,4 @@ export const stockMovementOptions = [
 ] as const
 
 export type StockMovementType = (typeof stockMovementOptions)[number]["value"]
+export type StockUnit = (typeof stockUnitOptions)[number]["value"]

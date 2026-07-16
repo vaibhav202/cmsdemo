@@ -34,7 +34,8 @@ Platform-owned:
 
 - Page background, body text, neutral cards, navigation structure, spacing, and interaction patterns.
 - Charcoal-based default theme and CMS Platform naming.
-- Body font remains Geist Sans.
+- Body font uses Geist Sans for Latin text and locale-matched Noto Sans for Devanagari
+  or Gujarati text.
 
 Vendor-controlled:
 
@@ -56,13 +57,44 @@ or all navigation text. Vendor theming must not erase the platform identity.
 
 ## Typography
 
-- Body and control text use `font-sans` (Geist Sans).
+- Body and control text use `font-sans`. The root locale supplies Geist Sans,
+  Noto Sans Devanagari, or Noto Sans Gujarati through `--font-ui-sans`.
 - Product and workspace headings use `font-heading`.
 - `font-heading` resolves through the runtime `--heading-font-family` token.
+- Locale-aware heading fallbacks use Noto Serif Devanagari or Noto Serif Gujarati
+  when a vendor selects the serif heading option.
 - Page `h1` and major section titles may use the selected heading font.
 - Compact labels, table text, input text, badges, and long descriptions remain Sans.
 - Do not apply serif to dense operational data.
 - Do not use viewport-scaled font sizes or negative letter spacing.
+
+## Language And Locale UI
+
+- Supported UI locales are Marathi (`mr-IN`), English (`en-IN`), Hindi (`hi-IN`),
+  and Gujarati (`gu-IN`); Marathi is the default.
+- Show every language in its native script: `मराठी`, `English`, `हिंदी`, `ગુજરાતી`.
+- Place the language control on the login page, desktop top bar, and mobile Account Sheet.
+- Use a shadcn DropdownMenu with a visible localized "Select your language" label and
+  a DropdownMenuRadioGroup for the four exclusive choices. Do not open a dedicated
+  Sheet or Drawer for language selection.
+- Pair the language menu with the Light, Dark, and System control on the login page so
+  both preferences are available before authentication. Maintain 44 px touch targets
+  on mobile.
+- Route paths stay unchanged after language selection. The selected locale is a UI
+  preference, not tenant data or authorization context.
+- Translate platform labels and formatting only. Never translate or transliterate
+  vendor names, menu items, ingredient names, customer notes, or user-entered records.
+- Format displayed order tokens, prices, quantities, stock values, counts, dates, and
+  times with the selected locale's configured numeral system: Devanagari for Marathi
+  and Hindi, Gujarati digits for Gujarati, and Latin digits for English.
+- Do not localize canonical technical strings such as IDs, credentials, route slugs,
+  email addresses, or HEX/RGB/HSL color values. Numeric form controls continue to submit
+  canonical numeric values even when surrounding read-only output uses localized digits.
+- Never render a dynamic display number with `String(value)` or raw JSX. Use the named
+  next-intl formats through `useDashboardFormats`, `useFormatter`, or the server formatter.
+- Allow translated copy to wrap naturally; do not set fixed text widths based on English.
+- Marathi must be reviewed first on phone-sized order and kitchen workflows. Hindi and
+  Gujarati remain draft-quality until native reviewers approve their terminology.
 
 ## Glass Surfaces
 
@@ -170,5 +202,11 @@ Do not add arbitrary z-index values. Do not override overlay z-index in feature 
 - Verify selected accent on primary buttons, readable foreground, and glass tint.
 - Verify Light, Dark, and System selection and the half-strength page tint.
 - Verify Sans and Serif heading settings after a reload.
+- Verify all four locale choices, cookie persistence, browser-language negotiation,
+  Marathi fallback, and unchanged route paths.
+- Verify representative integer, quantity, currency, token, date, time, and plural-count
+  output in each locale's expected numeral system.
+- Check representative Marathi, Hindi, and Gujarati screens for clipping and unintended
+  Latin-font fallback; complete the Marathi native review before pilot release.
 - Search `src/` for prohibited blur usage and unintended raw colors.
 - Update `docs/live-development-log.txt` before handing work to another model.

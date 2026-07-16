@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 
 import {
   WORKSPACE_SESSION_COOKIE,
@@ -18,6 +19,7 @@ export async function loginAction(
   _previousState: LoginState,
   formData: FormData
 ): Promise<LoginState> {
+  const t = await getTranslations("Auth.form")
   const email = String(formData.get("email") ?? "")
   const password = String(formData.get("password") ?? "")
   const next = String(formData.get("next") ?? "")
@@ -26,7 +28,7 @@ export async function loginAction(
   if (!account) {
     return {
       email,
-      error: "Invalid credentials or disabled membership.",
+      error: t("invalidCredentials"),
     }
   }
 

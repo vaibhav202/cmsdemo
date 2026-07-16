@@ -1,5 +1,8 @@
+import { useTranslations } from "next-intl"
+
 import type { StockItem, StockLog } from "@/lib/supabase/types"
 
+import { useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 import { InventoryActionForms } from "./inventory-action-forms"
 import { StockMovementHistory } from "./stock-movement-history"
@@ -22,6 +25,8 @@ export function InventoryDashboard({
   vendorId,
   vendorSlug,
 }: InventoryDashboardProps) {
+  const t = useTranslations("Inventory")
+  const format = useDashboardFormats()
   const lowStock = stockItems.filter(
     (item) => Number(item.current_qty) <= Number(item.reorder_level)
   )
@@ -31,19 +36,19 @@ export function InventoryDashboard({
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Ingredients"
-          note="Tracked in the stock register"
-          value={String(stockItems.length)}
+          label={t("metrics.ingredients")}
+          note={t("metrics.ingredientsNote")}
+          value={format.integer(stockItems.length)}
         />
         <MetricCard
-          label="Low stock"
-          note="At or below reorder level"
-          value={String(lowStock.length)}
+          label={t("metrics.low")}
+          note={t("metrics.lowNote")}
+          value={format.integer(lowStock.length)}
         />
         <MetricCard
-          label="Healthy"
-          note="Above reorder level"
-          value={String(stockItems.length - lowStock.length)}
+          label={t("metrics.healthy")}
+          note={t("metrics.healthyNote")}
+          value={format.integer(stockItems.length - lowStock.length)}
         />
       </div>
 

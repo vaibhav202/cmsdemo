@@ -1,4 +1,5 @@
 import { IndianRupee } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   Card,
@@ -13,7 +14,7 @@ import type {
   StockItem,
 } from "@/lib/supabase/types"
 
-import { formatCurrency } from "../shared/format"
+import { useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 
 export function ReportsDashboard({
@@ -25,6 +26,8 @@ export function ReportsDashboard({
   orders: OrderWithItems[]
   stockItems: StockItem[]
 }) {
+  const t = useTranslations("Reports")
+  const format = useDashboardFormats()
   const revenue = orders
     .filter((order) => order.payment_status === "paid")
     .reduce((total, order) => total + Number(order.total), 0)
@@ -47,28 +50,28 @@ export function ReportsDashboard({
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Sales"
-          note="Paid counter orders"
-          value={formatCurrency(revenue)}
+          label={t("sales")}
+          note={t("salesNote")}
+          value={format.currency(revenue)}
         />
         <MetricCard
-          label="Estimated gross profit"
-          note="Based on item cost prices"
-          value={formatCurrency(revenue - estimatedCost)}
+          label={t("profit")}
+          note={t("profitNote")}
+          value={format.currency(revenue - estimatedCost)}
         />
         <MetricCard
-          label="Completed orders"
-          note={`${lowStock} stock item(s) low`}
-          value={String(completed)}
+          label={t("completed")}
+          note={t("stockNote", {
+            count: lowStock,
+            formattedCount: format.integer(lowStock),
+          })}
+          value={format.integer(completed)}
         />
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Owner summary</CardTitle>
-          <CardDescription>
-            Sales, estimated cost, gross profit, order count, and stock warnings
-            stay connected with daily counter and kitchen work.
-          </CardDescription>
+          <CardTitle>{t("title")}</CardTitle>
+          <CardDescription>{t("description")}</CardDescription>
           <CardAction>
             <IndianRupee />
           </CardAction>

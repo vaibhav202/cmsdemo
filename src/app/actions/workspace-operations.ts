@@ -1,6 +1,7 @@
 "use server"
 
 import { refresh, revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import {
   headingFontOptions,
@@ -40,11 +41,11 @@ function getFormString(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim()
 }
 
-function getRequiredString(formData: FormData, key: string) {
+function getRequiredString(formData: FormData, key: string, errorMessage: string) {
   const value = getFormString(formData, key)
 
   if (!value) {
-    throw new Error(`Missing ${key}`)
+    throw new Error(errorMessage)
   }
 
   return value
@@ -69,20 +70,31 @@ function inventorySuccess(message: string): InventoryMutationState {
 }
 
 export async function createOrderAction(formData: FormData) {
+  const t = await getTranslations("Order")
   const session = await requireWorkspaceSession()
 
   if (!canAccessModule(session.user.role, "order")) {
-    throw new Error("This role cannot create counter orders.")
+    throw new Error(t("errors.role"))
   }
 
-  const vendorId = getRequiredString(formData, "vendorId")
-  const vendorSlug = getRequiredString(formData, "vendorSlug")
-  const menuItemId = getRequiredString(formData, "menuItemId")
+  const vendorId = getRequiredString(formData, "vendorId", t("errors.generic"))
+  const vendorSlug = getRequiredString(
+    formData,
+    "vendorSlug",
+    t("errors.generic")
+  )
+  const menuItemId = getRequiredString(
+    formData,
+    "menuItemId",
+    t("errors.generic")
+  )
   const quantity = Number(formData.get("quantity") ?? 1)
-  const customerLabel = String(formData.get("customerLabel") ?? "Counter")
+  const customerLabel = String(
+    formData.get("customerLabel") ?? t("counterDefault")
+  )
 
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
-    throw new Error("Quantity must be between 1 and 20.")
+    throw new Error(t("errors.quantity"))
   }
 
   const supabase = await createSupabaseServerClient()
@@ -94,7 +106,7 @@ export async function createOrderAction(formData: FormData) {
     .single()
 
   if (menuError || !menuItem || !menuItem.in_stock) {
-    throw new Error("Menu item is unavailable.")
+    throw new Error(t("errors.unavailable"))
   }
 
   const { data: latestOrder, error: latestError } = await supabase
@@ -106,7 +118,8 @@ export async function createOrderAction(formData: FormData) {
     .maybeSingle()
 
   if (latestError) {
-    throw new Error(latestError.message)
+    console.error("Unable to load the latest order token", latestError)
+    throw new Error(t("errors.create"))
   }
 
   const tokenNo = (latestOrder?.token_no ?? 100) + 1
@@ -117,7 +130,7 @@ export async function createOrderAction(formData: FormData) {
     .insert({
       vendor_id: vendorId,
       token_no: tokenNo,
-      customer_label: customerLabel || "Counter",
+      customer_label: customerLabel || t("counterDefault"),
       status: "paid",
       payment_status: "paid",
       source: "counter",
@@ -127,7 +140,8 @@ export async function createOrderAction(formData: FormData) {
     .single()
 
   if (orderError || !order) {
-    throw new Error(orderError?.message ?? "Unable to create order.")
+    console.error("Unable to create order", orderError)
+    throw new Error(t("errors.create"))
   }
 
   const { error: itemError } = await supabase.from("order_items").insert({
@@ -139,7 +153,8 @@ export async function createOrderAction(formData: FormData) {
   })
 
   if (itemError) {
-    throw new Error(itemError.message)
+    console.error("Unable to create order item", itemError)
+    throw new Error(t("errors.create"))
   }
 
   revalidatePath(`/app/${vendorSlug}/order`)
@@ -148,10 +163,23 @@ export async function createOrderAction(formData: FormData) {
 }
 
 export async function advanceOrderAction(formData: FormData) {
+  const t = await getTranslations("Kitchen")
   const session = await requireWorkspaceSession()
-  const vendorSlug = getRequiredString(formData, "vendorSlug")
-  const orderId = getRequiredString(formData, "orderId")
-  const currentStatus = getRequiredString(formData, "status")
+  const vendorSlug = getRequiredString(
+    formData,
+    "vendorSlug",
+    t("statusUpdateError")
+  )
+  const orderId = getRequiredString(
+    formData,
+    "orderId",
+    t("statusUpdateError")
+  )
+  const currentStatus = getRequiredString(
+    formData,
+    "status",
+    t("statusUpdateError")
+  )
   const nextStatus = statusFlow[currentStatus]
 
   if (!nextStatus) {
@@ -162,7 +190,7 @@ export async function advanceOrderAction(formData: FormData) {
     !canAccessModule(session.user.role, "kitchen") &&
     !canAccessModule(session.user.role, "order")
   ) {
-    throw new Error("This role cannot change order status.")
+    throw new Error(t("statusRoleError"))
   }
 
   const supabase = await createSupabaseServerClient()
@@ -172,7 +200,8 @@ export async function advanceOrderAction(formData: FormData) {
     .eq("id", orderId)
 
   if (error) {
-    throw new Error(error.message)
+    console.error("Unable to update order status", error)
+    throw new Error(t("statusUpdateError"))
   }
 
   revalidatePath(`/app/${vendorSlug}/order`)
@@ -181,15 +210,26 @@ export async function advanceOrderAction(formData: FormData) {
 }
 
 export async function toggleMenuItemAction(formData: FormData) {
+  const t = await getTranslations("Control.errors")
   const session = await requireWorkspaceSession()
 
   if (!canAccessModule(session.user.role, "control")) {
-    throw new Error("This role cannot change menu availability.")
+    throw new Error(t("availabilityRole"))
   }
 
-  const vendorSlug = getRequiredString(formData, "vendorSlug")
-  const menuItemId = getRequiredString(formData, "menuItemId")
-  const nextStockState = getRequiredString(formData, "nextStockState") === "true"
+  const vendorSlug = getRequiredString(
+    formData,
+    "vendorSlug",
+    t("availabilitySave")
+  )
+  const menuItemId = getRequiredString(
+    formData,
+    "menuItemId",
+    t("availabilitySave")
+  )
+  const nextStockState =
+    getRequiredString(formData, "nextStockState", t("availabilitySave")) ===
+    "true"
 
   const supabase = await createSupabaseServerClient()
   const { error } = await supabase
@@ -198,7 +238,8 @@ export async function toggleMenuItemAction(formData: FormData) {
     .eq("id", menuItemId)
 
   if (error) {
-    throw new Error(error.message)
+    console.error("Unable to change menu availability", error)
+    throw new Error(t("availabilitySave"))
   }
 
   revalidatePath(`/app/${vendorSlug}/control`)
@@ -209,10 +250,11 @@ export async function createStockItemAction(
   _previousState: InventoryMutationState,
   formData: FormData
 ): Promise<InventoryMutationState> {
+  const t = await getTranslations("Inventory")
   const session = await requireWorkspaceSession()
 
   if (!canManageStockItems(session.user.role)) {
-    return inventoryError("This role cannot add inventory ingredients.")
+    return inventoryError(t("errors.manageRole"))
   }
 
   const vendorId = getFormString(formData, "vendorId")
@@ -224,19 +266,19 @@ export async function createStockItemAction(
   const allowedUnits = stockUnitOptions.map((option) => option.value)
 
   if (session.vendor.slug !== vendorSlug) {
-    return inventoryError("This inventory does not belong to your workspace.")
+    return inventoryError(t("errors.workspace"))
   }
 
   if (name.length < 2 || name.length > 80 || /[%_]/.test(name)) {
-    return inventoryError("Use an ingredient name between 2 and 80 characters.")
+    return inventoryError(t("errors.name"))
   }
 
   if (!allowedUnits.includes(unit as (typeof allowedUnits)[number])) {
-    return inventoryError("Choose a supported stock unit.")
+    return inventoryError(t("errors.unit"))
   }
 
   if (openingQty === null || reorderLevel === null) {
-    return inventoryError("Quantities must be between 0 and 1,000,000.")
+    return inventoryError(t("errors.quantityRange"))
   }
 
   const supabase = await createSupabaseServerClient()
@@ -248,7 +290,7 @@ export async function createStockItemAction(
     .maybeSingle()
 
   if (vendorError || !vendor) {
-    return inventoryError("Unable to verify this inventory workspace.")
+    return inventoryError(t("errors.verify"))
   }
 
   const { data: existingItem, error: existingError } = await supabase
@@ -260,11 +302,11 @@ export async function createStockItemAction(
     .maybeSingle()
 
   if (existingError) {
-    return inventoryError("Unable to check the ingredient register.")
+    return inventoryError(t("errors.check"))
   }
 
   if (existingItem) {
-    return inventoryError(`${name} is already in the stock register.`)
+    return inventoryError(t("errors.duplicate", { name }))
   }
 
   const { data: stockItem, error: stockError } = await supabase
@@ -278,23 +320,25 @@ export async function createStockItemAction(
     .single()
 
   if (stockError || !stockItem) {
-    return inventoryError(stockError?.message ?? "Unable to add ingredient.")
+    console.error("Unable to add inventory ingredient", stockError)
+    return inventoryError(t("errors.add"))
   }
 
   revalidatePath(`/app/${vendorSlug}/inventory`)
   revalidatePath(`/app/${vendorSlug}/reports`)
 
-  return inventorySuccess(`${name} added to inventory.`)
+  return inventorySuccess(t("feedback.added", { name }))
 }
 
 export async function adjustStockItemAction(
   _previousState: InventoryMutationState,
   formData: FormData
 ): Promise<InventoryMutationState> {
+  const t = await getTranslations("Inventory")
   const session = await requireWorkspaceSession()
 
   if (!canRecordStockMovement(session.user.role)) {
-    return inventoryError("This role cannot record stock movements.")
+    return inventoryError(t("errors.movementRole"))
   }
 
   const vendorId = getFormString(formData, "vendorId")
@@ -306,7 +350,7 @@ export async function adjustStockItemAction(
   const allowedMovements = stockMovementOptions.map((option) => option.value)
 
   if (session.vendor.slug !== vendorSlug) {
-    return inventoryError("This inventory does not belong to your workspace.")
+    return inventoryError(t("errors.workspace"))
   }
 
   if (
@@ -314,15 +358,15 @@ export async function adjustStockItemAction(
       movementType as (typeof allowedMovements)[number]
     )
   ) {
-    return inventoryError("Choose whether stock is coming in or going out.")
+    return inventoryError(t("errors.movementType"))
   }
 
   if (quantity === null || quantity === 0) {
-    return inventoryError("Movement quantity must be greater than zero.")
+    return inventoryError(t("errors.movementQuantity"))
   }
 
   if (reason.length < 3 || reason.length > 120) {
-    return inventoryError("Add a reason between 3 and 120 characters.")
+    return inventoryError(t("errors.reason"))
   }
 
   const supabase = await createSupabaseServerClient()
@@ -334,7 +378,7 @@ export async function adjustStockItemAction(
     .maybeSingle()
 
   if (stockError || !stockItem) {
-    return inventoryError("Ingredient not found in this workspace.")
+    return inventoryError(t("errors.notFound"))
   }
 
   const currentQty = Number(stockItem.current_qty)
@@ -343,7 +387,11 @@ export async function adjustStockItemAction(
 
   if (nextQty < 0) {
     return inventoryError(
-      `Only ${currentQty} ${stockItem.unit} of ${stockItem.name} is available.`
+      t("errors.insufficient", {
+        name: stockItem.name,
+        quantity: currentQty,
+        unit: stockItem.unit,
+      })
     )
   }
 
@@ -357,11 +405,12 @@ export async function adjustStockItemAction(
     .single()
 
   if (updateError) {
-    return inventoryError(updateError.message)
+    console.error("Unable to record stock movement", updateError)
+    return inventoryError(t("errors.movement"))
   }
 
   if (!updatedItem) {
-    return inventoryError("The stock movement did not return an updated item.")
+    return inventoryError(t("errors.movementResult"))
   }
 
   const updatedQuantity = Number(
@@ -372,7 +421,11 @@ export async function adjustStockItemAction(
   revalidatePath(`/app/${vendorSlug}/reports`)
 
   return inventorySuccess(
-    `${stockItem.name} updated to ${updatedQuantity} ${stockItem.unit}.`
+    t("feedback.updated", {
+      name: stockItem.name,
+      quantity: updatedQuantity,
+      unit: stockItem.unit,
+    })
   )
 }
 
@@ -380,21 +433,30 @@ export async function updateVendorIdentityAction(
   _previousState: VendorIdentityState,
   formData: FormData
 ): Promise<VendorIdentityState> {
+  const t = await getTranslations("Control")
   const session = await requireWorkspaceSession()
 
   if (!canAccessModule(session.user.role, "control")) {
     return {
-      message: "This role cannot change workspace appearance.",
+      message: t("errors.role"),
       status: "error",
     }
   }
 
-  const vendorId = getRequiredString(formData, "vendorId")
-  const vendorSlug = getRequiredString(formData, "vendorSlug")
+  const vendorId = getRequiredString(formData, "vendorId", t("errors.save"))
+  const vendorSlug = getRequiredString(
+    formData,
+    "vendorSlug",
+    t("errors.save")
+  )
   const presetColor = String(formData.get("brandColorPreset") ?? "").trim()
   const pickerColor = String(formData.get("brandColorPicker") ?? "").trim()
   const customColor = String(formData.get("brandColorCustom") ?? "").trim()
-  const headingFont = getRequiredString(formData, "headingFont")
+  const headingFont = getRequiredString(
+    formData,
+    "headingFont",
+    t("errors.save")
+  )
   const allowedColors = vendorAccentOptions.map((option) => option.value)
   const allowedFonts = headingFontOptions.map((option) => option.value)
   const useCustomColor = presetColor === "custom"
@@ -404,7 +466,7 @@ export async function updateVendorIdentityAction(
     !useCustomColor &&
     !allowedColors.includes(presetColor as (typeof allowedColors)[number])
   ) {
-    return { message: "Unsupported brand color.", status: "error" }
+    return { message: t("errors.color"), status: "error" }
   }
 
   const brandColor = useCustomColor
@@ -413,13 +475,13 @@ export async function updateVendorIdentityAction(
 
   if (!brandColor) {
     return {
-      message: "Use a valid HEX, RGB, or HSL brand color.",
+      message: t("errors.invalidColor"),
       status: "error",
     }
   }
 
   if (!allowedFonts.includes(headingFont as (typeof allowedFonts)[number])) {
-    return { message: "Unsupported heading font.", status: "error" }
+    return { message: t("errors.font"), status: "error" }
   }
 
   const supabase = await createSupabaseServerClient()
@@ -435,12 +497,12 @@ export async function updateVendorIdentityAction(
 
   if (error) {
     console.error("Unable to update vendor appearance", error)
-    return { message: "Unable to save workspace appearance.", status: "error" }
+    return { message: t("errors.save"), status: "error" }
   }
 
   if (!updatedVendor) {
     return {
-      message: "This workspace did not allow the appearance update.",
+      message: t("errors.denied"),
       status: "error",
     }
   }
@@ -450,7 +512,7 @@ export async function updateVendorIdentityAction(
   refresh()
 
   return {
-    message: "Workspace appearance saved.",
+    message: t("saved"),
     savedAt: Date.now(),
     savedColor: updatedVendor.brand_color,
     savedFont: updatedVendor.heading_font,

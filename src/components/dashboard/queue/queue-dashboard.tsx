@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge"
+import { useTranslations } from "next-intl"
 import {
   Card,
   CardContent,
@@ -14,10 +15,16 @@ import {
 } from "@/components/ui/empty"
 import type { OrderWithItems } from "@/lib/supabase/types"
 
-import { statusLabel } from "../shared/format"
+import {
+  getOrderStatusMessageKey,
+  useDashboardFormats,
+} from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 
 export function QueueDashboard({ orders }: { orders: OrderWithItems[] }) {
+  const t = useTranslations("Queue")
+  const common = useTranslations("Common")
+  const format = useDashboardFormats()
   const visibleOrders = orders.filter((order) =>
     ["paid", "preparing", "ready"].includes(order.status)
   )
@@ -26,48 +33,56 @@ export function QueueDashboard({ orders }: { orders: OrderWithItems[] }) {
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="In queue"
-          note="Visible to staff/customer screen"
-          value={String(visibleOrders.length)}
+          label={t("inQueue")}
+          note={t("inQueueNote")}
+          value={format.integer(visibleOrders.length)}
         />
         <MetricCard
-          label="Ready now"
-          note="Tokens waiting for pickup"
-          value={String(visibleOrders.filter((order) => order.status === "ready").length)}
+          label={t("readyNow")}
+          note={t("readyNowNote")}
+          value={format.integer(
+            visibleOrders.filter((order) => order.status === "ready").length
+          )}
         />
         <MetricCard
-          label="Latest token"
-          note="Counter sequence"
-          value={`#${Math.max(...orders.map((order) => order.token_no), 0)}`}
+          label={t("latestToken")}
+          note={t("latestTokenNote")}
+          value={`#${format.integer(
+            Math.max(...orders.map((order) => order.token_no), 0)
+          )}`}
         />
       </div>
       {visibleOrders.length ? (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {visibleOrders.map((order) => (
+          {visibleOrders.map((order) => {
+            const statusKey = getOrderStatusMessageKey(order.status)
+
+            return (
             <Card key={order.id}>
               <CardHeader className="items-center text-center">
                 <Badge
                   variant={order.status === "ready" ? "default" : "outline"}
                 >
-                  {statusLabel[order.status]}
+                  {statusKey ? common(statusKey) : order.status}
                 </Badge>
               </CardHeader>
               <CardContent className="flex flex-col items-center gap-3 text-center">
-                <CardTitle className="text-5xl">#{order.token_no}</CardTitle>
+                <CardTitle className="text-5xl">
+                  #{format.integer(order.token_no)}
+                </CardTitle>
                 <CardDescription>
-                  {order.customer_label ?? "Counter"}
+                  {order.customer_label ?? t("counterFallback")}
                 </CardDescription>
               </CardContent>
             </Card>
-          ))}
+            )
+          })}
         </div>
       ) : (
         <Empty>
           <EmptyHeader>
-            <EmptyTitle>No visible queue</EmptyTitle>
-            <EmptyDescription>
-              Paid, preparing, and ready orders will appear here.
-            </EmptyDescription>
+            <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
+            <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
           </EmptyHeader>
         </Empty>
       )}

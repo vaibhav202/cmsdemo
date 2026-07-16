@@ -1,6 +1,7 @@
 "use client"
 
 import { ReceiptText } from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
   type FormEvent,
   useEffect,
@@ -31,7 +32,7 @@ import {
 import { Input } from "@/components/ui/input"
 import type { MenuItemWithCategory } from "@/lib/supabase/types"
 
-import { formatCurrency } from "../shared/format"
+import { useDashboardFormats } from "../shared/format"
 
 type OrderItemFormProps = {
   item: MenuItemWithCategory
@@ -40,11 +41,6 @@ type OrderItemFormProps = {
 }
 
 const ORDER_UNDO_DELAY_MS = 10_000
-
-function getErrorMessage(error: unknown) {
-  if (error instanceof Error) return error.message
-  return "Unable to create order."
-}
 
 function restoreScroll(scrollY: number) {
   const startedAt = Date.now()
@@ -65,6 +61,9 @@ export function OrderItemForm({
   vendorId,
   vendorSlug,
 }: OrderItemFormProps) {
+  const t = useTranslations("Order")
+  const common = useTranslations("Common.actions")
+  const format = useDashboardFormats()
   const formRef = useRef<HTMLFormElement>(null)
   const toastIdRef = useRef<string | number | null>(null)
   const timeoutRef = useRef<number | null>(null)
@@ -92,14 +91,17 @@ export function OrderItemForm({
     try {
       await createOrderAction(formData)
       formRef.current?.reset()
-      toast.success("Order sent to queue", {
-        description: `${item.name} was created after the undo window.`,
+      toast.success(t("feedback.createdTitle"), {
+        description: t("feedback.createdDescription", { item: item.name }),
       })
       restoreScroll(scrollY)
     } catch (submitError) {
-      const message = getErrorMessage(submitError)
+      const message =
+        submitError instanceof Error
+          ? submitError.message
+          : t("errors.generic")
       setError(message)
-      toast.error("Order could not be created", {
+      toast.error(t("feedback.failedTitle"), {
         description: message,
         duration: ORDER_UNDO_DELAY_MS,
       })
@@ -123,8 +125,8 @@ export function OrderItemForm({
     setIsScheduled(false)
 
     if (showCancelledToast) {
-      toast("Order cancelled", {
-        description: `${item.name} was not sent to the queue.`,
+      toast(t("feedback.cancelledTitle"), {
+        description: t("feedback.cancelledDescription", { item: item.name }),
       })
     }
   }
@@ -139,12 +141,12 @@ export function OrderItemForm({
     setError(null)
     setIsScheduled(true)
 
-    toastIdRef.current = toast.info("Order will be created in 10 seconds", {
+    toastIdRef.current = toast.info(t("feedback.scheduledTitle"), {
       action: {
-        label: "Undo",
+        label: common("undo"),
         onClick: () => clearScheduledOrder(),
       },
-      description: "Undo now if this counter order was tapped by mistake.",
+      description: t("feedback.scheduledDescription"),
       dismissible: false,
       duration: ORDER_UNDO_DELAY_MS + 500,
     })
@@ -179,12 +181,12 @@ export function OrderItemForm({
         <CardHeader>
           <CardTitle>{item.name}</CardTitle>
           <CardDescription>
-            {item.menu_categories?.name ?? "Menu"} ·{" "}
-            {formatCurrency(Number(item.price))}
+            {item.menu_categories?.name ?? t("menuFallback")} ·{" "}
+            {format.currency(Number(item.price))}
           </CardDescription>
           <CardAction>
             <Badge variant={item.in_stock ? "secondary" : "outline"}>
-              {item.in_stock ? "In stock" : "Off"}
+              {item.in_stock ? t("inStock") : t("off")}
             </Badge>
           </CardAction>
         </CardHeader>
@@ -192,15 +194,19 @@ export function OrderItemForm({
         <CardContent className="flex flex-col gap-3">
           <FieldGroup className="grid grid-cols-[minmax(0,1fr)_5rem] gap-3">
             <Field>
-              <FieldLabel htmlFor={`customer-${item.id}`}>Customer</FieldLabel>
+              <FieldLabel htmlFor={`customer-${item.id}`}>
+                {t("customer")}
+              </FieldLabel>
               <Input
-                defaultValue="Counter"
+                defaultValue={t("counterDefault")}
                 id={`customer-${item.id}`}
                 name="customerLabel"
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor={`quantity-${item.id}`}>Qty</FieldLabel>
+              <FieldLabel htmlFor={`quantity-${item.id}`}>
+                {t("quantity")}
+              </FieldLabel>
               <Input
                 defaultValue="1"
                 id={`quantity-${item.id}`}
@@ -222,10 +228,10 @@ export function OrderItemForm({
           >
             <ReceiptText data-icon="inline-start" />
             {isScheduled
-              ? "Undo available"
+              ? t("undoAvailable")
               : isSubmitting || pending
-                ? "Creating"
-                : "Add order"}
+                ? t("creating")
+                : t("addOrder")}
           </Button>
         </CardFooter>
       </form>

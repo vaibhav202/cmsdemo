@@ -1,11 +1,14 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { platformBrand } from "@/lib/brand";
-import { headingSerif } from "@/lib/fonts";
+import { getLocaleSansFont, localeFontVariables } from "@/lib/fonts";
 
 import "./globals.css";
 
@@ -19,35 +22,47 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: platformBrand.name,
-    template: `%s | ${platformBrand.name}`,
-  },
-  description: platformBrand.shortDescription,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
 
-export default function RootLayout({
+  return {
+    title: {
+      default: t("title"),
+      template: `%s | ${platformBrand.name}`,
+    },
+    description: t("description"),
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [locale, messages] = await Promise.all([getLocale(), getMessages()]);
+  const localeStyle = {
+    "--font-ui-sans": getLocaleSansFont(locale),
+  } as CSSProperties;
+
   return (
     <html
       suppressHydrationWarning
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${headingSerif.variable} h-full antialiased`}
+      lang={locale}
+      className={`${geistSans.variable} ${geistMono.variable} ${localeFontVariables} h-full antialiased`}
+      style={localeStyle}
     >
       <body
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-background text-foreground"
       >
-        <ThemeProvider>
-          <TooltipProvider>
-            {children}
-            <Toaster />
-          </TooltipProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <TooltipProvider>
+              {children}
+              <Toaster />
+            </TooltipProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

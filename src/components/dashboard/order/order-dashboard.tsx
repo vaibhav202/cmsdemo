@@ -1,4 +1,5 @@
 import { CardTitle } from "@/components/ui/card"
+import { useTranslations } from "next-intl"
 import {
   Empty,
   EmptyDescription,
@@ -10,7 +11,7 @@ import type {
   OrderWithItems,
 } from "@/lib/supabase/types"
 
-import { formatCurrency, isActiveOrder } from "../shared/format"
+import { isActiveOrder, useDashboardFormats } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
 import { OrderCard } from "../shared/order-card"
 import { CounterMenu } from "./counter-menu"
@@ -26,6 +27,8 @@ export function OrderDashboard({
   vendorId: string
   vendorSlug: string
 }) {
+  const t = useTranslations("Order")
+  const format = useDashboardFormats()
   const activeOrders = orders.filter(isActiveOrder)
   const paidOrders = orders.filter((order) => order.payment_status === "paid")
   const sales = paidOrders.reduce((total, order) => total + Number(order.total), 0)
@@ -34,19 +37,21 @@ export function OrderDashboard({
     <>
       <div className="grid gap-3 md:grid-cols-3">
         <MetricCard
-          label="Counter sales"
-          note="Paid counter orders"
-          value={formatCurrency(sales)}
+          label={t("metrics.sales")}
+          note={t("metrics.salesNote")}
+          value={format.currency(sales)}
         />
         <MetricCard
-          label="Active tokens"
-          note="Paid, preparing, or ready"
-          value={String(activeOrders.length)}
+          label={t("metrics.active")}
+          note={t("metrics.activeNote")}
+          value={format.integer(activeOrders.length)}
         />
         <MetricCard
-          label="Available items"
-          note="Menu items currently in stock"
-          value={String(menuItems.filter((item) => item.in_stock).length)}
+          label={t("metrics.available")}
+          note={t("metrics.availableNote")}
+          value={format.integer(
+            menuItems.filter((item) => item.in_stock).length
+          )}
         />
       </div>
 
@@ -58,7 +63,7 @@ export function OrderDashboard({
         />
 
         <aside className="flex flex-col gap-3">
-          <CardTitle>Active orders</CardTitle>
+          <CardTitle>{t("activeOrders")}</CardTitle>
           {activeOrders.length ? (
             activeOrders.map((order) => (
               <OrderCard key={order.id} order={order} vendorSlug={vendorSlug} />
@@ -66,10 +71,8 @@ export function OrderDashboard({
           ) : (
             <Empty>
               <EmptyHeader>
-                <EmptyTitle>No active orders</EmptyTitle>
-                <EmptyDescription>
-                  New paid orders will appear here after the undo window.
-                </EmptyDescription>
+                <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
+                <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
               </EmptyHeader>
             </Empty>
           )}
