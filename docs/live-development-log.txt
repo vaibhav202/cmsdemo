@@ -31,6 +31,21 @@ CURRENT UI DIRECTION
 
 LATEST CHANGES
 --------------
+- Hardened `scripts/check-i18n.mjs` into a catalog and rendering security gate. It now
+  rejects unexpected/oversized catalogs, unsafe structure or keys, markup/rich tags,
+  executable schemes, control and bidi-spoofing characters, invalid ICU contracts,
+  and prohibited raw HTML/dynamic-evaluation APIs under `src/`.
+- Added eight built-in security regression fixtures, including malicious markup, URL,
+  bidi, control-character, oversized-message, dangerous-key, and raw-React cases plus
+  a safe Indic ZWJ case.
+- Added `prebuild` enforcement so local and Vercel production builds cannot proceed when
+  translation security validation fails.
+- Added `.github/workflows/i18n-security.yml` for pull-request and `main` checks and
+  `.github/CODEOWNERS` ownership for catalogs and enforcement files. GitHub branch
+  protection still needs the documented external settings enabled.
+- Documented the React and next-intl raw/rich rendering boundary, public-catalog trust
+  model, prohibited APIs, contributor workflow, and repository protections in the
+  localization guide, product spec, UI guide, README, and AGENTS.md.
 - Added `next-intl` request configuration for stable, non-prefixed routes with locale
   resolution in this order: validated language cookie, `Accept-Language`, Marathi.
 - Added complete namespaced message catalogs for Marathi, English, Hindi, and Gujarati.
@@ -116,6 +131,13 @@ DATABASE TEST STATE
 
 VERIFICATION
 ------------
+- Hardened `npm run i18n:check`: passed for 320 messages across four locales, eight
+  security fixtures, and 88 application source files.
+- Explicit malicious probes: HTML-like script markup, `javascript:` schemes, bidi
+  overrides, and React raw-HTML rendering were rejected; safe Indic ZWJ text passed.
+- npm run lint and npx tsc --noEmit: passed after security enforcement changes.
+- npm run build: passed and visibly ran `prebuild` translation security validation before
+  the Next.js production build.
 - Clean temporary dependency install using only `package.json`, `package-lock.json`,
   and the committed `.npmrc`: `npm config get legacy-peer-deps` returned `true` and
   `npm install --ignore-scripts --no-audit --no-fund` installed 701 packages without
@@ -185,6 +207,9 @@ VERIFICATION
 
 OPEN RISKS / NEXT WORK
 ----------------------
+- Enable a GitHub ruleset or branch protection for `main` that requires pull requests,
+  `Validate translation security`, Code Owner approval, stale-approval dismissal, and
+  blocked force pushes/deletion. CODEOWNERS cannot enforce review until this is enabled.
 - Complete native-speaker review of Marathi across all phone-first operational flows;
   this is a release gate, not an optional copy edit.
 - Complete native review of the Hindi and Gujarati drafts before describing them as

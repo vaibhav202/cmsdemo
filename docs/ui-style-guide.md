@@ -92,6 +92,11 @@ or all navigation text. Vendor theming must not erase the platform identity.
   canonical numeric values even when surrounding read-only output uses localized digits.
 - Never render a dynamic display number with `String(value)` or raw JSX. Use the named
   next-intl formats through `useDashboardFormats`, `useFormatter`, or the server formatter.
+- Render translated copy only as ordinary React text or inert text attributes such as
+  labels, descriptions, placeholders, and accessible names. Do not use translations as
+  URLs, form actions, styles, IDs, or executable attributes.
+- Do not use `dangerouslySetInnerHTML`, direct DOM HTML injection, or next-intl raw,
+  markup, or rich translation APIs. Translation catalogs must not contain HTML-like tags.
 - Allow translated copy to wrap naturally; do not set fixed text widths based on English.
 - Marathi must be reviewed first on phone-sized order and kitchen workflows. Hindi and
   Gujarati remain draft-quality until native reviewers approve their terminology.
@@ -206,6 +211,8 @@ Do not add arbitrary z-index values. Do not override overlay z-index in feature 
   Marathi fallback, and unchanged route paths.
 - Verify representative integer, quantity, currency, token, date, time, and plural-count
   output in each locale's expected numeral system.
+- Run the enforced translation security check and obtain native review for destructive,
+  payment, role, permission, and error wording.
 - Check representative Marathi, Hindi, and Gujarati screens for clipping and unintended
   Latin-font fallback; complete the Marathi native review before pilot release.
 - Search `src/` for prohibited blur usage and unintended raw colors.

@@ -78,6 +78,9 @@ src/app/actions/locale.ts    validated preference cookie Server Action
 src/components/shell/
   language-control.tsx       shared language dropdown
 src/lib/fonts.ts             locale Sans and heading font coverage
+.github/CODEOWNERS           review ownership for catalogs and enforcement
+.github/workflows/
+  i18n-security.yml          pull-request and main-branch catalog security check
 ```
 
 Catalogs use one JSON file per locale. Every catalog has the same feature namespaces:
@@ -92,6 +95,73 @@ style inside Server Actions. Do not use raw JSX numbers or `String(number)` for 
 ICU plural `#` follows the locale's implicit default and can bypass an explicit numeral
 mapping, so plural messages should render a separately formatted value such as
 `formattedCount` when the configured numbering system must be guaranteed.
+
+## Translation Security Contract
+
+Translation catalogs are public application assets, not executable configuration and
+not a secret store. They may contain platform copy and ICU formatting instructions only.
+Do not put credentials, API keys, internal diagnostics, authorization decisions, HTML,
+URLs, or tenant data in `messages/*.json`.
+
+The application follows the security boundary described by the official guidance:
+
+- React renders translations as ordinary string children or inert text attributes.
+  React warns that untrusted raw HTML passed through `dangerouslySetInnerHTML` creates
+  an XSS risk: <https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html>.
+- next-intl parses normal ICU messages. Its raw-message guidance requires sanitization
+  before using `t.raw` with `dangerouslySetInnerHTML`:
+  <https://next-intl.dev/docs/usage/translations#raw-messages>.
+- Rich text in next-intl requires explicit tag-to-component functions. This project does
+  not permit catalog-controlled rich text, markup, attributes, or links:
+  <https://next-intl.dev/docs/usage/translations#rich-text>.
+
+The following APIs and patterns are prohibited under `src/`:
+
+- React `dangerouslySetInnerHTML`.
+- DOM `innerHTML`, `outerHTML`, or `insertAdjacentHTML`.
+- Dynamic evaluation through `eval` or `new Function`.
+- next-intl `t.raw`, `t.markup`, or `t.rich` rendering.
+- Translation values used as `href`, `src`, form actions, style values, or executable
+  attributes. URLs and link destinations must remain code-owned constants.
+- Runtime catalog downloads, tenant-uploaded catalogs, or direct production updates
+  from a translation service. External translations must enter through reviewed files.
+
+Introducing rich text or translated link destinations requires explicit security review,
+a narrow code-owned component allowlist, URL validation, sanitization where applicable,
+tests, and an update to this contract before implementation.
+
+### Automated enforcement
+
+`npm run i18n:check` is a required security gate. It validates:
+
+- The exact allowlisted catalog filenames and maximum catalog size.
+- JSON structure, nesting depth, message count, key shape, and dangerous object keys.
+- English-reference key parity, non-empty values, valid ICU syntax, and ICU argument parity.
+- Maximum message length, executable URL schemes, HTML/XML-like or ICU rich-text tags,
+  control characters, and invisible/bidirectional direction controls.
+- Application source for raw React/DOM HTML injection, dynamic evaluation, and next-intl
+  raw, markup, or rich translation APIs.
+- Built-in malicious fixtures plus a safe Indic ZWJ fixture on every run, preventing the
+  enforcement rules themselves from silently regressing. ZWJ and ZWNJ remain allowed
+  because they can be linguistically required; code-owned direction and layout handle RTL.
+
+The `prebuild` package script runs this gate automatically before every `npm run build`,
+including Vercel production builds. `.github/workflows/i18n-security.yml` runs it on every
+pull request and every push to `main`. `.github/CODEOWNERS` assigns the catalogs and their
+enforcement files to `@vaibhav202`.
+
+CODEOWNERS requests review but only becomes a merge requirement after GitHub branch
+protection or a ruleset is enabled. Protect `main` with all of the following:
+
+1. Require a pull request before merging.
+2. Require review from Code Owners and dismiss stale approvals after new commits.
+3. Require the `Validate translation security` status check.
+4. Block force pushes and branch deletion.
+
+Machine checks prevent injection-shaped content and structural corruption. They cannot
+decide whether a grammatically valid translation is deceptive. A native reviewer must
+still confirm that security warnings, destructive actions, payment states, roles, and
+permissions retain their intended meaning.
 
 ## Adding A Future Locale
 
@@ -122,6 +192,8 @@ Adding a language is a complete product slice, not only a JSON-file addition:
 9. Record the locale, reviewer status, verification, limitations, and release readiness
    in `docs/live-development-log.txt`, and update the supported-locale tables in this
    guide, `docs/product-spec.md`, `docs/ui-style-guide.md`, and `README.md`.
+10. Submit the change through a pull request. The catalog security workflow and code-owner
+    review must pass; do not import translations directly into the production branch.
 
 ## Translation Review
 

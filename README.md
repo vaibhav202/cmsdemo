@@ -54,12 +54,20 @@ The same app is then available on the phone at `http://127.0.0.1:3000`.
 
 ## Checks
 
+`npm run build` automatically runs the translation security gate first. Run it directly
+while editing catalogs for faster feedback:
+
 ```bash
 npm run i18n:check
 npm run lint
 npx tsc --noEmit
 npm run build
 ```
+
+Translation catalogs are public assets and must contain plain ICU messages only—never
+secrets, HTML, translated URLs, or tenant data. The full rendering boundary, automated
+rules, and required GitHub branch protection are documented in the
+[localization guide](docs/localization-guide.md#translation-security-contract).
 
 ## Architecture
 

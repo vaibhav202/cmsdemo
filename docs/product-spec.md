@@ -80,6 +80,12 @@ Must include:
   their canonical stored representation.
 - Message files use feature namespaces and ICU arguments. English is the structural
   reference locale; every locale must keep the same keys and argument contracts.
+- Translation catalogs are public, code-owned assets. They must never contain secrets,
+  tenant data, raw/rich HTML, executable URLs, or authorization decisions, and they may
+  only render through ordinary React text paths.
+- Catalog and rendering security validation must pass automatically before a production
+  build and on protected-branch pull requests. Native review remains required because
+  automation cannot determine whether valid wording is deceptive.
 - Marathi copy requires native-speaker review on the real phone workflows before the
   pilot gate can pass. Hindi and Gujarati are supported drafts and also require native
   review before they are presented as production-quality translations.
@@ -175,6 +181,8 @@ Security gate:
 - Supabase Auth memberships replace presentation cookies.
 - Cross-vendor reads and writes fail in automated/manual tests.
 - Disabled membership and role restrictions are verified.
+- The translation security check passes, catalog changes have code-owner approval, and
+  no raw HTML or catalog-controlled URL rendering path exists.
 
 Operations gate:
 

@@ -34,6 +34,11 @@ Security rules:
 - Frontend route guards improve UX; server validation and RLS enforce access.
 - Do not bypass RLS in user-facing flows or weaken staff policies for public ordering.
 - Ask before changing the tenant model, business model, customer authentication, or platform-admin access.
+- Treat `messages/*.json` as public, code-owned plain ICU data. Never place secrets,
+  tenant data, HTML, translated URLs, or authorization decisions in a catalog.
+- Do not use `dangerouslySetInnerHTML`, DOM HTML injection, dynamic evaluation, or
+  next-intl raw/markup/rich translation rendering. Run `npm run i18n:check` after
+  translation or rendering changes; production builds enforce it through `prebuild`.
 
 Working standard:
 

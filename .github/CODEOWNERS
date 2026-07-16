@@ -1,0 +1,7 @@
+# Translation catalogs and their enforcement rules require repository-owner review.
+/.github/ @vaibhav202
+/messages/ @vaibhav202
+/scripts/check-i18n.mjs @vaibhav202
+/src/i18n/ @vaibhav202
+/src/app/layout.tsx @vaibhav202
+/package.json @vaibhav202
