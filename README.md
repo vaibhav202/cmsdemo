@@ -6,6 +6,8 @@ workflow, queue handling, menu availability, inventory, ledger entries, and
 reports into one role-aware vendor workspace. The staff interface is Marathi-first
 for the Maharashtra pilot, with English, Hindi, and Gujarati also supported. Displayed
 numbers, currency, dates, and times use the selected language's numeral system.
+Device-local accessibility controls provide text sizing and weight preferences plus
+Standard, Color-safe, and High contrast profiles before and after sign-in.
 
 The project is in active development and is not production-ready yet. The current
 workspace uses temporary presentation authentication and Supabase preview policies.

@@ -137,6 +137,11 @@ pointer events; navigation controls remain the interactive surface.
 - Default Buttons use `primary`; vendor layouts override `primary` at runtime.
 - Destructive actions remain `destructive`, never vendor accent.
 - Status color must keep its operational meaning and must not become vendor-themed.
+- Active order states use one shared palette in Queue and Kitchen: `status-paid` is
+  muted blue, `status-preparing` is muted amber/orange, and `status-ready` is muted
+  green. Apply these colors to compact Badge text, a small status dot, a restrained
+  translucent fill, and a quiet border; do not flood the order card, metric card, or
+  workspace background.
 - `--platform-background` is the neutral light/dark foundation.
 - A vendor workspace mixes `--vendor-brand` into `--platform-background` at 2.5%,
   exactly half the leading 5% glass-surface tint.
@@ -155,6 +160,33 @@ pointer events; navigation controls remain the interactive surface.
 - Disable theme-change transitions to avoid distracting full-workspace color animation.
 - Keep `suppressHydrationWarning` on the root `html` element because `next-themes`
   updates its class before hydration.
+
+## Accessibility Preferences
+
+- Use the shadcn/Radix Slider for text size and text weight. Each thumb requires a
+  localized accessible name and `aria-valuetext`; a visual value alone is insufficient.
+- Text size supports 100% through 200% in 10% steps. Text weight supports Regular,
+  Medium, and Strong without flattening the distinction between ordinary, medium, and
+  semibold copy.
+- The root layout reads the validated `cms_platform_accessibility` cookie and renders
+  the matching size, weight, and `data-color-profile` before first paint. Client controls
+  update the same root values immediately and persist only this non-sensitive preference.
+- Keep accessibility preferences device-local until profile-backed preferences are
+  explicitly introduced. Never use this cookie for authorization, tenant selection,
+  business rules, or stored record formatting.
+- Offer Standard, Color-safe, and High contrast profiles. Color-safe presentation uses
+  semantic status/chart tokens designed to remain distinguishable for common color-vision
+  differences. Do not apply CSS filters that simulate color blindness or recolor photos,
+  logos, vendor artwork, or native color inputs.
+- High contrast can override vendor accent tokens. Accessibility takes precedence over
+  branding when the two conflict.
+- Status components use semantic tokens such as `status-paid`, `status-preparing`,
+  `status-ready`, and `destructive`.
+  Do not encode state only with hue: retain visible text and add icons, shapes, patterns,
+  or direct labels where a visualization otherwise depends on color.
+- Describe these settings as improving possible readability, not guaranteeing access or
+  WCAG conformance. Browser zoom, operating-system preferences, assistive technology,
+  and user testing remain part of the accessibility strategy.
 
 ## Layout And Responsive Rules
 
@@ -206,6 +238,15 @@ Do not add arbitrary z-index values. Do not override overlay z-index in feature 
 - Verify expanded and collapsed sidebar alignment.
 - Verify selected accent on primary buttons, readable foreground, and glass tint.
 - Verify Light, Dark, and System selection and the half-strength page tint.
+- Verify the 100%, 150%, and 200% text-size settings at desktop and phone widths without
+  hidden controls, horizontal page overflow, or unreachable fixed navigation.
+- Verify Regular, Medium, and Strong text weights with Latin, Devanagari, and Gujarati
+  fonts, including that headings remain visually distinct from body copy.
+- Verify Standard, Color-safe, and High contrast profiles in light and dark modes. Check
+  text contrast, focus rings, status labels, charts, and vendor-workspace overrides.
+- Operate both sliders with keyboard arrows and touch; confirm their localized accessible
+  names/value text and that an invalid preference cookie returns to the defaults.
+- Test 200% browser zoom separately; the in-app text-size control does not replace it.
 - Verify Sans and Serif heading settings after a reload.
 - Verify all four locale choices, cookie persistence, browser-language negotiation,
   Marathi fallback, and unchanged route paths.

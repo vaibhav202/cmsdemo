@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { logoutAction } from "@/app/actions/auth"
+import { AccessibilityMenu } from "@/components/accessibility/accessibility-control"
 import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -45,6 +46,7 @@ export function VendorTopbar({
         <div className="flex items-center gap-3">
           <LanguageMenu compact />
           <ThemeModeControl />
+          <AccessibilityMenu />
           <LiveClock initialIso={initialClockIso} />
           <Badge variant="secondary">{common(`roles.${user.role}`)}</Badge>
           <form action={logoutAction}>

@@ -17,6 +17,7 @@ import type { OrderWithItems } from "@/lib/supabase/types"
 
 import {
   getOrderStatusMessageKey,
+  getStatusVariant,
   useDashboardFormats,
 } from "../shared/format"
 import { MetricCard } from "../shared/metric-card"
@@ -60,9 +61,7 @@ export function QueueDashboard({ orders }: { orders: OrderWithItems[] }) {
             return (
             <Card key={order.id}>
               <CardHeader className="items-center text-center">
-                <Badge
-                  variant={order.status === "ready" ? "default" : "outline"}
-                >
+                <Badge variant={getStatusVariant(order.status)}>
                   {statusKey ? common(statusKey) : order.status}
                 </Badge>
               </CardHeader>

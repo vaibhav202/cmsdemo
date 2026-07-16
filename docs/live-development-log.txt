@@ -4,7 +4,7 @@ CMS PLATFORM - LIVE DEVELOPMENT HANDOFF
 STATUS
 ------
 State: Active development
-Last updated: 2026-07-16 (Asia/Kolkata)
+Last updated: 2026-07-17 (Asia/Kolkata)
 Current stack: Next.js 16 canary, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
 
 PURPOSE
@@ -28,9 +28,35 @@ CURRENT UI DIRECTION
 - Mobile navigation uses shadcn/Radix bottom Sheets from a fixed two-action bar.
 - The staff interface is Marathi-first with English, Hindi, and Gujarati support.
   Language and theme preferences are both available before authentication.
+- Device-local accessibility controls provide 100%-200% text sizing, three text-weight
+  levels, and Standard, Color-safe, or High contrast profiles before and after sign-in.
 
 LATEST CHANGES
 --------------
+- Added shared Paid, Preparing, and Ready Badge variants backed by semantic blue,
+  amber/orange, and green tokens. Queue and Kitchen now use the same status mapper,
+  with restrained translucent fills, quiet borders, and small matching dots rather than
+  full-card color. The first running-browser check exposed a stale Turbopack development
+  bundle still serving the removed `status-positive` token; the subsequent source update
+  regenerated the live stylesheet with all three current status tokens and Badge rules.
+- Defined separate light, dark, Color-safe, and High contrast values for every active
+  order status while retaining the translated status label as the primary state cue.
+- Added a global accessibility preference model with strict parsing for the
+  `cms_platform_accessibility` cookie. The Server Component root layout renders the
+  selected size, semantic font weights, and color profile before first paint; invalid
+  or edited values return to the 100%, Regular, Standard defaults.
+- Added official shadcn/Radix Slider and Popover primitives plus localized accessibility
+  controls on the login page, desktop top bar, and mobile Account Sheet. Slider values
+  use each locale's numeral system and expose localized accessible names/value text.
+- Text size supports 100%-200% in 10% steps. Text weight supports Regular, Medium, and
+  Strong while preserving the normal/medium/semibold hierarchy. Pointer drags preview
+  locally and commit on release so the control does not resize underneath the pointer.
+- Added Standard, Color-safe, and High contrast presentation profiles. Color-safe uses
+  semantic status/chart tokens rather than a page-wide simulation filter; High contrast
+  can override vendor branding, and operational meaning remains visible in text.
+- Documented the accessibility scope, device-local security boundary, WCAG Resize Text /
+  Use of Color / Non-text Contrast guidance, non-guarantee language, and verification
+  gates in the product spec, UI style guide, and README.
 - Hardened `scripts/check-i18n.mjs` into a catalog and rendering security gate. It now
   rejects unexpected/oversized catalogs, unsafe structure or keys, markup/rich tags,
   executable schemes, control and bidi-spoofing characters, invalid ICU contracts,
@@ -131,6 +157,32 @@ DATABASE TEST STATE
 
 VERIFICATION
 ------------
+- After the visibility correction, `npm run lint`, `npx tsc --noEmit`,
+  `npm run i18n:check`, and `git diff --check` passed. The stylesheet currently served
+  by localhost contains all three semantic token values plus the 15% fill, 40% border,
+  colored-text, and status-dot utilities. A new production build was not started while
+  the active Turbopack development server was using the shared `.next` directory.
+- `npm run lint`, `npx tsc --noEmit`, `npm run i18n:check`, `git diff --check`, and
+  `npm run build` passed after unifying Queue and Kitchen status colors. The generated
+  production CSS contains the new paid, preparing, and ready token utilities.
+- `npm run i18n:check` passed for 341 messages across four locales, eight security
+  fixtures, and 93 application source files after adding accessibility copy.
+- `npm run lint`, `npx tsc --noEmit`, `git diff --check`, and the final production
+  `npm run build` passed after the accessibility implementation. The build visibly ran
+  the translation security prebuild gate first.
+- Local production HTML checks confirmed that `200:500:high-contrast` renders a 200%
+  root size, 500/600/700 semantic weights, High contrast data attribute, Gujarati font,
+  and Gujarati copy. A malformed `999:999:javascript` cookie returned to the 100%,
+  400/500/600, Standard English defaults.
+- Checked selected profile foreground colors against their intended light/dark
+  foundations: sampled ratios ranged from 5.60:1 to 13.83:1. Status text remains
+  present independently of those colors.
+- Headless Firefox at 430x932 rendered the visible English login flow at the 200%,
+  Strong, High contrast settings without visible horizontal clipping; the top preference
+  controls wrapped and the content reflowed vertically. The CLI exited before its
+  client-mounted theme control was captured.
+- An authenticated 200% headless capture was attempted, but Firefox produced compositor /
+  shutdown artifacts, so it is not recorded as a dashboard visual pass.
 - Hardened `npm run i18n:check`: passed for 320 messages across four locales, eight
   security fixtures, and 88 application source files.
 - Explicit malicious probes: HTML-like script markup, `javascript:` schemes, bidi
@@ -207,6 +259,16 @@ VERIFICATION
 
 OPEN RISKS / NEXT WORK
 ----------------------
+- Complete a real-browser keyboard, touch, and screen-reader pass for both sliders,
+  localized value text, popover scrolling, profile persistence, and Reset. Recheck the
+  authenticated dashboard and mobile Account Sheet at 100%, 150%, and 200% on Android
+  Firefox; the headless authenticated capture was not reliable.
+- Validate Color-safe and High contrast presentation with users who have color-vision or
+  low-vision access needs. The current semantic palettes and contrast checks improve the
+  foundation but do not, by themselves, promise WCAG conformance or individual benefit.
+- When charts are implemented, pair hue with labels, shapes, or patterns and test every
+  chart in all three profiles; the current product has chart tokens but no complete chart
+  workflow to visually validate.
 - Enable a GitHub ruleset or branch protection for `main` that requires pull requests,
   `Validate translation security`, Code Owner approval, stale-approval dismissal, and
   blocked force pushes/deletion. CODEOWNERS cannot enforce review until this is enabled.

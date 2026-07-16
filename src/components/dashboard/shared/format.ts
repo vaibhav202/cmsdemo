@@ -2,7 +2,14 @@ import { useFormatter } from "next-intl"
 
 import type { OrderWithItems } from "@/lib/supabase/types"
 
-type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
+type BadgeVariant =
+  | "default"
+  | "secondary"
+  | "destructive"
+  | "outline"
+  | "paid"
+  | "preparing"
+  | "ready"
 
 const orderStatusMessageKeys = {
   paid: "orderStatus.paid",
@@ -35,7 +42,9 @@ export function useDashboardFormats() {
 }
 
 export function getStatusVariant(status: string): BadgeVariant {
-  if (status === "ready") return "default"
+  if (status === "paid") return "paid"
+  if (status === "preparing") return "preparing"
+  if (status === "ready") return "ready"
   if (status === "completed") return "secondary"
   if (status === "cancelled") return "destructive"
   return "outline"

@@ -68,7 +68,11 @@ export default async function VendorLayout({
   } as CSSProperties
 
   return (
-    <div className="min-h-svh bg-background" style={workspaceStyle}>
+    <div
+      className="min-h-svh bg-background"
+      data-vendor-workspace
+      style={workspaceStyle}
+    >
       <VendorShell
         homeHref={homeHref}
         initialClockIso={initialClockIso}

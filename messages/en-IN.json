@@ -68,7 +68,32 @@
     },
     "accessibility": {
       "mobileSidebarTitle": "Sidebar",
-      "mobileSidebarDescription": "Displays the mobile sidebar."
+      "mobileSidebarDescription": "Displays the mobile sidebar.",
+      "open": "Open accessibility settings",
+      "title": "Accessibility",
+      "description": "Adjust text and colors for more comfortable reading.",
+      "textSize": "Text size",
+      "textSizeDescription": "Scale text and layout without changing stored business data.",
+      "textSizeValue": "{value} text size",
+      "textWeight": "Text weight",
+      "textWeightDescription": "Increase stroke weight while preserving the visual hierarchy.",
+      "textWeightValue": "{value} weight",
+      "weights": {
+        "regular": "Regular",
+        "medium": "Medium",
+        "strong": "Strong"
+      },
+      "colorProfile": "Color profile",
+      "colorProfileDescription": "Profiles change semantic status and chart colors; text labels remain the source of meaning.",
+      "profiles": {
+        "default": "Standard",
+        "color-safe": "Color-safe",
+        "high-contrast": "High contrast"
+      },
+      "profileOptionLabel": "{profile} color profile",
+      "supportNote": "These settings can improve readability, but do not replace browser zoom or assistive technology.",
+      "deviceNote": "Saved only on this device.",
+      "reset": "Reset accessibility"
     }
   },
   "Auth": {

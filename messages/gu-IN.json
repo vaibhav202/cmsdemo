@@ -68,7 +68,32 @@
     },
     "accessibility": {
       "mobileSidebarTitle": "બાજુનું મેનૂ",
-      "mobileSidebarDescription": "મોબાઇલનું બાજુનું મેનૂ બતાવે છે."
+      "mobileSidebarDescription": "મોબાઇલનું બાજુનું મેનૂ બતાવે છે.",
+      "open": "સુલભતા સેટિંગ્સ ખોલો",
+      "title": "સુલભતા",
+      "description": "વાંચવામાં વધુ સરળતા માટે લખાણ અને રંગ બદલો.",
+      "textSize": "લખાણનું કદ",
+      "textSizeDescription": "સંગ્રહિત વ્યવસાયિક ડેટા બદલ્યા વિના લખાણ અને લેઆઉટ મોટું કરો.",
+      "textSizeValue": "{value} લખાણનું કદ",
+      "textWeight": "લખાણની જાડાઈ",
+      "textWeightDescription": "દૃશ્ય ક્રમ જાળવીને અક્ષરો વધુ જાડા કરો.",
+      "textWeightValue": "{value} જાડાઈ",
+      "weights": {
+        "regular": "સામાન્ય",
+        "medium": "મધ્યમ",
+        "strong": "વધુ જાડું"
+      },
+      "colorProfile": "રંગ પ્રોફાઇલ",
+      "colorProfileDescription": "પ્રોફાઇલ સ્થિતિ અને ચાર્ટના રંગ બદલે છે; અર્થ માટે લખાણ લેબલ યથાવત રહે છે.",
+      "profiles": {
+        "default": "માનક",
+        "color-safe": "રંગ-સુલભ",
+        "high-contrast": "ઉચ્ચ કોન્ટ્રાસ્ટ"
+      },
+      "profileOptionLabel": "{profile} રંગ પ્રોફાઇલ",
+      "supportNote": "આ સેટિંગ્સ વાંચવાની સરળતા સુધારી શકે છે; તે બ્રાઉઝર ઝૂમ અથવા સહાયક ટેકનોલોજીનું સ્થાન લેતી નથી.",
+      "deviceNote": "ફક્ત આ ડિવાઇસ પર સંગ્રહાય છે.",
+      "reset": "સુલભતા રીસેટ કરો"
     }
   },
   "Auth": {

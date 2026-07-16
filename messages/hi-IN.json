@@ -68,7 +68,32 @@
     },
     "accessibility": {
       "mobileSidebarTitle": "साइडबार",
-      "mobileSidebarDescription": "मोबाइल साइडबार दिखाता है।"
+      "mobileSidebarDescription": "मोबाइल साइडबार दिखाता है।",
+      "open": "सुगम्यता सेटिंग खोलें",
+      "title": "सुगम्यता",
+      "description": "पढ़ने में अधिक सुविधा के लिए टेक्स्ट और रंग बदलें।",
+      "textSize": "टेक्स्ट का आकार",
+      "textSizeDescription": "सहेजे गए व्यावसायिक डेटा को बदले बिना टेक्स्ट और लेआउट बड़ा करें।",
+      "textSizeValue": "{value} टेक्स्ट आकार",
+      "textWeight": "टेक्स्ट की मोटाई",
+      "textWeightDescription": "दृश्य क्रम बनाए रखते हुए अक्षरों को अधिक मोटा करें।",
+      "textWeightValue": "{value} मोटाई",
+      "weights": {
+        "regular": "सामान्य",
+        "medium": "मध्यम",
+        "strong": "अधिक मोटा"
+      },
+      "colorProfile": "रंग प्रोफ़ाइल",
+      "colorProfileDescription": "प्रोफ़ाइल स्थिति और चार्ट के रंग बदलती हैं; अर्थ के लिए टेक्स्ट लेबल बने रहते हैं।",
+      "profiles": {
+        "default": "मानक",
+        "color-safe": "रंग-सुलभ",
+        "high-contrast": "उच्च कॉन्ट्रास्ट"
+      },
+      "profileOptionLabel": "{profile} रंग प्रोफ़ाइल",
+      "supportNote": "ये सेटिंग पढ़ने की सुविधा बेहतर कर सकती हैं; ये ब्राउज़र ज़ूम या सहायक तकनीक की जगह नहीं लेतीं।",
+      "deviceNote": "केवल इस डिवाइस पर सहेजा जाता है।",
+      "reset": "सुगम्यता रीसेट करें"
     }
   },
   "Auth": {

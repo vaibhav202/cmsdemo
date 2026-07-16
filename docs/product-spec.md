@@ -53,6 +53,8 @@ Must include:
   reorder levels, stock-in, stock-out, and movement history.
 - Vendor logo, menu image, and staff avatar uploads normalized server-side.
 - Terms, Privacy, support contact, vendor settings, and sensitive-action audit logs.
+- Device-local text size, text weight, Color-safe, and High contrast accessibility
+  preferences available before and after authentication.
 - Cross-vendor RLS tests, role tests, mobile workflow tests, and order lifecycle tests.
 
 ## Language And Localization Contract
@@ -89,6 +91,37 @@ Must include:
 - Marathi copy requires native-speaker review on the real phone workflows before the
   pilot gate can pass. Hindi and Gujarati are supported drafts and also require native
   review before they are presented as production-quality translations.
+
+## Accessibility And Visual Preferences Contract
+
+- Staff can adjust text size from 100% to 200%, choose Regular, Medium, or Strong text
+  weight, and select Standard, Color-safe, or High contrast color presentation.
+- Accessibility settings are available before sign-in, in the authenticated desktop
+  top bar, and in the mobile Account Sheet. Values and accessible value text follow the
+  selected UI locale and numeral system.
+- Preferences are presentation-only and device-local for the MVP. The validated
+  `cms_platform_accessibility` cookie may change rendering but must never influence
+  tenant access, roles, business data, pricing, or Server Action authorization.
+- Invalid or edited cookie values fall back to the default 100%, Regular, Standard
+  profile. Authenticated profile synchronization may be added later without changing
+  the authorization model.
+- Color-safe presentation changes semantic status and chart tokens; it does not apply a
+  visual-impairment simulation filter to the page, photos, menu images, or vendor artwork.
+  High contrast may override vendor accent presentation where necessary for legibility.
+- Queue and Kitchen use the same active-order status mapping: Paid is blue, Preparing is
+  amber/orange, and Ready is green. Status color stays restrained inside a labeled Badge
+  with a small matching dot; full-card color fills are outside the calm operational UI
+  direction.
+- Color is never the only way to communicate an order, payment, stock, validation, or
+  membership state. Visible text remains mandatory, with icons or shapes added where
+  dense visualizations need another distinguishing cue.
+- These controls are assistive options, not a promise of WCAG conformance and not a
+  replacement for browser zoom, screen readers, operating-system settings, or testing
+  with disabled users. The interface must still support 200% browser zoom and reflow.
+- The implementation follows WCAG 2.2 guidance for
+  [Resize Text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html),
+  [Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html), and
+  [Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
 
 ## Future Language Expansion
 
@@ -199,6 +232,10 @@ Pilot gate:
 - Known limitations and support expectations are documented.
 - A native Marathi reviewer completes the login, order, kitchen, queue, inventory,
   control, ledger, and reports terminology review on a representative phone viewport.
+- Text remains usable at the 100%, 150%, and 200% in-app settings and at 200% browser
+  zoom; keyboard and touch users can operate both sliders and all profile choices.
+- Standard, Color-safe, and High contrast profiles are checked in light and dark modes,
+  and no tested operational state relies on color alone.
 
 ## Open Decisions
 

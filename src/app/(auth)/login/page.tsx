@@ -6,6 +6,7 @@ import { getLocale, getTranslations } from "next-intl/server"
 import { LoginForm } from "@/app/(auth)/login/login-form"
 import { LanguageMenu } from "@/components/shell/language-control"
 import { ThemeModeControl } from "@/components/shell/theme-mode-control"
+import { AccessibilityMenu } from "@/components/accessibility/accessibility-control"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -59,9 +60,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <main className="min-h-svh px-4 py-5 sm:px-6 lg:px-8">
       <div className="mx-auto grid min-h-[calc(100svh-2.5rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[minmax(0,1fr)_420px]">
         <section className="flex flex-col gap-7">
-          <div className="flex justify-end gap-2 lg:hidden">
+          <div className="flex flex-wrap justify-end gap-2 lg:hidden">
             <LanguageMenu />
             <ThemeModeControl />
+            <AccessibilityMenu />
           </div>
           <div className="flex items-center gap-3">
             <Badge
@@ -101,9 +103,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         </section>
 
         <section className="flex flex-col gap-4">
-          <div className="hidden justify-end gap-2 lg:flex">
+          <div className="hidden flex-wrap justify-end gap-2 lg:flex">
             <LanguageMenu />
             <ThemeModeControl />
+            <AccessibilityMenu />
           </div>
           <Card>
             <CardHeader>

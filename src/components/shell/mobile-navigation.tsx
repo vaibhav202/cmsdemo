@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl"
 import type { ReactNode } from "react"
 
 import { logoutAction } from "@/app/actions/auth"
+import { AccessibilitySettings } from "@/components/accessibility/accessibility-control"
 import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -254,6 +255,18 @@ export function MobileNavigation({
                 </CardHeader>
                 <CardContent>
                   <LanguageMenu fullWidth />
+                </CardContent>
+              </Card>
+
+              <Card size="sm">
+                <CardHeader>
+                  <CardTitle>{common("accessibility.title")}</CardTitle>
+                  <CardDescription>
+                    {common("accessibility.description")}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <AccessibilitySettings />
                 </CardContent>
               </Card>
 

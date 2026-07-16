@@ -1,12 +1,19 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
+import { AccessibilityProvider } from "@/components/accessibility/accessibility-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
+import {
+  accessibilityCookieName,
+  getAccessibilityStyle,
+  parseAccessibilityPreferences,
+} from "@/lib/accessibility-preferences";
 import { platformBrand } from "@/lib/brand";
 import { getLocaleSansFont, localeFontVariables } from "@/lib/fonts";
 
@@ -39,15 +46,24 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [locale, messages] = await Promise.all([getLocale(), getMessages()]);
+  const [locale, messages, cookieStore] = await Promise.all([
+    getLocale(),
+    getMessages(),
+    cookies(),
+  ]);
+  const accessibilityPreferences = parseAccessibilityPreferences(
+    cookieStore.get(accessibilityCookieName)?.value
+  );
   const localeStyle = {
     "--font-ui-sans": getLocaleSansFont(locale),
+    ...getAccessibilityStyle(accessibilityPreferences),
   } as CSSProperties;
 
   return (
     <html
       suppressHydrationWarning
       lang={locale}
+      data-color-profile={accessibilityPreferences.colorProfile}
       className={`${geistSans.variable} ${geistMono.variable} ${localeFontVariables} h-full antialiased`}
       style={localeStyle}
     >
@@ -56,12 +72,14 @@ export default async function RootLayout({
         className="min-h-full flex flex-col bg-background text-foreground"
       >
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <TooltipProvider>
-              {children}
-              <Toaster />
-            </TooltipProvider>
-          </ThemeProvider>
+          <AccessibilityProvider initialPreferences={accessibilityPreferences}>
+            <ThemeProvider>
+              <TooltipProvider>
+                {children}
+                <Toaster />
+              </TooltipProvider>
+            </ThemeProvider>
+          </AccessibilityProvider>
         </NextIntlClientProvider>
       </body>
     </html>

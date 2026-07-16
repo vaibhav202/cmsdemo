@@ -68,7 +68,32 @@
     },
     "accessibility": {
       "mobileSidebarTitle": "बाजूचा मेनू",
-      "mobileSidebarDescription": "मोबाइलवरील बाजूचा मेनू दाखवतो."
+      "mobileSidebarDescription": "मोबाइलवरील बाजूचा मेनू दाखवतो.",
+      "open": "सुलभता सेटिंग्ज उघडा",
+      "title": "सुलभता",
+      "description": "मजकूर आणि रंग वाचायला अधिक सोयीचे करा.",
+      "textSize": "मजकुराचा आकार",
+      "textSizeDescription": "जतन केलेल्या व्यावसायिक डेटामध्ये बदल न करता मजकूर आणि मांडणी मोठी करा.",
+      "textSizeValue": "{value} मजकूर आकार",
+      "textWeight": "मजकुराची जाडी",
+      "textWeightDescription": "दृश्य क्रम कायम ठेवून अक्षरे अधिक ठळक करा.",
+      "textWeightValue": "{value} जाडी",
+      "weights": {
+        "regular": "सामान्य",
+        "medium": "ठळक",
+        "strong": "अधिक ठळक"
+      },
+      "colorProfile": "रंग प्रोफाइल",
+      "colorProfileDescription": "प्रोफाइल स्थिती आणि आलेखांचे रंग बदलतात; अर्थासाठी मजकूर लेबले कायम राहतात.",
+      "profiles": {
+        "default": "मानक",
+        "color-safe": "रंग-सुलभ",
+        "high-contrast": "उच्च विरोधाभास"
+      },
+      "profileOptionLabel": "{profile} रंग प्रोफाइल",
+      "supportNote": "या सेटिंग्जमुळे वाचनीयता सुधारू शकते; त्या ब्राउझर झूम किंवा सहाय्यक तंत्रज्ञानाची जागा घेत नाहीत.",
+      "deviceNote": "फक्त या डिव्हाइसवर जतन होते.",
+      "reset": "सुलभता रीसेट करा"
     }
   },
   "Auth": {
