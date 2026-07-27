@@ -1,6 +1,6 @@
 import {
-  Noto_Sans_Devanagari,
-  Noto_Sans_Gujarati,
+  Anek_Devanagari,
+  Anek_Gujarati,
   Noto_Serif_Devanagari,
   Noto_Serif_Gujarati,
 } from "next/font/google"
@@ -17,11 +17,11 @@ export const headingSerif = localFont({
   weight: "400 700",
 })
 
-const notoSansDevanagari = Noto_Sans_Devanagari({
+const anekDevanagari = Anek_Devanagari({
   display: "swap",
   preload: false,
   subsets: ["devanagari"],
-  variable: "--font-noto-sans-devanagari",
+  variable: "--font-anek-devanagari",
   weight: "variable",
 })
 
@@ -33,11 +33,11 @@ const notoSerifDevanagari = Noto_Serif_Devanagari({
   weight: "variable",
 })
 
-const notoSansGujarati = Noto_Sans_Gujarati({
+const anekGujarati = Anek_Gujarati({
   display: "swap",
   preload: false,
   subsets: ["gujarati"],
-  variable: "--font-noto-sans-gujarati",
+  variable: "--font-anek-gujarati",
   weight: "variable",
 })
 
@@ -51,19 +51,19 @@ const notoSerifGujarati = Noto_Serif_Gujarati({
 
 export const localeFontVariables = [
   headingSerif.variable,
-  notoSansDevanagari.variable,
+  anekDevanagari.variable,
   notoSerifDevanagari.variable,
-  notoSansGujarati.variable,
+  anekGujarati.variable,
   notoSerifGujarati.variable,
 ].join(" ")
 
 export function getLocaleSansFont(locale: AppLocale) {
   if (locale === "mr-IN" || locale === "hi-IN") {
-    return "var(--font-noto-sans-devanagari), var(--font-geist-sans), sans-serif"
+    return "var(--font-geist-sans), var(--font-anek-devanagari), sans-serif"
   }
 
   if (locale === "gu-IN") {
-    return "var(--font-noto-sans-gujarati), var(--font-geist-sans), sans-serif"
+    return "var(--font-geist-sans), var(--font-anek-gujarati), sans-serif"
   }
 
   return "var(--font-geist-sans), sans-serif"
@@ -76,11 +76,11 @@ export function getLocaleHeadingFont(
   if (font !== "serif") return getLocaleSansFont(locale)
 
   if (locale === "mr-IN" || locale === "hi-IN") {
-    return "var(--font-noto-serif-devanagari), var(--font-libre-baskerville), serif"
+    return "var(--font-libre-baskerville), var(--font-noto-serif-devanagari), serif"
   }
 
   if (locale === "gu-IN") {
-    return "var(--font-noto-serif-gujarati), var(--font-libre-baskerville), serif"
+    return "var(--font-libre-baskerville), var(--font-noto-serif-gujarati), serif"
   }
 
   return "var(--font-libre-baskerville), Georgia, serif"

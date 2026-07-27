@@ -57,12 +57,14 @@ or all navigation text. Vendor theming must not erase the platform identity.
 
 ## Typography
 
-- Body and control text use `font-sans`. The root locale supplies Geist Sans,
-  Noto Sans Devanagari, or Noto Sans Gujarati through `--font-ui-sans`.
+- Body and control text use `font-sans`. Latin glyphs resolve to Geist Sans first in
+  every locale; Devanagari and Gujarati glyphs fall through to Anek Devanagari or
+  Anek Gujarati through `--font-ui-sans`.
 - Product and workspace headings use `font-heading`.
 - `font-heading` resolves through the runtime `--heading-font-family` token.
-- Locale-aware heading fallbacks use Noto Serif Devanagari or Noto Serif Gujarati
-  when a vendor selects the serif heading option.
+- When a vendor selects the serif heading option, Latin glyphs resolve to local Libre
+  Baskerville first and Indic glyphs fall through to Noto Serif Devanagari or
+  Noto Serif Gujarati.
 - Page `h1` and major section titles may use the selected heading font.
 - Compact labels, table text, input text, badges, and long descriptions remain Sans.
 - Do not apply serif to dense operational data.

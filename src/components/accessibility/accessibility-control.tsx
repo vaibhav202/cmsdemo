@@ -42,6 +42,24 @@ const weightMessageKeys = {
   500: "strong",
 } as const
 
+function ColorProfilePreview({ profile }: { profile: ColorProfile }) {
+  return (
+    <span
+      aria-hidden
+      className="flex shrink-0 items-center gap-1.5"
+      data-color-profile-preview={profile}
+    >
+      <span className="size-4 rounded-full border" data-profile-surface />
+      <span className="size-3 rounded-full border" data-profile-status="paid" />
+      <span
+        className="size-3 rounded-full border"
+        data-profile-status="preparing"
+      />
+      <span className="size-3 rounded-full border" data-profile-status="ready" />
+    </span>
+  )
+}
+
 export function AccessibilitySettings() {
   const {
     colorProfile,
@@ -137,11 +155,17 @@ export function AccessibilitySettings() {
             return (
               <ToggleGroupItem
                 aria-label={t("profileOptionLabel", { profile: label })}
-                className="h-auto min-h-10 w-full justify-start whitespace-normal py-2 text-left"
+                className="h-auto min-h-16 w-full justify-between gap-3 whitespace-normal px-3 py-3 text-left"
                 key={profile}
                 value={profile}
               >
-                {label}
+                <span className="flex min-w-0 flex-1 flex-col gap-1">
+                  <span className="font-medium">{label}</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t(`profileDescriptions.${profile}`)}
+                  </span>
+                </span>
+                <ColorProfilePreview profile={profile} />
               </ToggleGroupItem>
             )
           })}

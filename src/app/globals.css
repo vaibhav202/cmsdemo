@@ -272,6 +272,54 @@ html[data-color-profile="high-contrast"] [data-vendor-workspace] {
   --vendor-brand-foreground: var(--accessibility-action-foreground) !important;
 }
 
+[data-color-profile-preview="default"] {
+  --profile-preview-background: #ffffff;
+  --profile-preview-foreground: #27272a;
+  --profile-preview-paid: #2c5a82;
+  --profile-preview-preparing: #765515;
+  --profile-preview-ready: #306548;
+}
+
+[data-color-profile-preview="color-safe"] {
+  --profile-preview-background: #ffffff;
+  --profile-preview-foreground: #27272a;
+  --profile-preview-paid: #006397;
+  --profile-preview-preparing: #805200;
+  --profile-preview-ready: #006e50;
+}
+
+[data-color-profile-preview="high-contrast"] {
+  --profile-preview-background: #ffffff;
+  --profile-preview-foreground: #000000;
+  --profile-preview-paid: #004f84;
+  --profile-preview-preparing: #704600;
+  --profile-preview-ready: #005d32;
+}
+
+.dark [data-color-profile-preview="default"] {
+  --profile-preview-background: #18181b;
+  --profile-preview-foreground: #ffffff;
+  --profile-preview-paid: #9ac7eb;
+  --profile-preview-preparing: #ebbc65;
+  --profile-preview-ready: #9bd4b8;
+}
+
+.dark [data-color-profile-preview="color-safe"] {
+  --profile-preview-background: #18181b;
+  --profile-preview-foreground: #ffffff;
+  --profile-preview-paid: #78cef5;
+  --profile-preview-preparing: #f2c765;
+  --profile-preview-ready: #60d5ae;
+}
+
+.dark [data-color-profile-preview="high-contrast"] {
+  --profile-preview-background: #000000;
+  --profile-preview-foreground: #ffffff;
+  --profile-preview-paid: #83d0ff;
+  --profile-preview-preparing: #ffd27a;
+  --profile-preview-ready: #70dfa5;
+}
+
 @layer components {
   .glass-surface {
     background-color: var(--glass-base);
@@ -298,6 +346,34 @@ html[data-color-profile="high-contrast"] [data-vendor-workspace] {
       color-mix(in srgb, var(--mobile-navigation-fade) 62%, transparent) 58%,
       transparent 100%
     );
+  }
+
+  [data-color-profile-preview] [data-profile-surface] {
+    background-image: linear-gradient(
+      135deg,
+      var(--profile-preview-background) 0 50%,
+      var(--profile-preview-foreground) 50% 100%
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--profile-preview-foreground) 45%,
+      transparent
+    );
+  }
+
+  [data-color-profile-preview] [data-profile-status="paid"] {
+    background-color: var(--profile-preview-paid);
+    border-color: var(--profile-preview-paid);
+  }
+
+  [data-color-profile-preview] [data-profile-status="preparing"] {
+    background-color: var(--profile-preview-preparing);
+    border-color: var(--profile-preview-preparing);
+  }
+
+  [data-color-profile-preview] [data-profile-status="ready"] {
+    background-color: var(--profile-preview-ready);
+    border-color: var(--profile-preview-ready);
   }
 }
 

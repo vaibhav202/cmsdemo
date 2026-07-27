@@ -23,6 +23,9 @@ unfamiliar language.
   `Accept-Language` preference, then `mr-IN`.
 - The root layout sets the matching HTML `lang`, locale font variables, translated
   metadata, and the `next-intl` provider used by interactive client components.
+- Font stacks are script-prioritized rather than locale-exclusive: Geist remains first for
+  Latin glyphs in every Sans locale stack, while Devanagari and Gujarati fall through to
+  their Anek script fonts. Mixed-script vendor content therefore preserves Geist English.
 - React Server Components resolve translations and locale-aware formats on the server.
 - Language changes run through a Server Action that validates the locale, writes an
   HTTP-only same-site cookie, and refreshes the current route.
@@ -179,7 +182,8 @@ Adding a language is a complete product slice, not only a JSON-file addition:
    the list checked by `scripts/check-i18n.mjs`.
 5. Add suitable Sans and Serif/heading font coverage in `src/lib/fonts.ts`. Prefer a
    script-specific font that covers both platform copy and vendor-entered mixed text;
-   keep Latin fallbacks for emails, identifiers, and mixed-script names.
+   keep the intended Latin family first so emails, identifiers, and mixed-script names do
+   not inherit Latin glyphs bundled inside an Indic font.
 6. Review every numeric named format in `src/i18n/request.ts`. Add the locale's Unicode
    numbering-system identifier and verify integers, decimals, currency, dates, times,
    tokens, and plural counts. Canonical form and database values must remain numeric.

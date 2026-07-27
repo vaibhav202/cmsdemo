@@ -4,7 +4,7 @@ CMS PLATFORM - LIVE DEVELOPMENT HANDOFF
 STATUS
 ------
 State: Active development
-Last updated: 2026-07-17 (Asia/Kolkata)
+Last updated: 2026-07-26 (Asia/Kolkata)
 Current stack: Next.js 16 canary, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
 
 PURPOSE
@@ -33,6 +33,23 @@ CURRENT UI DIRECTION
 
 LATEST CHANGES
 --------------
+- Replaced Noto Sans Devanagari and Noto Sans Gujarati with variable Anek Devanagari
+  and Anek Gujarati for body and control text. Sans locale stacks now place Geist first,
+  so Latin/English remains Geist in every locale while unsupported Indic glyphs fall
+  through to the matching Anek script font, including mixed-script vendor content.
+- Corrected serif heading stack order at the same boundary: Latin uses local Libre
+  Baskerville first and Devanagari/Gujarati fall through to the existing Noto Serif fonts.
+  Added the Anek SIL Open Font License 1.1 notice under `src/assets/fonts/`.
+- Reworked the accessibility color-profile selector into three descriptive, full-width
+  ToggleGroup options. Standard, Color-safe, and High contrast now preview their
+  light/dark surface pair plus Paid, Preparing, and Ready semantic colors before selection,
+  so Color-safe remains understandable on login and other pages without live statuses or charts.
+- Added localized profile descriptions across Marathi, English, Hindi, and Gujarati while
+  preserving the existing device-local cookie contract and immediate root-token updates.
+- Diagnosed the deployed `https://kotdemo.vercel.app` accessibility failure as stale
+  production CSS rather than a control or cookie bug. Firefox confirmed that production
+  updates and persists `data-color-profile`, but its immutable stylesheet contains no
+  Color-safe, High contrast, or semantic status rules; a fresh Vercel deployment is required.
 - Added shared Paid, Preparing, and Ready Badge variants backed by semantic blue,
   amber/orange, and green tokens. Queue and Kitchen now use the same status mapper,
   with restrained translucent fills, quiet borders, and small matching dots rather than
@@ -157,6 +174,27 @@ DATABASE TEST STATE
 
 VERIFICATION
 ------------
+- After the Anek migration, `npm run lint`, `npx tsc --noEmit`, `npm run i18n:check`,
+  and `npm run build` passed. The production build self-hosts Anek Devanagari and Anek
+  Gujarati and contains no application references to Noto Sans.
+- Production-server locale checks rendered `Geist -> Anek Devanagari` for Marathi/Hindi,
+  `Geist -> Anek Gujarati` for Gujarati, and Geist alone for English. Clean Firefox 153
+  captures at 430x932 confirmed Anek Indic copy, Geist English/mixed-script content, and
+  no visible horizontal clipping on Marathi or Gujarati login flows.
+- After the color-profile selector rework, `npm run lint`, `npx tsc --noEmit`, and
+  `npm run i18n:check` passed. The localization gate validated 344 messages across four
+  locales, eight security fixtures, and 93 application source files.
+- Clean Firefox 153 WebDriver BiDi at 430x932 rendered all three descriptive profile
+  options and three palette previews inside the accessibility popover without horizontal
+  overflow. Selecting Color-safe immediately set the root profile and resolved
+  `--status-paid` to `#006397`.
+- Comparative Firefox testing confirmed localhost applies and persists High contrast
+  (`#fff` background, `#000` foreground, `#004f84` Paid), while the current Vercel
+  deployment persists the cookie/attribute but resolves none of those profile tokens.
+- An isolated `npm run build` passed without touching the active dev server's `.next`
+  directory. Its emitted production CSS contains both profile selectors, all three preview
+  selectors, the vendor-workspace High contrast override, and all six light/dark values
+  for each Paid, Preparing, and Ready token.
 - After the visibility correction, `npm run lint`, `npx tsc --noEmit`,
   `npm run i18n:check`, and `git diff --check` passed. The stylesheet currently served
   by localhost contains all three semantic token values plus the 15% fill, 40% border,
@@ -259,6 +297,9 @@ VERIFICATION
 
 OPEN RISKS / NEXT WORK
 ----------------------
+- Redeploy the current source to Vercel, then repeat the clean Firefox profile switch and
+  reload check against `https://kotdemo.vercel.app`. The current deployment serves stale
+  immutable CSS without the profile or semantic status selectors.
 - Complete a real-browser keyboard, touch, and screen-reader pass for both sliders,
   localized value text, popover scrolling, profile persistence, and Reset. Recheck the
   authenticated dashboard and mobile Account Sheet at 100%, 150%, and 200% on Android
@@ -277,7 +318,9 @@ OPEN RISKS / NEXT WORK
 - Complete native review of the Hindi and Gujarati drafts before describing them as
   production-quality translations.
 - Visually test long Marathi, Hindi, and Gujarati labels at desktop and phone viewports,
-  including Android Firefox. Include native digit clarity in tokens, quantities,
+  including Android Firefox. Review Anek at 100%, 150%, and 200% text size plus Regular,
+  Medium, and Strong weights with native speakers before release. Include native digit
+  clarity in tokens, quantities,
   currency, dates, times, and editable numeric fields. This implementation pass verified
   rendered server HTML, but did not perform a new screenshot or physical-device pass.
 - Persist locale to the authenticated staff profile when profile-backed preferences are

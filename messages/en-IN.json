@@ -90,6 +90,11 @@
         "color-safe": "Color-safe",
         "high-contrast": "High contrast"
       },
+      "profileDescriptions": {
+        "default": "Platform and vendor colors.",
+        "color-safe": "Distinct blue, amber, and teal status colors.",
+        "high-contrast": "Stronger black-and-white surfaces and borders."
+      },
       "profileOptionLabel": "{profile} color profile",
       "supportNote": "These settings can improve readability, but do not replace browser zoom or assistive technology.",
       "deviceNote": "Saved only on this device.",
