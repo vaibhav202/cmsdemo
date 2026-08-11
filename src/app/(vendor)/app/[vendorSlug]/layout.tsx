@@ -7,15 +7,16 @@ import {
   getVendorAccentForeground,
   normalizeVendorAccent,
   platformBrand,
-} from "@/lib/brand"
+} from "@/features/vendors/brand"
 import { getLocaleHeadingFont } from "@/lib/fonts"
-import { requireWorkspaceSession } from "@/lib/workspace-auth"
+import { getCurrentMemberMedia } from "@/lib/media/assets"
+import { requireWorkspaceSession } from "@/features/auth/demo-session"
 import {
   getAllowedModules,
   getModuleHref,
-} from "@/lib/permissions"
+} from "@/features/memberships/permissions"
 import { VendorNotFoundError } from "@/lib/supabase/errors"
-import { getVendorBySlug } from "@/lib/supabase/queries"
+import { getVendorBySlug } from "@/features/vendors/data"
 
 type VendorLayoutProps = {
   children: React.ReactNode
@@ -55,6 +56,7 @@ export default async function VendorLayout({
   }))
   const vendorAccent = normalizeVendorAccent(vendor.brand_color)
   const vendorAccentForeground = getVendorAccentForeground(vendorAccent)
+  const currentMemberMedia = await getCurrentMemberMedia(vendor.id)
   const workspaceStyle = {
     "--background":
       "color-mix(in srgb, var(--vendor-brand) 2.5%, var(--platform-background))",
@@ -79,16 +81,22 @@ export default async function VendorLayout({
         navItems={navItems}
         platformName={platformBrand.name}
         user={{
+          avatarUrl: currentMemberMedia?.avatarUrl ?? null,
           email: session.user.email,
+          mediaMode:
+            process.env.NODE_ENV === "production" ? "production" : "demo",
+          memberId: currentMemberMedia?.memberId ?? null,
           name: session.user.name,
           role: session.user.role,
           status: session.user.status,
         }}
         vendor={{
+          logoUrl: vendor.logo_url,
           location: vendor.location,
           name: vendor.name,
         }}
         vendorInitial={vendorInitial}
+        vendorSlug={vendorSlug}
       >
         {children}
       </VendorShell>

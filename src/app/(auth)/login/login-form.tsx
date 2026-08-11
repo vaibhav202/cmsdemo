@@ -4,7 +4,7 @@ import { useActionState } from "react"
 import { KeyRound, LogIn, Mail } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { loginAction, type LoginState } from "@/app/actions/auth"
+import { loginAction, type LoginState } from "@/features/auth/actions"
 import { Button } from "@/components/ui/button"
 import {
   Field,

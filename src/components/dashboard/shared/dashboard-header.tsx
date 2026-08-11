@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl"
 
-import type { ModuleKey } from "@/lib/permissions"
+import type { ModuleKey } from "@/features/memberships/permissions"
 
 export function DashboardHeader({
   module,

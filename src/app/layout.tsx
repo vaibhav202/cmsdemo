@@ -14,7 +14,7 @@ import {
   getAccessibilityStyle,
   parseAccessibilityPreferences,
 } from "@/lib/accessibility-preferences";
-import { platformBrand } from "@/lib/brand";
+import { platformBrand } from "@/features/vendors/brand";
 import { getLocaleSansFont, localeFontVariables } from "@/lib/fonts";
 
 import "./globals.css";

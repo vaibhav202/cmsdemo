@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import type { VendorRole } from "@/lib/permissions"
+import type { VendorRole } from "@/features/memberships/permissions"
 
 export function WorkspaceInfoCards({ role }: { role: VendorRole }) {
   const t = useTranslations("Module.info")

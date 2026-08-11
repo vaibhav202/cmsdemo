@@ -47,6 +47,11 @@
       "invited": "Invited",
       "disabled": "Disabled"
     },
+    "accountImage": {
+      "open": "Open profile picture settings",
+      "title": "Profile picture",
+      "description": "Your private image for this vendor workspace"
+    },
     "orderStatus": {
       "paid": "Paid",
       "preparing": "Preparing",
@@ -289,6 +294,7 @@
     "appearanceTitle": "Brand appearance",
     "appearanceDescription": "Apply a focused vendor accent and heading style without replacing the platform identity.",
     "workspaceMark": "Workspace mark",
+    "workspaceMarkAlt": "Vendor logo",
     "workspaceMarkDescription": "The accent is reserved for vendor identity and selected operational highlights. Navigation, cards, and core controls keep the platform appearance consistent.",
     "accentTitle": "Vendor accent",
     "accentDescription": "Used for primary actions, focus rings, vendor marks, and subtle surface tinting.",
@@ -323,6 +329,37 @@
       "availabilitySave": "Unable to change menu availability."
     },
     "saved": "Workspace appearance saved."
+  },
+  "Media": {
+    "logoLabel": "Vendor logo",
+    "avatarLabel": "Profile picture",
+    "logoAlt": "Vendor logo preview",
+    "avatarAlt": "Profile picture preview",
+    "logoHelp": "Use a clear square mark that remains recognizable at small sizes.",
+    "avatarHelp": "Choose any image you like for your private profile.",
+    "formatHelp": "JPG, PNG, or WebP up to 4 MB. Stored as a 512 × 512 optimized WebP.",
+    "authHelp": "Secure uploads become available after production Supabase sign-in is connected.",
+    "upload": "Upload image",
+    "uploading": "Optimizing and uploading",
+    "logoSaved": "Vendor logo saved as optimized WebP.",
+    "avatarSaved": "Profile picture saved as optimized WebP.",
+    "demoSaved": "Demo image saved on this device.",
+    "errors": {
+      "authRequired": "Production Supabase sign-in is required for secure uploads.",
+      "fileEmpty": "The selected file is empty.",
+      "fileMissing": "Choose an image first.",
+      "fileTooLarge": "Choose an image smaller than 4 MB.",
+      "imageInvalid": "This image could not be read safely.",
+      "imageTooComplex": "This image is too large or contains unsupported animation.",
+      "mimeMismatch": "The file contents do not match its image type.",
+      "mimeUnsupported": "Choose a JPG, PNG, or WebP image.",
+      "originInvalid": "The upload request did not come from this application.",
+      "outputTooLarge": "This image could not meet the optimized size limit.",
+      "permissionDenied": "Your role cannot change this image.",
+      "saveFailed": "The image could not be saved. Try again.",
+      "targetInvalid": "The selected profile is not available.",
+      "vendorNotFound": "The vendor workspace is not available."
+    }
   },
   "Inventory": {
     "metrics": {

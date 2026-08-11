@@ -6,11 +6,12 @@ import { LogOut, Menu, UserRound, type LucideIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import type { ReactNode } from "react"
 
-import { logoutAction } from "@/app/actions/auth"
+import { logoutAction } from "@/features/auth/actions"
 import { AccessibilitySettings } from "@/components/accessibility/accessibility-control"
+import { MediaImageUploadForm } from "@/components/media/media-image-upload-form"
 import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -44,6 +45,7 @@ type MobileNavigationProps = {
   user: ShellUser
   vendor: ShellVendor
   vendorInitial: string
+  vendorSlug: string
 }
 
 type MobileSheetProps = {
@@ -96,6 +98,7 @@ export function MobileNavigation({
   user,
   vendor,
   vendorInitial,
+  vendorSlug,
 }: MobileNavigationProps) {
   const pathname = usePathname()
   const t = useTranslations("Shell")
@@ -121,6 +124,7 @@ export function MobileNavigation({
                 >
                   <Link href={homeHref}>
                     <Avatar size="lg">
+                      <AvatarImage alt="" src={vendor.logoUrl ?? undefined} />
                       <AvatarFallback className="bg-vendor-brand text-vendor-brand-foreground">
                         {vendorInitial}
                       </AvatarFallback>
@@ -199,8 +203,9 @@ export function MobileNavigation({
                   </CardDescription>
                   <CardAction>
                     <Avatar size="lg">
+                      <AvatarImage alt="" src={user.avatarUrl ?? undefined} />
                       <AvatarFallback className="bg-vendor-brand text-vendor-brand-foreground">
-                        {vendorInitial}
+                        {user.name.slice(0, 1).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   </CardAction>
@@ -214,6 +219,29 @@ export function MobileNavigation({
                       {common(`membership.${user.status}`)}
                     </Badge>
                   </div>
+                </CardContent>
+              </Card>
+
+              <Card size="sm">
+                <CardHeader>
+                  <CardTitle>{common("accountImage.title")}</CardTitle>
+                  <CardDescription>
+                    {common("accountImage.description")}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <MediaImageUploadForm
+                    currentUrl={user.avatarUrl}
+                    enabled={Boolean(user.memberId)}
+                    fallback={user.name.slice(0, 1).toUpperCase()}
+                    memberId={
+                      user.memberId ??
+                      (user.mediaMode === "demo" ? user.email : undefined)
+                    }
+                    mode={user.mediaMode}
+                    purpose="member-avatar"
+                    vendorSlug={vendorSlug}
+                  />
                 </CardContent>
               </Card>
 

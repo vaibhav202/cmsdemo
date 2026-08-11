@@ -16,6 +16,7 @@ export function VendorShell({
   user,
   vendor,
   vendorInitial,
+  vendorSlug,
 }: VendorShellProps) {
   return (
     <SidebarProvider>
@@ -31,7 +32,7 @@ export function VendorShell({
         <VendorTopbar
           initialClockIso={initialClockIso}
           user={user}
-          vendorInitial={vendorInitial}
+          vendorSlug={vendorSlug}
         />
         <main className="px-4 py-5 pb-28 lg:px-6 lg:py-6">{children}</main>
       </SidebarInset>
@@ -44,6 +45,7 @@ export function VendorShell({
         user={user}
         vendor={vendor}
         vendorInitial={vendorInitial}
+        vendorSlug={vendorSlug}
       />
     </SidebarProvider>
   )

@@ -9,7 +9,7 @@ import {
   Warehouse,
 } from "lucide-react"
 
-import type { ModuleKey } from "@/lib/permissions"
+import type { ModuleKey } from "@/features/memberships/permissions"
 
 export type NavIcon = ComponentType<{
   className?: string

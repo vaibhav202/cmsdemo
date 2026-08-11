@@ -1,15 +1,24 @@
 import type { ReactNode } from "react"
 
-import type { MembershipStatus, ModuleKey, VendorRole } from "@/lib/permissions"
+import type {
+  MembershipStatus,
+  ModuleKey,
+  VendorRole,
+} from "@/features/memberships/permissions"
+import type { MediaUploadMode } from "@/lib/media/config"
 
 export type ShellVendor = {
+  logoUrl: string | null
   name: string
   location: string | null
 }
 
 export type ShellUser = {
+  avatarUrl: string | null
   name: string
   email: string
+  mediaMode: MediaUploadMode
+  memberId: string | null
   role: VendorRole
   status: MembershipStatus
 }
@@ -29,4 +38,5 @@ export type VendorShellProps = {
   user: ShellUser
   vendor: ShellVendor
   vendorInitial: string
+  vendorSlug: string
 }

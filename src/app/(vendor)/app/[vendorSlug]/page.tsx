@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
-import { requireWorkspaceSession } from "@/lib/workspace-auth"
-import { getDefaultRouteForRole } from "@/lib/permissions"
+import { requireWorkspaceSession } from "@/features/auth/demo-session"
+import { getDefaultRouteForRole } from "@/features/memberships/permissions"
 
 type VendorIndexPageProps = {
   params: Promise<{ vendorSlug: string }>

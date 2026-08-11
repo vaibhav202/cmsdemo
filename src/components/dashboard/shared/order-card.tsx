@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { advanceOrderAction } from "@/app/actions/workspace-operations"
+import { advanceOrderAction } from "@/features/orders/actions"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {

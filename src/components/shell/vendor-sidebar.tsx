@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Sidebar,
   SidebarContent,
@@ -52,6 +52,7 @@ export function VendorSidebar({
             >
               <Link href={homeHref}>
                 <Avatar className="size-10 group-data-[collapsible=icon]:size-8">
+                  <AvatarImage alt="" src={vendor.logoUrl ?? undefined} />
                   <AvatarFallback className="bg-vendor-brand text-vendor-brand-foreground">
                     {vendorInitial}
                   </AvatarFallback>

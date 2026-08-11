@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/dashboard/module-page"
+import { ModulePage } from "@/features/vendors/components/vendor-module-page"
 
 type OrderPageProps = {
   params: Promise<{ vendorSlug: string }>

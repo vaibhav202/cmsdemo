@@ -35,8 +35,8 @@ export function ThemeModeControl({
   const t = useTranslations("Common.theme")
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setMounted(true))
-    return () => window.cancelAnimationFrame(frame)
+    const timeout = window.setTimeout(() => setMounted(true), 0)
+    return () => window.clearTimeout(timeout)
   }, [])
 
   if (!mounted) {

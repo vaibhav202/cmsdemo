@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
 
-import { WORKSPACE_SESSION_COOKIE } from "@/lib/workspace-auth"
+import { WORKSPACE_SESSION_COOKIE } from "@/features/auth/demo-session"
 
 export function proxy(request: NextRequest) {
   if (request.cookies.has(WORKSPACE_SESSION_COOKIE)) {

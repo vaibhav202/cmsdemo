@@ -69,7 +69,7 @@ npm run build
 Translation catalogs are public assets and must contain plain ICU messages only—never
 secrets, HTML, translated URLs, or tenant data. The full rendering boundary, automated
 rules, and required GitHub branch protection are documented in the
-[localization guide](docs/localization-guide.md#translation-security-contract).
+[localization guide](docs/domains/localization.md#translation-security-contract).
 
 ## Architecture
 
@@ -91,12 +91,13 @@ Main application routes live under:
 
 ## Documentation
 
-- [Product specification](docs/product-spec.md)
-- [Platform architecture report](docs/platform-architecture-report.txt)
-- [SDLC and agentic roadmap](docs/sdlc-agentic-roadmap.txt)
-- [UI style guide](docs/ui-style-guide.md)
-- [Localization guide](docs/localization-guide.md)
-- [Live development handoff](docs/live-development-log.txt)
+- [Product](docs/product.md)
+- [Architecture](docs/architecture.md)
+- [Security invariants](docs/security.md)
+- [Roadmap and required checks](docs/roadmap.md)
+- [Current development log](docs/development-log.md)
+- [Domain specifications](docs/domains/README.md)
+- [Architecture decisions](docs/decisions/)
 - [Architecture diagrams](docs/diagrams/README.md)
 - [Supabase project notes](supabase/README.md)
 

@@ -23,10 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { platformBrand } from "@/lib/brand"
-import { workspaceAccounts, workspaceVendor } from "@/lib/workspace-data"
-import { getCurrentWorkspaceSession } from "@/lib/workspace-auth"
-import { getDefaultRouteForRole } from "@/lib/permissions"
+import { workspaceAccounts, workspaceVendor } from "@/features/auth/demo-data"
+import { getCurrentWorkspaceSession } from "@/features/auth/demo-session"
+import { getDefaultRouteForRole } from "@/features/memberships/permissions"
+import { platformBrand } from "@/features/vendors/brand"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Metadata")
