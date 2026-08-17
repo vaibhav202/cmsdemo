@@ -1,4 +1,4 @@
-# CMS Platform Product
+# KOT Platform Product
 
 This document is the canonical MVP scope and role-permission reference for humans
 and coding agents. It replaces the former agent workflow pack's separate MVP and
@@ -242,6 +242,7 @@ Trust gate:
 
 Pilot gate:
 
+- Public `/`, `/demo`, `/contact`, `/terms`, and `/privacy` routes render anonymously, and the browser gate verifies that the live demo remains synthetic and interactive without protected tenant data.
 - One test vendor completes onboarding and one complete order lifecycle.
 - Known limitations and support expectations are documented.
 - A native Marathi reviewer completes the login, order, kitchen, queue, inventory,

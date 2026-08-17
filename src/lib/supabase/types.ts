@@ -139,6 +139,29 @@ export type Database = {
           updated_at: string
         }
       }
+      pilot_inquiries: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          business_name: string
+          phone: string | null
+          city: string | null
+          message: string | null
+          consent: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          business_name: string
+          phone?: string | null
+          city?: string | null
+          message?: string | null
+          consent: boolean
+        }
+      }
       vendor_members: {
         Row: {
           id: string
@@ -217,7 +240,10 @@ export type Database = {
           customer_label: string | null
           status: string
           payment_status: string
+          payment_mode: string | null
           source: string
+          note: string | null
+          idempotency_key: string | null
           total: number
           created_at: string
           updated_at: string
@@ -228,12 +254,17 @@ export type Database = {
           customer_label?: string | null
           status?: string
           payment_status?: string
+          payment_mode?: string | null
           source?: string
+          note?: string | null
+          idempotency_key?: string | null
           total?: number
         }
         Update: {
           status?: string
           payment_status?: string
+          payment_mode?: string | null
+          note?: string | null
           total?: number
         }
       }

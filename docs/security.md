@@ -73,5 +73,6 @@ may change only through an explicit security review and an ADR.
 - Integration tests cover server-side use cases and negative authorization paths.
 - RLS tests cover tenant isolation and role permissions against a disposable
   database.
-- Firefox E2E tests cover the critical cashier and kitchen/queue workflows.
+- Firefox E2E tests cover the critical cashier, kitchen/queue, public-demo, and media workflows.
+- Anonymous public demo and inquiry routes do not read protected tenant data and are covered by route/browser checks.
 - Translation, lint, type, build, and dependency checks remain release gates.

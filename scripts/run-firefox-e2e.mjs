@@ -112,6 +112,7 @@ try {
       "tests/e2e/header-mobile-interactions.spec.ts",
       "tests/e2e/kitchen-queue-flow.spec.ts",
       "tests/e2e/media-upload-flow.spec.ts",
+      "tests/e2e/public-acquisition.spec.ts",
     ],
     {
       env: {

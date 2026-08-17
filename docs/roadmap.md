@@ -613,6 +613,8 @@ Required before:
 - Onboarding first real vendor.
 
 Checklist:
+- Public homepage and safe synthetic live demo render anonymously.
+- Public pilot inquiry, terms, privacy, and support contact routes work anonymously.
 - Basic terms page.
 - Basic privacy page.
 - Support contact.

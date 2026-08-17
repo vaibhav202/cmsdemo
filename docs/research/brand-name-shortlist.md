@@ -1,9 +1,12 @@
 # Brand name shortlist
 
-Current working name:
-- CMS Platform
+Selected working name:
+- KOT Platform
 
-Preferred candidate:
+Brand checks still required:
+- Trademark and domain review before public commercial launch.
+
+Previous preferred candidate:
 - OutletOS
   - Broad, product-like, and not limited to cafes or canteens.
   - Can support future expansion into restaurants, canteens, counters, kiosks, and small retail operations.

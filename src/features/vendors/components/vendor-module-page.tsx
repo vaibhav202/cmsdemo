@@ -22,6 +22,7 @@ import { InventoryDashboard } from "@/features/inventory/components/inventory-da
 import { KitchenDashboard } from "@/features/kitchen/components/kitchen-dashboard"
 import { LedgerDashboard } from "@/features/ledger/components/ledger-dashboard"
 import { OrderDashboard } from "@/features/orders/components/order-dashboard"
+import { OrderRealtimeSubscription } from "@/features/orders/components/order-realtime-subscription"
 import { QueueDashboard } from "@/features/queue/components/queue-dashboard"
 import { ReportsDashboard } from "@/features/reports/components/reports-dashboard"
 import { getCurrentWorkspaceSession } from "@/features/auth/demo-session"
@@ -71,16 +72,28 @@ export async function ModulePage({ module, vendorSlug }: ModulePageProps) {
       : null
   const mediaMode: MediaUploadMode =
     process.env.NODE_ENV === "production" ? "production" : "demo"
+  const orderModule = ["order", "kitchen", "queue"].includes(module)
+  const realtimeEnabled =
+    orderModule &&
+    process.env.SUPABASE_AUTH_ENABLED === "true" &&
+    process.env.NEXT_PUBLIC_ORDER_REALTIME_ENABLED === "true" &&
+    !(process.env.NODE_ENV === "development" &&
+      process.env.E2E_USE_FIXTURES === "1")
+  const snapshotAt = new Date().toISOString()
 
   return (
     <section className="flex flex-col gap-6" key={locale}>
       <DashboardHeader module={module} vendorName={data.vendor.name} />
+      <OrderRealtimeSubscription
+        enabled={realtimeEnabled}
+        snapshotAt={snapshotAt}
+        vendorId={data.vendor.id}
+      />
 
       {module === "order" ? (
         <OrderDashboard
           menuItems={data.menuItems}
           orders={data.orders}
-          vendorId={data.vendor.id}
           vendorSlug={vendorSlug}
         />
       ) : null}

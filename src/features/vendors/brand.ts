@@ -1,5 +1,5 @@
 export const platformBrand = {
-  name: "CMS Platform",
+  name: "KOT Platform",
   tagline: "Restaurant operations, kept in flow.",
   shortDescription: "Orders, kitchen, stock, ledger, and reports in one workspace.",
 }

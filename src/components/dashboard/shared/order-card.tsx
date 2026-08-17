@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card"
 import type { OrderWithItems } from "@/lib/supabase/types"
 
+import { ElapsedTime } from "@/features/orders/components/elapsed-time"
 import {
   getOrderStatusMessageKey,
   getStatusVariant,
@@ -88,9 +89,12 @@ export function OrderCard({
             </Badge>
           </div>
         </CardTitle>
-        <CardDescription>
-          {order.customer_label ?? queue("counterFallback")} ·{" "}
-          {format.currency(Number(order.total))}
+        <CardDescription className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>
+            {order.customer_label ?? queue("counterFallback")} ·{" "}
+            {format.currency(Number(order.total))}
+          </span>
+          <ElapsedTime createdAt={order.created_at} />
         </CardDescription>
         {!compact ? (
           <CardAction>

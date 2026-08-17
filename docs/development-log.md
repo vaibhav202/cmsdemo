@@ -4,8 +4,8 @@ CMS PLATFORM - DEVELOPMENT LOG
 STATUS
 ------
 State: Active development
-Last updated: 2026-08-09 (Asia/Kolkata)
-Current stack: Next.js 16 canary, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
+Last updated: 2026-08-17 (Asia/Kolkata)
+Current stack: Next.js 16.3.0 stable, React 19, shadcn/ui Nova with Radix, Tailwind CSS v4, Supabase
 
 PURPOSE
 -------
@@ -33,6 +33,16 @@ CURRENT UI DIRECTION
 
 LATEST CHANGES
 --------------
+- Renamed the customer-facing product to KOT Platform across the brand source, metadata, public navigation, inquiry/legal copy, and all four locale catalogs. The homepage eyebrow now reads “A platform for your food outlet,” the entire hero heading now rotates through complete two-line operational capability statements at a larger display size, uses tighter leading, and includes a reduced-motion-safe vertical ticker for counter-to-kitchen orders, clear handoffs, visible queues, and connected shifts.
+- Aligned the public demo promo card with the neutral glass Card surface used by the pilot card, so both homepage action cards share the same light and dark theme treatment. Updated the footer tagline to emphasize easy outlet management from any device.
+- Added a public product homepage at `/`, a synthetic in-memory `/demo` for Owner/Cashier/Kitchen/Queue workflows, and anonymous Contact, Terms, and Privacy routes. The demo never loads protected dashboard components or production data; the public Firefox test covers route access, role switching, multi-item sample checkout, and browser-error absence, and all six Firefox E2E tests pass.
+- Added a same-origin, rate-limited pilot inquiry API with honeypot handling, server-side validation, anonymous-only Supabase insertion, and bounded field validation that rejects oversized values instead of truncating them. Validation has focused unit coverage; the remote migration is applied with RLS and anonymous INSERT-only grants verified.
+- Added a guarded vendor-scoped order Realtime subscription for Order, Kitchen, and Queue. It refreshes the existing server snapshot, exposes reconnect/stale/manual-refresh feedback, and remains disabled until production Supabase Auth and explicit deployment flags are ready. ADR 0006 records the boundary.
+- Completed the cart checkout slice: one counter checkout now creates one multi-line ticket, with atomic token allocation, idempotency, immediate persistence plus Undo-as-cancel, elapsed ticket age, and Firefox coverage for the multi-item flow. Focused typecheck, lint, i18n, unit, integration, and the five operational Firefox E2E flows pass. The cart, pilot-inquiry, and private-counter-RLS migrations are applied to the remote CMS Platform project.
+- Completed the Supabase-native pilot inquiry notification path. `public.pilot_inquiry_notifications` is RLS-protected and service-role-only; the `notify-pilot-inquiry` Edge Function validates the native webhook payload, claims delivery with a compare-and-swap state transition, sends through server-side SMTP, and records sent/failed state without logging inquiry PII or credentials. Supabase Vault stores the webhook secret, and an asynchronous `pg_net` trigger on `public.pilot_inquiries` sends the insert payload. A synthetic delivery returned HTTP 200 from `pg_net`, reached `sent` with one attempt, and a replay returned 200 without a second SMTP attempt; synthetic rows were removed. ADR 0007 records the boundary.
+- Completed final verification for the notification slice after excluding the separately deployed Supabase Edge Function from the root Next.js TypeScript project and narrowing its SMTP connection after STARTTLS. `notify-pilot-inquiry` is active at version 5; native Deno typechecking, application typecheck, lint, i18n, unit/integration/subscription/media tests, production build, Firefox E2E (6/6), and `git diff --check` all pass. The security advisor retains only the intentional private-counter notice; performance notices are pre-existing unused-index suggestions.
+- Applied the cart checkout and public pilot-inquiry migrations to remote project `bayrnypobftotxnuysom` after schema/RLS review. A rollback-only anonymous smoke test verified counter creation, idempotent retry, cancellation, and the inquiry INSERT path; no test rows remain. The private counter table has RLS enabled with no direct anon/authenticated grants; the security advisor has no critical findings, and the remaining no-policy notice is intentional.
+- Aligned `next` and `eslint-config-next` on stable `16.3.0`; the local Node.js runtime is stable `v22.23.1`. The isolated production build, typecheck, and lint all pass.
 - Removed the extra animation-frame delay before the hydrated theme control renders, and added a Firefox regression check for the mobile Account Sheet avatar upload, preview, and device-local persistence. Typecheck, lint, media normalization tests, and all five Firefox E2E tests pass.
 - Verified the active dev host is `192.168.1.6`; the existing `allowedDevOrigins` pattern allows `http://192.168.1.6:3000` and its JavaScript chunks. An unlisted dev host returns `403`, so Android should use the LAN URL or USB reverse mode with `http://127.0.0.1:3000`. ADB currently reports no connected device, so Android Firefox logs remain unavailable.
 - Added an explicit development-only media mode so the mock workspace can test

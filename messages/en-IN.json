@@ -1,9 +1,19 @@
 {
   "Metadata": {
-    "title": "CMS Platform",
-    "titleTemplate": "{page} | CMS Platform",
+    "title": "KOT Platform",
+    "titleTemplate": "{page} | KOT Platform",
     "description": "Orders, kitchen, stock, ledger, and reports in one workspace.",
-    "loginTitle": "Sign in"
+    "loginTitle": "Sign in",
+    "homeTitle": "Restaurant operations, kept in flow",
+    "homeDescription": "A phone-first workspace for counter orders, kitchen handoff, queue visibility, and daily control.",
+    "demoTitle": "Try the live demo",
+    "demoDescription": "Explore a safe sample workspace without creating an account or touching a real vendor.",
+    "contactTitle": "Request a pilot",
+    "contactDescription": "Tell us about your outlet and we will help you evaluate the right workflow.",
+    "termsTitle": "Terms",
+    "termsDescription": "The current terms for evaluating KOT Platform during a pilot.",
+    "privacyTitle": "Privacy",
+    "privacyDescription": "How KOT Platform handles information submitted during a pilot inquiry."
   },
   "Common": {
     "language": "Language",
@@ -207,9 +217,9 @@
     },
     "activeOrders": "Active orders",
     "emptyTitle": "No active orders",
-    "emptyDescription": "New paid orders will appear here after the undo window.",
+    "emptyDescription": "New paid orders appear here immediately after checkout.",
     "createTitle": "Create counter order",
-    "createDescription": "Add one item quickly, confirm paid, and send it into the live queue.",
+    "createDescription": "Build a cart, book one ticket, and send it into the live queue.",
     "searchLabel": "Search menu",
     "searchPlaceholder": "Search item or category",
     "resultCount": "{count, plural, =0 {No items} =1 {{formattedCount} item} other {{formattedCount} items}}",
@@ -221,9 +231,38 @@
     "counterDefault": "Counter",
     "customer": "Customer",
     "quantity": "Qty",
-    "addOrder": "Add order",
-    "undoAvailable": "Undo available",
-    "creating": "Creating",
+    "addToCart": "Add to cart",
+    "cartTitle": "Current cart",
+    "cartEmptyTitle": "Cart is empty",
+    "cartEmptyDescription": "Add items from the menu to book one ticket.",
+    "clearCart": "Clear cart",
+    "decreaseItem": "Decrease {item}",
+    "increaseItem": "Increase {item}",
+    "removeItem": "Remove {item}",
+    "payment": "Payment",
+    "paymentModes": {
+      "cash": "Cash",
+      "upi": "UPI",
+      "card": "Card"
+    },
+    "note": "Order note (optional)",
+    "notePlaceholder": "Add a kitchen or customer note",
+    "bookOrder": "Book order",
+    "booking": "Booking",
+
+    "elapsed": {
+      "justNow": "Just now",
+      "minutes": "{value} min",
+      "hours": "{hours} h {minutes} min"
+    },
+    "live": {
+      "connecting": "Connecting to live updates",
+      "connected": "Live updates on",
+      "reconnecting": "Reconnecting to live updates",
+      "unavailable": "Live updates unavailable",
+      "stale": "This view may be out of date",
+      "refresh": "Refresh now"
+    },
     "nextStatus": {
       "paid": "Send to kitchen",
       "preparing": "Mark ready",
@@ -231,19 +270,20 @@
     },
     "feedback": {
       "createdTitle": "Order sent to queue",
-      "createdDescription": "{item} was created after the undo window.",
+      "createdDescription": "Ticket #{token, number, integer} booked for {total}.",
       "failedTitle": "Order could not be created",
       "cancelledTitle": "Order cancelled",
-      "cancelledDescription": "{item} was not sent to the queue.",
-      "scheduledTitle": "Order will be created in 10 seconds",
-      "scheduledDescription": "Undo now if this counter order was tapped by mistake."
+      "cancelledDescription": "Ticket #{token, number, integer} was removed from the queue."
     },
     "errors": {
       "generic": "Unable to create order.",
       "role": "This role cannot create counter orders.",
       "quantity": "Quantity must be between 1 and 20.",
       "unavailable": "Menu item is unavailable.",
-      "create": "Unable to create order."
+      "create": "Unable to create order.",
+      "cart": "Add at least one valid item to the cart.",
+      "payment": "Choose a valid payment mode.",
+      "cancel": "Unable to cancel this ticket."
     }
   },
   "Kitchen": {
@@ -466,6 +506,159 @@
     "stockNote": "{count, plural, =0 {No stock items low} =1 {{formattedCount} stock item low} other {{formattedCount} stock items low}}",
     "title": "Owner summary",
     "description": "Sales, estimated cost, gross profit, order count, and stock warnings stay connected with daily counter and kitchen work."
+  },
+  "Public": {
+    "nav": {
+      "home": "Go to KOT Platform home",
+      "label": "Public navigation",
+      "tagline": "Restaurant operations, kept in flow.",
+      "demo": "Live demo",
+      "contact": "Request a pilot",
+      "login": "Sign in"
+    },
+    "footer": {
+      "tagline": "Manage your outlet operations with ease. From any device.",
+      "label": "Public information",
+      "contact": "Contact",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "login": "Sign in"
+    },
+    "home": {
+      "eyebrow": "A platform for your food outlet",
+      "titleTickerLabel": "What KOT Platform helps your outlet do",
+      "titleTicker": {
+        "orders": "Counter orders reach kitchen.",
+        "handoff": "Keep every handoff clear.",
+        "queue": "Keep queues visible for everyone.",
+        "daily": "Keep menu, stock, and shifts in sync."
+      },
+      "description": "{product} connects the counter, kitchen, queue, menu, and daily controls in one focused workspace for local outlets.",
+      "primaryCta": "Try the live demo",
+      "secondaryCta": "Request a pilot",
+      "note": "Start with a public walkthrough. Move to a protected workspace when you are ready.",
+      "previewLabel": "A calmer shift",
+      "previewTitle": "One operational picture",
+      "previewDescription": "See the work that matters without switching between disconnected tools.",
+      "previewLive": "Live view",
+      "preview": {
+        "salesLabel": "Today",
+        "salesValue": "₹{value, number}",
+        "activeLabel": "Active tickets",
+        "activeValue": "{value, number}",
+        "readyLabel": "Ready now",
+        "readyValue": "{value, number}",
+        "ticket": "Ticket #{token, number, integer}",
+        "items": "{count, number} items",
+        "status": "Preparing",
+        "elapsed": "{value, number} min elapsed",
+        "source": "Booked at",
+        "sourceValue": "Counter"
+      },
+      "workflowEyebrow": "Designed around the shift",
+      "workflowTitle": "The flow your team already understands",
+      "workflowDescription": "Keep the language simple for staff and the data dependable for owners.",
+      "workflow": {
+        "counterTitle": "Counter to ticket",
+        "counterDescription": "Build one cart for one customer and book a single ticket with clear payment details.",
+        "kitchenTitle": "Ticket to kitchen",
+        "kitchenDescription": "Move paid work through preparing and ready without losing the customer context.",
+        "queueTitle": "Kitchen to queue",
+        "queueDescription": "Give staff and customers a focused view of what is ready and what is next."
+      },
+      "demoEyebrow": "See it before you buy it",
+      "demoTitle": "Let an outlet owner try the real workflow",
+      "demoDescription": "Switch between owner, cashier, kitchen, and queue views using sample data that resets in one tap.",
+      "demoCta": "Open the live demo",
+      "demoNote": "No login. No production writes. No real vendor data.",
+      "pilotEyebrow": "Need a closer conversation?",
+      "pilotTitle": "Request a pilot for your outlet",
+      "pilotDescription": "Share the basics and we can discuss your counter setup, staff roles, and rollout questions.",
+      "pilotCta": "Tell us about your outlet"
+    },
+    "demo": {
+      "eyebrow": "Interactive product walkthrough",
+      "title": "Run a sample shift",
+      "description": "This is a safe, local browser demo. Book a ticket as a cashier, move it in the kitchen, and watch the queue change.",
+      "safeNotice": "Sample data only. This screen does not call Supabase, store an order, or change a vendor workspace.",
+      "roleLabel": "Choose a demo view",
+      "roles": {
+        "owner": "Owner",
+        "cashier": "Cashier",
+        "kitchen": "Kitchen",
+        "queue": "Queue"
+      },
+      "reset": "Reset demo",
+      "resetDone": "Demo reset",
+      "orders": "Sample tickets",
+      "active": "In progress",
+      "ready": "Ready now",
+      "ownerTitle": "Owner overview",
+      "ownerDescription": "A quick view of the shift without opening every operational screen.",
+      "menuTitle": "Counter menu",
+      "menuDescription": "Add more than one item, then book one ticket for the customer.",
+      "add": "Add",
+      "cartTitle": "Current cart",
+      "emptyCart": "Add items to see one checkout total.",
+      "emptyCartTitle": "Cart is empty",
+      "decrease": "Decrease {item}",
+      "increase": "Increase {item}",
+      "customer": "Customer label",
+      "customerPlaceholder": "Table 4 or counter number",
+      "book": "Book sample ticket",
+      "booked": "Sample ticket #{token, number, integer} booked",
+      "kitchenTitle": "Kitchen board",
+      "kitchenDescription": "Advance the sample ticket as the kitchen works.",
+      "queueTitle": "Queue screen",
+      "queueDescription": "A focused view for the next handoff.",
+      "items": "{count, number} items",
+      "readyStatus": "Ready for handoff",
+      "counterFallback": "Counter customer"
+    },
+    "contact": {
+      "eyebrow": "Pilot conversation",
+      "title": "Bring your outlet workflow into focus.",
+      "description": "Tell us what you run today, what slows the shift down, and which staff roles need the clearest path.",
+      "note": "This is an inquiry, not an automatic subscription or sales commitment.",
+      "formTitle": "Request a pilot",
+      "formDescription": "A few details help us respond with a useful next step.",
+      "name": "Your name",
+      "email": "Work email",
+      "business": "Outlet or business name",
+      "city": "City",
+      "phone": "Phone (optional)",
+      "message": "What would you like to improve?",
+      "messagePlaceholder": "For example: faster counter booking and a clearer kitchen queue.",
+      "consent": "I agree that KOT Platform may use these details to respond to this inquiry.",
+      "privacyBefore": "Read our",
+      "privacyLink": "Privacy notice",
+      "privacyAfter": "before submitting.",
+      "submit": "Send inquiry",
+      "submitting": "Sending inquiry",
+      "success": "Thanks. Your inquiry was received and is ready for a pilot follow-up.",
+      "errors": {
+        "generic": "We could not validate this request. Check the fields and try again.",
+        "rateLimited": "Too many requests from this connection. Try again later.",
+        "unavailable": "The inquiry service is temporarily unavailable. Please try again later.",
+        "validation": "Complete the required fields and consent before sending."
+      }
+    },
+    "legal": {
+      "draftBadge": "Pilot draft",
+      "updated": "Last reviewed {date}",
+      "termsTitle": "Terms for pilot evaluation",
+      "termsIntro": "These plain-language terms describe how to evaluate KOT Platform before a signed commercial agreement is in place.",
+      "termsUseTitle": "Evaluation use",
+      "termsUseBody": "Use the public demo with sample data. Protected vendor workspaces are for authorized staff only. Do not enter confidential customer, payment-card, health, or other sensitive information into a demo or pilot environment unless the agreed setup explicitly supports it.",
+      "termsPilotTitle": "Pilot conversations",
+      "termsPilotBody": "A pilot inquiry starts a conversation; it does not create an account, subscription, service-level commitment, or payment obligation. Final commercial terms, support scope, retention, and onboarding responsibilities should be confirmed in writing before production use.",
+      "privacyTitle": "Privacy notice",
+      "privacyIntro": "This draft explains the limited information collected when someone asks about a pilot. It should be reviewed and finalized before public commercial launch.",
+      "privacyDataTitle": "Inquiry information",
+      "privacyDataBody": "The pilot form may collect your name, work email, outlet name, city, optional phone number, message, and consent record. We use it to respond to the request and plan a relevant product conversation. We do not sell inquiry information or use it for advertising profiles.",
+      "privacySecurityTitle": "Storage and choices",
+      "privacySecurityBody": "Inquiry data is stored separately from vendor operational data and is not exposed through a public read path. You can ask us to correct or delete an inquiry through the contact channel provided during follow-up. The public demo stores its temporary state only in the current browser session."
+    }
   },
   "WorkspaceError": {
     "title": "Workspace unavailable",

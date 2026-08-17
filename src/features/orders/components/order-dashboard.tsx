@@ -22,12 +22,10 @@ import { CounterMenu } from "./counter-menu"
 export function OrderDashboard({
   menuItems,
   orders,
-  vendorId,
   vendorSlug,
 }: {
   menuItems: MenuItemWithCategory[]
   orders: OrderWithItems[]
-  vendorId: string
   vendorSlug: string
 }) {
   const t = useTranslations("Order")
@@ -59,11 +57,7 @@ export function OrderDashboard({
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <CounterMenu
-          menuItems={menuItems}
-          vendorId={vendorId}
-          vendorSlug={vendorSlug}
-        />
+        <CounterMenu menuItems={menuItems} vendorSlug={vendorSlug} />
 
         <aside className="flex flex-col gap-3">
           <CardTitle>{t("activeOrders")}</CardTitle>

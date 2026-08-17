@@ -1,9 +1,19 @@
 {
   "Metadata": {
-    "title": "CMS Platform",
-    "titleTemplate": "{page} | CMS Platform",
+    "title": "KOT Platform",
+    "titleTemplate": "{page} | KOT Platform",
     "description": "ऑर्डर, रसोई, स्टॉक, बहीखाता और रिपोर्ट एक ही कार्यक्षेत्र में।",
-    "loginTitle": "साइन इन"
+    "loginTitle": "साइन इन",
+    "homeTitle": "रेस्टोरेंट का काम आसान और व्यवस्थित रखें",
+    "homeDescription": "काउंटर ऑर्डर, रसोई, कतार और रोज़मर्रा के नियंत्रण के लिए फोन-फ्रेंडली कार्यक्षेत्र।",
+    "demoTitle": "लाइव डेमो आज़माएँ",
+    "demoDescription": "खाता बनाए बिना और किसी असली विक्रेता को छुए बिना सुरक्षित नमूना कार्यक्षेत्र देखें।",
+    "contactTitle": "पायलट का अनुरोध करें",
+    "contactDescription": "अपने आउटलेट के बारे में बताएँ; हम सही workflow समझने में मदद करेंगे।",
+    "termsTitle": "शर्तें",
+    "termsDescription": "पायलट से पहले KOT Platform को आज़माने की वर्तमान शर्तें।",
+    "privacyTitle": "गोपनीयता",
+    "privacyDescription": "पायलट पूछताछ में दी गई जानकारी को KOT Platform कैसे संभालता है।"
   },
   "Common": {
     "language": "भाषा",
@@ -207,9 +217,9 @@
     },
     "activeOrders": "सक्रिय ऑर्डर",
     "emptyTitle": "कोई सक्रिय ऑर्डर नहीं",
-    "emptyDescription": "वापस लेने की अवधि के बाद नए भुगतान किए गए ऑर्डर यहाँ दिखेंगे।",
+    "emptyDescription": "चेकआउट के बाद नए भुगतान किए गए ऑर्डर तुरंत यहाँ दिखेंगे।",
     "createTitle": "काउंटर ऑर्डर बनाएँ",
-    "createDescription": "एक आइटम जल्दी जोड़ें, भुगतान की पुष्टि करें और लाइव कतार में भेजें।",
+    "createDescription": "कार्ट बनाएँ, एक टिकट बुक करें और उसे लाइव कतार में भेजें।",
     "searchLabel": "मेनू खोजें",
     "searchPlaceholder": "आइटम या श्रेणी खोजें",
     "resultCount": "{count, plural, =0 {कोई आइटम नहीं} =1 {{formattedCount} आइटम} other {{formattedCount} आइटम}}",
@@ -221,9 +231,38 @@
     "counterDefault": "काउंटर",
     "customer": "ग्राहक",
     "quantity": "मात्रा",
-    "addOrder": "ऑर्डर जोड़ें",
-    "undoAvailable": "वापस ले सकते हैं",
-    "creating": "बन रहा है",
+    "addToCart": "कार्ट में जोड़ें",
+    "cartTitle": "वर्तमान कार्ट",
+    "cartEmptyTitle": "कार्ट खाली है",
+    "cartEmptyDescription": "एक टिकट बुक करने के लिए मेनू से आइटम जोड़ें।",
+    "clearCart": "कार्ट खाली करें",
+    "decreaseItem": "{item} की मात्रा घटाएँ",
+    "increaseItem": "{item} की मात्रा बढ़ाएँ",
+    "removeItem": "{item} हटाएँ",
+    "payment": "भुगतान",
+    "paymentModes": {
+      "cash": "नकद",
+      "upi": "UPI",
+      "card": "कार्ड"
+    },
+    "note": "ऑर्डर नोट (वैकल्पिक)",
+    "notePlaceholder": "रसोई या ग्राहक के लिए नोट जोड़ें",
+    "bookOrder": "ऑर्डर बुक करें",
+    "booking": "बुक हो रहा है",
+
+    "elapsed": {
+      "justNow": "अभी",
+      "minutes": "{value} मिनट",
+      "hours": "{hours} घंटे {minutes} मिनट"
+    },
+    "live": {
+      "connecting": "लाइव अपडेट से जुड़ रहे हैं",
+      "connected": "लाइव अपडेट चालू हैं",
+      "reconnecting": "लाइव अपडेट से फिर जुड़ रहे हैं",
+      "unavailable": "लाइव अपडेट उपलब्ध नहीं हैं",
+      "stale": "इस दृश्य की जानकारी पुरानी हो सकती है",
+      "refresh": "अभी रिफ्रेश करें"
+    },
     "nextStatus": {
       "paid": "रसोई में भेजें",
       "preparing": "तैयार चिह्नित करें",
@@ -231,19 +270,20 @@
     },
     "feedback": {
       "createdTitle": "ऑर्डर कतार में भेजा गया",
-      "createdDescription": "वापस लेने की अवधि के बाद {item} का ऑर्डर बनाया गया।",
+      "createdDescription": "टिकट #{token, number, integer} {total} के लिए बुक किया गया।",
       "failedTitle": "ऑर्डर नहीं बनाया जा सका",
       "cancelledTitle": "ऑर्डर रद्द किया गया",
-      "cancelledDescription": "{item} को कतार में नहीं भेजा गया।",
-      "scheduledTitle": "ऑर्डर 10 सेकंड में बनाया जाएगा",
-      "scheduledDescription": "अगर यह काउंटर ऑर्डर गलती से चुना गया है तो अभी वापस लें।"
+      "cancelledDescription": "टिकट #{token, number, integer} को कतार से हटा दिया गया।"
     },
     "errors": {
       "generic": "ऑर्डर नहीं बनाया जा सका।",
       "role": "यह भूमिका काउंटर ऑर्डर नहीं बना सकती।",
       "quantity": "मात्रा 1 से 20 के बीच होनी चाहिए।",
       "unavailable": "मेनू आइटम उपलब्ध नहीं है।",
-      "create": "ऑर्डर नहीं बनाया जा सका।"
+      "create": "ऑर्डर नहीं बनाया जा सका।",
+      "cart": "कार्ट में कम से कम एक मान्य आइटम जोड़ें।",
+      "payment": "मान्य भुगतान विधि चुनें।",
+      "cancel": "यह टिकट रद्द नहीं किया जा सका।"
     }
   },
   "Kitchen": {
@@ -466,6 +506,159 @@
     "stockNote": "{count, plural, =0 {कोई स्टॉक आइटम कम नहीं} =1 {{formattedCount} स्टॉक आइटम कम} other {{formattedCount} स्टॉक आइटम कम}}",
     "title": "मालिक सारांश",
     "description": "बिक्री, अनुमानित लागत, सकल लाभ, ऑर्डर संख्या और स्टॉक चेतावनी दैनिक काउंटर और रसोई के काम से जुड़े रहते हैं।"
+  },
+  "Public": {
+    "nav": {
+      "home": "KOT Platform होम पर जाएँ",
+      "label": "सार्वजनिक नेविगेशन",
+      "tagline": "रेस्टोरेंट का काम आसान और व्यवस्थित रखें।",
+      "demo": "लाइव डेमो",
+      "contact": "पायलट का अनुरोध करें",
+      "login": "साइन इन"
+    },
+    "footer": {
+      "tagline": "अपने आउटलेट का संचालन आसानी से सँभालें। किसी भी डिवाइस से।",
+      "label": "सार्वजनिक जानकारी",
+      "contact": "संपर्क",
+      "terms": "शर्तें",
+      "privacy": "गोपनीयता",
+      "login": "साइन इन"
+    },
+    "home": {
+      "eyebrow": "आपके फूड आउटलेट के लिए एक प्लेटफ़ॉर्म",
+      "titleTickerLabel": "KOT Platform आपके आउटलेट के लिए क्या करता है",
+      "titleTicker": {
+        "orders": "काउंटर ऑर्डर रसोई तक पहुँचाएँ।",
+        "handoff": "हर handoff साफ़ रखें।",
+        "queue": "कतार सभी के लिए दिखाई दे।",
+        "daily": "मेनू, स्टॉक और शिफ्ट को sync में रखें।"
+      },
+      "description": "{product} काउंटर, रसोई, कतार, मेनू और रोज़मर्रा के नियंत्रण को एक केंद्रित workspace में जोड़ता है।",
+      "primaryCta": "लाइव डेमो आज़माएँ",
+      "secondaryCta": "पायलट का अनुरोध करें",
+      "note": "पहले सार्वजनिक walkthrough देखें। तैयार होने पर सुरक्षित workspace में जाएँ।",
+      "previewLabel": "एक शांत शिफ्ट",
+      "previewTitle": "ऑपरेशन की एक तस्वीर",
+      "previewDescription": "अलग-अलग tools बदले बिना ज़रूरी काम एक जगह देखें।",
+      "previewLive": "लाइव दृश्य",
+      "preview": {
+        "salesLabel": "आज",
+        "salesValue": "₹{value, number}",
+        "activeLabel": "सक्रिय टिकट",
+        "activeValue": "{value, number}",
+        "readyLabel": "अभी तैयार",
+        "readyValue": "{value, number}",
+        "ticket": "टिकट #{token, number, integer}",
+        "items": "{count, number} आइटम",
+        "status": "तैयार हो रहा है",
+        "elapsed": "{value, number} मिनट बीते",
+        "source": "बुकिंग स्थान",
+        "sourceValue": "काउंटर"
+      },
+      "workflowEyebrow": "शिफ्ट के हिसाब से डिज़ाइन",
+      "workflowTitle": "वही flow जिसे आपकी टीम पहले से समझती है",
+      "workflowDescription": "स्टाफ के लिए भाषा सरल और मालिक के लिए डेटा भरोसेमंद रखें।",
+      "workflow": {
+        "counterTitle": "काउंटर से टिकट",
+        "counterDescription": "एक ग्राहक के लिए cart बनाएँ और payment details के साथ एक टिकट बुक करें।",
+        "kitchenTitle": "टिकट से रसोई",
+        "kitchenDescription": "ग्राहक का संदर्भ खोए बिना paid काम को तैयारी और ready चरणों में ले जाएँ।",
+        "queueTitle": "रसोई से कतार",
+        "queueDescription": "स्टाफ और ग्राहकों को दिखाएँ कि क्या तैयार है और आगे क्या है।"
+      },
+      "demoEyebrow": "खरीदने से पहले देखें",
+      "demoTitle": "आउटलेट मालिक को असली workflow आज़माने दें",
+      "demoDescription": "नमूना डेटा के साथ owner, cashier, kitchen और queue views बदलें और एक tap में demo reset करें।",
+      "demoCta": "लाइव डेमो खोलें",
+      "demoNote": "लॉगिन नहीं। Production writes नहीं। असली vendor data नहीं।",
+      "pilotEyebrow": "और बात करनी है?",
+      "pilotTitle": "अपने आउटलेट के लिए पायलट माँगें",
+      "pilotDescription": "काउंटर setup, staff roles और rollout questions के बारे में बताएँ।",
+      "pilotCta": "अपने आउटलेट के बारे में बताएँ"
+    },
+    "demo": {
+      "eyebrow": "इंटरैक्टिव product walkthrough",
+      "title": "नमूना शिफ्ट चलाएँ",
+      "description": "यह एक सुरक्षित browser demo है। Cashier की तरह टिकट बुक करें, kitchen में आगे बढ़ाएँ और queue बदलते देखें।",
+      "safeNotice": "केवल नमूना डेटा। यह स्क्रीन Supabase को call नहीं करती और किसी vendor workspace को नहीं बदलती।",
+      "roleLabel": "Demo view चुनें",
+      "roles": {
+        "owner": "मालिक",
+        "cashier": "कैशियर",
+        "kitchen": "रसोई",
+        "queue": "कतार"
+      },
+      "reset": "Demo reset करें",
+      "resetDone": "Demo reset हो गया",
+      "orders": "नमूना टिकट",
+      "active": "प्रगति में",
+      "ready": "अभी तैयार",
+      "ownerTitle": "Owner overview",
+      "ownerDescription": "हर operational screen खोले बिना shift की एक quick view।",
+      "menuTitle": "काउंटर मेनू",
+      "menuDescription": "एक से ज़्यादा आइटम जोड़ें और ग्राहक के लिए एक टिकट बुक करें।",
+      "add": "जोड़ें",
+      "cartTitle": "वर्तमान cart",
+      "emptyCart": "एक checkout total देखने के लिए आइटम जोड़ें।",
+      "emptyCartTitle": "Cart खाली है",
+      "decrease": "{item} की मात्रा घटाएँ",
+      "increase": "{item} की मात्रा बढ़ाएँ",
+      "customer": "ग्राहक label",
+      "customerPlaceholder": "Table 4 या counter number",
+      "book": "नमूना टिकट बुक करें",
+      "booked": "नमूना टिकट #{token, number, integer} बुक हुआ",
+      "kitchenTitle": "Kitchen board",
+      "kitchenDescription": "Kitchen के काम के साथ नमूना टिकट आगे बढ़ाएँ।",
+      "queueTitle": "Queue screen",
+      "queueDescription": "अगले handoff के लिए focused view।",
+      "items": "{count, number} आइटम",
+      "readyStatus": "देने के लिए तैयार",
+      "counterFallback": "काउंटर ग्राहक"
+    },
+    "contact": {
+      "eyebrow": "पायलट बातचीत",
+      "title": "अपने outlet workflow को स्पष्ट बनाएँ।",
+      "description": "आज का काम कैसे चलता है, shift में क्या धीमा है और किन staff roles को आसान रास्ता चाहिए, बताएँ।",
+      "note": "यह पूछताछ है; अपने-आप subscription या बिक्री की प्रतिबद्धता नहीं।",
+      "formTitle": "पायलट का अनुरोध करें",
+      "formDescription": "कुछ विवरण हमें उपयोगी अगला कदम बताने में मदद करेंगे।",
+      "name": "आपका नाम",
+      "email": "काम का email",
+      "business": "Outlet या business का नाम",
+      "city": "शहर",
+      "phone": "Phone (वैकल्पिक)",
+      "message": "आप क्या सुधारना चाहते हैं?",
+      "messagePlaceholder": "उदाहरण: तेज़ counter booking और साफ़ kitchen queue।",
+      "consent": "मैं सहमत हूँ कि KOT Platform इस पूछताछ का उत्तर देने के लिए इन विवरणों का उपयोग कर सकता है।",
+      "privacyBefore": "भेजने से पहले हमारी",
+      "privacyLink": "गोपनीयता सूचना",
+      "privacyAfter": "पढ़ें।",
+      "submit": "पूछताछ भेजें",
+      "submitting": "पूछताछ भेज रहे हैं",
+      "success": "धन्यवाद। आपकी पूछताछ मिल गई है और pilot follow-up के लिए तैयार है।",
+      "errors": {
+        "generic": "हम इस अनुरोध को validate नहीं कर सके। फ़ील्ड जाँचकर फिर कोशिश करें।",
+        "rateLimited": "इस connection से बहुत requests आई हैं। बाद में फिर कोशिश करें।",
+        "unavailable": "पूछताछ सेवा अभी उपलब्ध नहीं है। बाद में फिर कोशिश करें।",
+        "validation": "भेजने से पहले आवश्यक फ़ील्ड और consent पूरा करें।"
+      }
+    },
+    "legal": {
+      "draftBadge": "Pilot draft",
+      "updated": "अंतिम समीक्षा {date}",
+      "termsTitle": "Pilot evaluation की शर्तें",
+      "termsIntro": "लिखित commercial agreement से पहले KOT Platform को आज़माने के लिए ये सरल शर्तें हैं।",
+      "termsUseTitle": "Evaluation use",
+      "termsUseBody": "Public demo में sample data इस्तेमाल करें। Protected vendor workspaces केवल authorized staff के लिए हैं। सहमत setup के बिना demo या pilot में customer, card, health या अन्य sensitive information न डालें।",
+      "termsPilotTitle": "Pilot बातचीत",
+      "termsPilotBody": "Pilot inquiry बातचीत शुरू करती है; account, subscription, service-level commitment या payment obligation नहीं बनाती। Production use से पहले commercial terms, support, retention और onboarding responsibilities लिखित में तय करें।",
+      "privacyTitle": "गोपनीयता सूचना",
+      "privacyIntro": "Pilot के बारे में पूछते समय ली जाने वाली सीमित जानकारी इस draft में बताई गई है। Public commercial launch से पहले इसका final review होना चाहिए।",
+      "privacyDataTitle": "Inquiry information",
+      "privacyDataBody": "Pilot form आपका नाम, work email, outlet name, city, optional phone, message और consent record ले सकता है। इसका उपयोग उत्तर देने और relevant product conversation की तैयारी के लिए होता है। Inquiry information बेची नहीं जाती और advertising profiles के लिए उपयोग नहीं होती।",
+      "privacySecurityTitle": "Storage और विकल्प",
+      "privacySecurityBody": "Inquiry data vendor operational data से अलग store होता है और public read path से उपलब्ध नहीं है। Follow-up में दिए contact channel से correction या deletion माँग सकते हैं। Public demo की temporary state केवल current browser में रहती है।"
+    }
   },
   "WorkspaceError": {
     "title": "कार्यक्षेत्र उपलब्ध नहीं है",

@@ -17,9 +17,10 @@ function prepareForAccount(
     actorVendorSlug: "city-canteen",
     customerLabel: " Counter 4 ",
     defaultCustomerLabel: "Counter customer",
-    menuItemId: "menu-item-1",
-    quantity: 2,
-    vendorId: "vendor-1",
+    idempotencyKey: "00000000-0000-4000-8000-000000000001",
+    lines: [{ menuItemId: "menu-item-1", quantity: 2 }],
+    note: "",
+    paymentMode: "cash",
     vendorSlug: "city-canteen",
     ...overrides,
   })
@@ -35,9 +36,10 @@ describe("order action boundary", () => {
     assert.deepEqual(result, {
       command: {
         customerLabel: "Counter 4",
-        menuItemId: "menu-item-1",
-        quantity: 2,
-        vendorId: "vendor-1",
+        idempotencyKey: "00000000-0000-4000-8000-000000000001",
+        lines: [{ menuItemId: "menu-item-1", quantity: 2 }],
+        note: "",
+        paymentMode: "cash",
         vendorSlug: "city-canteen",
       },
       ok: true,
@@ -67,7 +69,7 @@ describe("order action boundary", () => {
     const result = prepareForAccount(
       "cashier@citycanteen.in",
       "Cashier@2026",
-      { quantity: 21 }
+      { lines: [{ menuItemId: "menu-item-1", quantity: 21 }] }
     )
 
     assert.deepEqual(result, { ok: false, reason: "quantity" })

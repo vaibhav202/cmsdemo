@@ -10,6 +10,8 @@ Remote schema work applied through Supabase MCP:
 - Advisor cleanup for security and indexes.
 - Interactive order/menu operations for the presentation workspace.
 - Vendor identity settings: `brand_color` and `heading_font`.
+- Cart checkout, pilot inquiry, private counter-table RLS, pilot inquiry notification, and pg_net webhook migrations applied on 2026-08-16 after remote schema/RLS review.
+- `notify-pilot-inquiry` is deployed and active. It uses Supabase Vault for the webhook secret and server-side Edge Function secrets for SMTP delivery.
 
 Current sample workspace:
 - Name: City Canteen
@@ -28,6 +30,18 @@ Repository migrations:
   and stock movement recording.
 - The migration was applied to the remote CMS Platform project on 2026-07-14.
   Replace its demo-vendor policies during the Auth/RLS phase.
+- `20260816135052_cart_checkout_order_creation.sql` adds atomic cart checkout,
+  idempotency, payment metadata, and demo/authenticated RPC boundaries.
+- `20260816134803_public_pilot_inquiries.sql` adds the anonymous inquiry table with
+  RLS and INSERT-only Data API access.
+- `20260816135334_vendor_order_counter_rls.sql` enables defense-in-depth RLS on the
+  private token counter; it intentionally has no direct role policies.
+- `20260816230931_pilot_inquiry_notifications.sql` adds service-role-only notification
+  state with retry status and idempotent attempt tracking.
+- `20260816234122_pilot_inquiry_webhook.sql` adds the private asynchronous `pg_net`
+  trigger that posts inserts to the notification Edge Function using a Vault secret.
+- `20260816234718_move_pg_net_extension.sql` relocates pg_net into the non-exposed
+  `extensions` schema and recreates the trigger safely.
 
 Tables created:
 - `vendors`
@@ -42,6 +56,8 @@ Tables created:
 - `ledger_entries`
 - `media_assets`
 - `audit_logs`
+- `pilot_inquiries`
+- `pilot_inquiry_notifications` (service-role-only delivery state)
 
 Storage:
 - Bucket: `vendor-media`

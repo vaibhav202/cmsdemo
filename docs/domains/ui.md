@@ -8,7 +8,7 @@ the platform identity.
 
 - Build a quiet, efficient restaurant operations workspace.
 - Optimize for repeated use, scanning, touch accuracy, and low-cost Android phones.
-- Keep CMS Platform recognizable through charcoal neutrals, restrained spacing,
+- Keep KOT Platform recognizable through charcoal neutrals, restrained spacing,
   consistent component behavior, and predictable navigation.
 - Add visual depth selectively. Avoid decorative layouts that compete with operational data.
 
@@ -33,7 +33,7 @@ the platform identity.
 Platform-owned:
 
 - Page background, body text, neutral cards, navigation structure, spacing, and interaction patterns.
-- Charcoal-based default theme and CMS Platform naming.
+- Charcoal-based default theme and KOT Platform naming.
 - Body font uses Geist Sans for Latin text and locale-matched Noto Sans for Devanagari
   or Gujarati text.
 
