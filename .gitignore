@@ -41,3 +41,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+project-review-odt/
+Documents/
+KOT_Platform_Database_Design_Data_Dictionary.pdf
+KOT_Platform_ERD_UML_Module_Hierarchy.pdf
+doc2-raw.odt

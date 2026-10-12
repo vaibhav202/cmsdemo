@@ -1,11 +1,6 @@
-import { CardTitle } from "@/components/ui/card"
+"use client"
+
 import { useTranslations } from "next-intl"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "@/components/ui/empty"
 import type {
   MenuItemWithCategory,
   OrderWithItems,
@@ -16,7 +11,7 @@ import {
   useDashboardFormats,
 } from "@/components/dashboard/shared/format"
 import { MetricCard } from "@/components/dashboard/shared/metric-card"
-import { OrderCard } from "@/components/dashboard/shared/order-card"
+import { useActiveOrders } from "@/components/shell/active-orders-context"
 import { CounterMenu } from "./counter-menu"
 
 export function OrderDashboard({
@@ -29,7 +24,9 @@ export function OrderDashboard({
   vendorSlug: string
 }) {
   const t = useTranslations("Order")
+  const shell = useTranslations("Shell")
   const format = useDashboardFormats()
+  const { toggle } = useActiveOrders()
   const activeOrders = orders.filter(isActiveOrder)
   const paidOrders = orders.filter((order) => order.payment_status === "paid")
   const sales = paidOrders.reduce((total, order) => total + Number(order.total), 0)
@@ -42,11 +39,25 @@ export function OrderDashboard({
           note={t("metrics.salesNote")}
           value={format.currency(sales)}
         />
-        <MetricCard
-          label={t("metrics.active")}
-          note={t("metrics.activeNote")}
-          value={format.integer(activeOrders.length)}
-        />
+        <div
+          aria-label={shell("openActiveOrders")}
+          className="cursor-pointer transition-opacity hover:opacity-90 active:scale-[0.99]"
+          onClick={toggle}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault()
+              toggle()
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <MetricCard
+            label={t("metrics.active")}
+            note={t("metrics.activeNote")}
+            value={format.integer(activeOrders.length)}
+          />
+        </div>
         <MetricCard
           label={t("metrics.available")}
           note={t("metrics.availableNote")}
@@ -56,25 +67,7 @@ export function OrderDashboard({
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <CounterMenu menuItems={menuItems} vendorSlug={vendorSlug} />
-
-        <aside className="flex flex-col gap-3">
-          <CardTitle>{t("activeOrders")}</CardTitle>
-          {activeOrders.length ? (
-            activeOrders.map((order) => (
-              <OrderCard key={order.id} order={order} vendorSlug={vendorSlug} />
-            ))
-          ) : (
-            <Empty>
-              <EmptyHeader>
-                <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
-                <EmptyDescription>{t("emptyDescription")}</EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-          )}
-        </aside>
-      </div>
+      <CounterMenu menuItems={menuItems} vendorSlug={vendorSlug} />
     </>
   )
 }

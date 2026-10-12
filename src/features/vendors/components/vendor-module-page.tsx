@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl"
 import { getLocale } from "next-intl/server"
 
 import { DashboardHeader } from "@/components/dashboard/shared/dashboard-header"
-import { WorkspaceInfoCards } from "@/components/dashboard/shared/workspace-info-cards"
+
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -135,7 +135,6 @@ export async function ModulePage({ module, vendorSlug }: ModulePageProps) {
         />
       ) : null}
 
-      <WorkspaceInfoCards role={session.user.role} />
     </section>
   )
 }

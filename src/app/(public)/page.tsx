@@ -2,12 +2,18 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import {
+  ArrowDownToLine,
   ArrowRight,
+  BookOpenText,
+  Boxes,
+  ChartNoAxesCombined,
+  Check,
   CheckCircle2,
   ChefHat,
   Clock3,
   MonitorSmartphone,
   ReceiptText,
+  TriangleAlert,
   Utensils,
   type LucideIcon,
 } from "lucide-react"
@@ -66,7 +72,7 @@ export default async function HomePage() {
               {t("home.eyebrow")}
             </Badge>
             <div className="flex flex-col gap-5">
-              <h1 className="min-w-0 max-w-3xl font-heading text-5xl leading-[0.92] font-semibold tracking-tight sm:text-7xl sm:leading-[0.9]">
+              <h1 className="min-w-0 max-w-3xl font-heading text-5xl leading-[1.08] font-semibold tracking-tight sm:text-7xl sm:leading-[1.04]">
                 <VerticalTextTicker
                   items={[
                     t("home.titleTicker.orders"),
@@ -169,15 +175,175 @@ export default async function HomePage() {
                 <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <Icon />
                 </span>
-                <CardTitle className="mt-2">{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
+                <CardTitle className="mt-2 leading-normal">{title}</CardTitle>
+                <CardDescription className="leading-6">{description}</CardDescription>
               </CardHeader>
             </Card>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 pb-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:pb-20">
+      <section className="border-y bg-primary/5" data-home-features>
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+          <div className="flex max-w-3xl flex-col gap-3">
+            <Badge className="w-fit" variant="outline">
+              {t("home.featuresEyebrow")}
+            </Badge>
+            <h2 className="font-heading text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+              {t("home.featuresTitle")}
+            </h2>
+            <p className="max-w-2xl leading-7 text-muted-foreground">
+              {t("home.featuresDescription")}
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <FeatureShowcase
+              badge={t("home.inventory.badge")}
+              capabilities={[
+                t("home.inventory.capability1"),
+                t("home.inventory.capability2"),
+                t("home.inventory.capability3"),
+              ]}
+              description={t("home.inventory.description")}
+              eyebrow={t("home.inventory.eyebrow")}
+              icon={Boxes}
+              title={t("home.inventory.title")}
+            >
+              <div className="flex w-full flex-col gap-3 rounded-xl border bg-background/80 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-sm leading-6 font-medium">
+                    {t("home.inventory.badge")}
+                  </span>
+                  <Badge variant="secondary">{t("home.inventory.liveBadge")}</Badge>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <StockPreviewRow
+                    low
+                    name={t("home.inventory.item1Name")}
+                    status={t("home.inventory.item1Status")}
+                    stock={t("home.inventory.item1Stock", { value: 2.5 })}
+                  />
+                  <StockPreviewRow
+                    name={t("home.inventory.item2Name")}
+                    status={t("home.inventory.item2Status")}
+                    stock={t("home.inventory.item2Stock", { value: 18 })}
+                  />
+                  <StockPreviewRow
+                    name={t("home.inventory.item3Name")}
+                    status={t("home.inventory.item3Status")}
+                    stock={t("home.inventory.item3Stock", { value: 12 })}
+                  />
+                </div>
+                <div className="flex items-start gap-3 rounded-lg border bg-muted/30 p-3">
+                  <ArrowDownToLine className="mt-0.5 size-4 shrink-0 text-primary" />
+                  <div className="min-w-0">
+                    <p className="text-xs leading-5 text-muted-foreground">
+                      {t("home.inventory.recentAction")}
+                    </p>
+                    <p className="text-sm leading-6 font-medium">
+                      {t("home.inventory.recentActionValue", { value: 8 })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FeatureShowcase>
+
+            <FeatureShowcase
+              badge={t("home.reports.badge")}
+              capabilities={[
+                t("home.reports.capability1"),
+                t("home.reports.capability2"),
+                t("home.reports.capability3"),
+              ]}
+              description={t("home.reports.description")}
+              eyebrow={t("home.reports.eyebrow")}
+              icon={ChartNoAxesCombined}
+              title={t("home.reports.title")}
+            >
+              <div className="flex w-full flex-col gap-3 rounded-xl border bg-background/80 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-sm leading-6 font-medium">
+                    {t("home.reports.badge")}
+                  </span>
+                  <Badge variant="secondary">{t("home.reports.liveBadge")}</Badge>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-3">
+                  <FeatureMetric
+                    label={t("home.reports.salesLabel")}
+                    value={t("home.reports.salesValue", { value: 18420 })}
+                  />
+                  <FeatureMetric
+                    label={t("home.reports.profitLabel")}
+                    note={t("home.reports.profitNote")}
+                    value={t("home.reports.profitValue", { value: 6720 })}
+                  />
+                  <FeatureMetric
+                    label={t("home.reports.completedLabel")}
+                    value={t("home.reports.completedValue", { value: 74 })}
+                  />
+                </div>
+                <div className="rounded-lg border bg-muted/30 p-3">
+                  <p className="text-xs leading-5 text-muted-foreground">
+                    {t("home.reports.stockAlertLabel")}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 font-medium">
+                    {t("home.reports.stockAlertValue", { count: 3 })}
+                  </p>
+                  <p className="text-xs leading-5 text-muted-foreground">
+                    {t("home.reports.stockAlertDetail")}
+                  </p>
+                </div>
+              </div>
+            </FeatureShowcase>
+
+            <FeatureShowcase
+              badge={t("home.ledger.badge")}
+              capabilities={[
+                t("home.ledger.capability1"),
+                t("home.ledger.capability2"),
+                t("home.ledger.capability3"),
+              ]}
+              description={t("home.ledger.description")}
+              eyebrow={t("home.ledger.eyebrow")}
+              icon={BookOpenText}
+              title={t("home.ledger.title")}
+            >
+              <div className="flex w-full flex-col gap-3 rounded-xl border bg-background/80 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-sm leading-6 font-medium">
+                    {t("home.ledger.badge")}
+                  </span>
+                  <Badge variant="secondary">{t("home.ledger.liveBadge")}</Badge>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <FeatureMetric
+                    label={t("home.ledger.receivableLabel")}
+                    value={t("home.ledger.receivableValue", { value: 6240 })}
+                  />
+                  <FeatureMetric
+                    label={t("home.ledger.payableLabel")}
+                    value={t("home.ledger.payableValue", { value: 12180 })}
+                  />
+                  <FeatureMetric
+                    label={t("home.ledger.expenseLabel")}
+                    value={t("home.ledger.expenseValue", { value: 1400 })}
+                  />
+                  <FeatureMetric
+                    label={t("home.ledger.openEntriesLabel")}
+                    value={t("home.ledger.openEntriesValue", { value: 8 })}
+                  />
+                </div>
+                <p className="rounded-lg border bg-muted/30 p-3 text-xs leading-5 text-muted-foreground">
+                  {t("home.ledger.contextNote")}
+                </p>
+              </div>
+            </FeatureShowcase>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-20">
         <Card>
           <CardHeader>
             <Badge className="w-fit" variant="outline">
@@ -214,11 +380,111 @@ export default async function HomePage() {
   )
 }
 
+function FeatureShowcase({
+  badge,
+  capabilities,
+  children,
+  description,
+  eyebrow,
+  icon: Icon,
+  title,
+}: {
+  badge: string
+  capabilities: string[]
+  children: React.ReactNode
+  description: string
+  eyebrow: string
+  icon: LucideIcon
+  title: string
+}) {
+  return (
+    <Card className="py-0" data-home-feature>
+      <div className="grid min-w-0 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
+        <CardHeader className="flex flex-col gap-5 py-6 lg:py-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Icon />
+            </span>
+            <Badge variant="secondary">{badge}</Badge>
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm leading-6 font-medium text-muted-foreground">
+              {eyebrow}
+            </p>
+            <CardTitle className="text-2xl leading-normal">{title}</CardTitle>
+            <CardDescription className="leading-7">{description}</CardDescription>
+          </div>
+          <ul className="flex flex-col gap-2">
+            {capabilities.map((capability) => (
+              <li className="flex items-start gap-2" key={capability}>
+                <Check className="mt-1 size-4 shrink-0 text-primary" />
+                <span className="text-sm leading-6">{capability}</span>
+              </li>
+            ))}
+          </ul>
+        </CardHeader>
+        <CardContent className="flex items-center border-t bg-muted/20 py-6 lg:border-t-0 lg:border-l lg:py-8">
+          {children}
+        </CardContent>
+      </div>
+    </Card>
+  )
+}
+
+function StockPreviewRow({
+  low = false,
+  name,
+  status,
+  stock,
+}: {
+  low?: boolean
+  name: string
+  status: string
+  stock: string
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5">
+      <div className="min-w-0">
+        <p className="text-sm leading-6 font-medium">{name}</p>
+        <p className="text-xs leading-5 text-muted-foreground">{stock}</p>
+      </div>
+      <Badge variant={low ? "destructive" : "secondary"}>
+        {low ? <TriangleAlert data-icon="inline-start" /> : null}
+        {status}
+      </Badge>
+    </div>
+  )
+}
+
+function FeatureMetric({
+  label,
+  note,
+  value,
+}: {
+  label: string
+  note?: string
+  value: string
+}) {
+  return (
+    <div className="flex min-w-0 flex-col gap-1 rounded-lg border p-3">
+      <span className="text-xs leading-5 text-muted-foreground">{label}</span>
+      <span className="break-words text-lg leading-7 font-semibold tabular-nums">
+        {value}
+      </span>
+      {note ? (
+        <span className="text-xs leading-5 text-muted-foreground">{note}</span>
+      ) : null}
+    </div>
+  )
+}
+
 function PreviewMetric({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-1 rounded-lg border p-3">
-      <span className="truncate text-xs text-muted-foreground">{label}</span>
-      <span className="truncate text-lg font-semibold tabular-nums">{value}</span>
+      <span className="text-xs leading-5 text-muted-foreground">{label}</span>
+      <span className="break-words text-lg leading-7 font-semibold tabular-nums">
+        {value}
+      </span>
     </div>
   )
 }

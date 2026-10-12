@@ -16,7 +16,7 @@ import {
   getModuleHref,
 } from "@/features/memberships/permissions"
 import { VendorNotFoundError } from "@/lib/supabase/errors"
-import { getVendorBySlug } from "@/features/vendors/data"
+import { getVendorDashboardData } from "@/features/vendors/data"
 
 type VendorLayoutProps = {
   children: React.ReactNode
@@ -33,10 +33,10 @@ export default async function VendorLayout({
     getLocale(),
     getTranslations("Module"),
   ])
-  let vendor
+  let dashboardData
 
   try {
-    vendor = await getVendorBySlug(vendorSlug)
+    dashboardData = await getVendorDashboardData(vendorSlug)
   } catch (error) {
     if (error instanceof VendorNotFoundError) {
       notFound()
@@ -45,13 +45,14 @@ export default async function VendorLayout({
     throw error
   }
 
+  const vendor = dashboardData.vendor
   const modules = getAllowedModules(session.user.role)
   const vendorInitial = vendor.name.slice(0, 1).toUpperCase()
   const initialClockIso = new Date().toISOString()
   const homeHref = `/app/${vendorSlug}`
   const navItems = modules.map((module) => ({
     href: getModuleHref(vendorSlug, module),
-    label: moduleTranslations(`${module}.shortTitle`),
+    label: moduleTranslations(`${module}.shortTitle` as "order.shortTitle"),
     module,
   }))
   const vendorAccent = normalizeVendorAccent(vendor.brand_color)
@@ -79,6 +80,7 @@ export default async function VendorLayout({
         homeHref={homeHref}
         initialClockIso={initialClockIso}
         navItems={navItems}
+        orders={dashboardData.orders}
         platformName={platformBrand.name}
         user={{
           avatarUrl: currentMemberMedia?.avatarUrl ?? null,

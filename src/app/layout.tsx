@@ -54,8 +54,10 @@ export default async function RootLayout({
   const accessibilityPreferences = parseAccessibilityPreferences(
     cookieStore.get(accessibilityCookieName)?.value
   );
+  const localeSans = getLocaleSansFont(locale);
   const localeStyle = {
-    "--font-ui-sans": getLocaleSansFont(locale),
+    "--font-ui-sans": localeSans,
+    "--heading-font-family": localeSans,
     ...getAccessibilityStyle(accessibilityPreferences),
   } as CSSProperties;
 

@@ -28,6 +28,34 @@ test("cashier can book one multi-item counter ticket and undo it", async () => {
 
     await page.evaluate(`(() => {
       const form = document.querySelector('form[id^="order-form-"]')
+      const controls = form?.querySelectorAll('button[type="button"]')
+      const increase = controls?.[1]
+      if (!(increase instanceof HTMLButtonElement)) {
+        throw new Error("Menu quantity controls were not rendered")
+      }
+      increase.click()
+      return true
+    })()`)
+    await page.waitFor(
+      'document.querySelector(\'form[id^="order-form-"] input[id^="quantity-"]\')?.value === "2"'
+    )
+
+    await page.evaluate(`(() => {
+      const form = document.querySelector('form[id^="order-form-"]')
+      const controls = form?.querySelectorAll('button[type="button"]')
+      const decrease = controls?.[0]
+      if (!(decrease instanceof HTMLButtonElement)) {
+        throw new Error("Menu quantity controls were not rendered")
+      }
+      decrease.click()
+      return true
+    })()`)
+    await page.waitFor(
+      'document.querySelector(\'form[id^="order-form-"] input[id^="quantity-"]\')?.value === "1"'
+    )
+
+    await page.evaluate(`(() => {
+      const form = document.querySelector('form[id^="order-form-"]')
       const button = form?.querySelector('button[type="submit"]')
       if (!(button instanceof HTMLButtonElement) || button.disabled) {
         throw new Error("No enabled first menu button")

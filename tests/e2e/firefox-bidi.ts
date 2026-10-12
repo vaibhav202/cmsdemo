@@ -3,7 +3,9 @@ import assert from "node:assert/strict"
 import {
   findWorkspaceAccount,
   getPostLoginRoute,
+  WORKSPACE_SESSION_COOKIE,
 } from "../../src/features/auth/demo-session"
+import { withChromiumPage } from "./chromium-cdp"
 
 type PendingRequest = {
   reject: (error: Error) => void
@@ -21,16 +23,19 @@ type BidiMessage = {
   result?: Record<string, unknown>
 }
 
-type FirefoxPage = {
+export type BrowserPage = {
   browserErrors: string[]
-  context: string
-  evaluate(expression: string): Promise<BidiMessage>
+  context?: string
+  evaluate(expression: string): Promise<any>
   evaluateJson<T>(expression: string): Promise<T>
   navigate(path: string): Promise<void>
   setCookie(name: string, value: string): Promise<void>
+  setViewport(width: number, height: number): Promise<void>
   setFiles(selector: string, files: string[]): Promise<void>
   waitFor(expression: string, timeoutMs?: number): Promise<void>
 }
+
+export type FirefoxPage = BrowserPage
 
 const baseUrl = process.env.E2E_BASE_URL ?? "http://127.0.0.1:3100"
 const bidiUrl = process.env.FIREFOX_BIDI_URL ?? "ws://127.0.0.1:9222/session"
@@ -45,8 +50,13 @@ function remoteValue(message: BidiMessage) {
 }
 
 export async function withFirefoxPage(
-  run: (page: FirefoxPage) => Promise<void>
+  run: (page: BrowserPage) => Promise<void>
 ) {
+  const browserType = process.env.E2E_BROWSER?.toLowerCase()
+  if (browserType === "brave" || browserType === "chromium") {
+    return withChromiumPage(run)
+  }
+
   const socket = new WebSocket(bidiUrl)
   const pending = new Map<number, PendingRequest>()
   const browserErrors: string[] = []
@@ -118,13 +128,13 @@ export async function withFirefoxPage(
       })
     }
 
-    const page: FirefoxPage = {
+    const page: BrowserPage = {
       browserErrors,
       context,
       evaluate,
       async evaluateJson<T>(expression: string) {
-        const message = await evaluate(`JSON.stringify(${expression})`)
-        const value = remoteValue(message)
+        const message = await evaluate(`JSON.stringify(${expression})` as string)
+        const value = remoteValue(message as BidiMessage)
         if (typeof value !== "string") {
           throw new Error("Firefox script did not return serialized JSON")
         }
@@ -151,6 +161,13 @@ export async function withFirefoxPage(
               value,
             },
           },
+        })
+      },
+      async setViewport(width: number, height: number) {
+        await send("browsingContext.setViewport", {
+          context,
+          devicePixelRatio: 1,
+          viewport: { height, width },
         })
       },
       async setFiles(selector: string, files: string[]) {
@@ -192,15 +209,20 @@ export async function withFirefoxPage(
   }
 }
 
+export const withBrowserPage = withFirefoxPage
+
 export async function login(
-  page: FirefoxPage,
+  page: BrowserPage,
   email: string,
   password: string
 ) {
   const account = findWorkspaceAccount(email, password)
-  assert.ok(account, "the Firefox fixture account should be valid")
 
-  await page.setCookie("cms_platform_locale", "en-IN")
-  await page.setCookie("cms_platform_session", account.id)
+  assert.ok(
+    account,
+    `Cannot seed a demo session for nonexistent account: ${email}`
+  )
+
+  await page.setCookie(WORKSPACE_SESSION_COOKIE, account.id)
   await page.navigate(getPostLoginRoute(account))
 }

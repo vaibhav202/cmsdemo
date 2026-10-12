@@ -1,6 +1,6 @@
 "use client"
 
-import { Plus } from "lucide-react"
+import { Minus, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { type FormEvent, useState } from "react"
 
@@ -40,6 +40,27 @@ export function OrderItemForm({
   const [quantity, setQuantity] = useState("1")
   const [error, setError] = useState<string | null>(null)
 
+  function setClampedQuantity(nextQuantity: number) {
+    setQuantity(
+      String(Math.min(maxCartLineQuantity, Math.max(1, nextQuantity)))
+    )
+    setError(null)
+  }
+
+  function handleDecrease() {
+    const parsedQuantity = Number(quantity)
+    const currentQuantity = Number.isInteger(parsedQuantity) ? parsedQuantity : 1
+
+    setClampedQuantity(currentQuantity - 1)
+  }
+
+  function handleIncrease() {
+    const parsedQuantity = Number(quantity)
+    const currentQuantity = Number.isInteger(parsedQuantity) ? parsedQuantity : 1
+
+    setClampedQuantity(currentQuantity + 1)
+  }
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -60,15 +81,15 @@ export function OrderItemForm({
   }
 
   return (
-    <Card size="sm">
+    <Card className="flex h-full flex-col justify-between" size="sm">
       <form
-        className="flex flex-col gap-(--card-spacing)"
+        className="flex h-full flex-col justify-between gap-3"
         id={`order-form-${item.id}`}
         onSubmit={handleSubmit}
       >
         <CardHeader>
-          <CardTitle>{item.name}</CardTitle>
-          <CardDescription>
+          <CardTitle className="line-clamp-1">{item.name}</CardTitle>
+          <CardDescription className="line-clamp-1">
             {item.menu_categories?.name ?? t("menuFallback")} · {format.currency(Number(item.price))}
           </CardDescription>
           <CardAction>
@@ -78,24 +99,61 @@ export function OrderItemForm({
           </CardAction>
         </CardHeader>
 
-        <CardContent>
-          <FieldGroup className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
-            <Field data-invalid={Boolean(error)}>
-              <FieldLabel htmlFor={`quantity-${item.id}`}>
+        <CardContent className="pt-0">
+          <FieldGroup className="gap-3">
+            <Field
+              className="flex-col gap-1.5"
+              data-invalid={Boolean(error)}
+            >
+              <FieldLabel
+                className="sr-only"
+                htmlFor={`quantity-${item.id}`}
+              >
                 {t("quantity")}
               </FieldLabel>
-              <Input
-                aria-invalid={Boolean(error)}
-                id={`quantity-${item.id}`}
-                max={maxCartLineQuantity}
-                min="1"
-                onChange={(event) => setQuantity(event.target.value)}
-                type="number"
-                value={quantity}
-              />
-              {error ? <FieldError>{error}</FieldError> : null}
+              <div className="flex min-h-10 items-center rounded-lg border border-input bg-background px-1">
+                <Button
+                  aria-label={t("decreaseItem", { item: item.name })}
+                  className="shrink-0"
+                  disabled={Number(quantity) <= 1}
+                  onClick={handleDecrease}
+                  size="icon-sm"
+                  type="button"
+                  variant="ghost"
+                >
+                  <Minus />
+                </Button>
+                <Input
+                  aria-invalid={Boolean(error)}
+                  aria-label={t("quantity")}
+                  className="h-8 flex-1 border-0 bg-transparent text-center text-sm font-mono font-medium shadow-none focus-visible:ring-0"
+                  id={`quantity-${item.id}`}
+                  max={maxCartLineQuantity}
+                  min="1"
+                  onChange={(event) => {
+                    setError(null)
+                    setQuantity(event.target.value)
+                  }}
+                  type="number"
+                  value={quantity}
+                />
+                <Button
+                  aria-label={t("increaseItem", { item: item.name })}
+                  className="shrink-0"
+                  disabled={Number(quantity) >= maxCartLineQuantity}
+                  onClick={handleIncrease}
+                  size="icon-sm"
+                  type="button"
+                  variant="ghost"
+                >
+                  <Plus />
+                </Button>
+              </div>
+              {error ? (
+                <FieldError className="text-xs">{error}</FieldError>
+              ) : null}
             </Field>
-            <Button disabled={!item.in_stock} size="sm" type="submit">
+            <Button className="w-full" disabled={!item.in_stock} type="submit">
               <Plus data-icon="inline-start" />
               {t("addToCart")}
             </Button>

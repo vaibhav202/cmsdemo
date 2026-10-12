@@ -31,12 +31,8 @@ import {
 import type { MenuItemWithCategory } from "@/lib/supabase/types"
 
 import { useDashboardFormats } from "@/components/dashboard/shared/format"
-import {
-  changeCartLineQuantity,
-  mergeCartLine,
-  removeCartLine,
-} from "../commands"
-import { OrderCart, type OrderCartLine } from "./order-cart"
+import { OrderCart } from "./order-cart"
+import { useOrderCart } from "./order-cart-context"
 import { OrderItemForm } from "./order-item-form"
 
 type CounterMenuProps = {
@@ -49,7 +45,7 @@ export function CounterMenu({ menuItems, vendorSlug }: CounterMenuProps) {
   const t = useTranslations("Order")
   const format = useDashboardFormats()
   const [query, setQuery] = useState("")
-  const [cartLines, setCartLines] = useState<OrderCartLine[]>([])
+  const { addItem } = useOrderCart()
   const normalizedQuery = query.trim().toLocaleLowerCase(locale)
   const filteredItems = useMemo(() => {
     if (!normalizedQuery) return menuItems
@@ -62,29 +58,10 @@ export function CounterMenu({ menuItems, vendorSlug }: CounterMenuProps) {
     })
   }, [locale, menuItems, normalizedQuery])
 
-  function addToCart(item: MenuItemWithCategory, quantity: number) {
-    setCartLines((currentLines) =>
-      mergeCartLine(currentLines, { item, quantity }, (line) => line.item.id)
-    )
-  }
-
-  function changeQuantity(menuItemId: string, quantity: number) {
-    setCartLines((currentLines) =>
-      changeCartLineQuantity(currentLines, menuItemId, quantity, (line) =>
-        line.item.id
-      )
-    )
-  }
-
-  function removeFromCart(menuItemId: string) {
-    setCartLines((currentLines) =>
-      removeCartLine(currentLines, menuItemId, (line) => line.item.id)
-    )
-  }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
-      <Card>
+    <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <Card className="flex flex-col">
         <CardHeader>
           <CardTitle>{t("createTitle")}</CardTitle>
           <CardDescription>{t("createDescription")}</CardDescription>
@@ -126,34 +103,30 @@ export function CounterMenu({ menuItems, vendorSlug }: CounterMenuProps) {
             </FieldDescription>
           </Field>
 
-          {filteredItems.length ? (
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {filteredItems.map((item) => (
-                <OrderItemForm
-                  item={item}
-                  key={item.id}
-                  onAddAction={addToCart}
-                />
-              ))}
-            </div>
-          ) : (
-            <Empty>
-              <EmptyHeader>
-                <EmptyTitle>{t("noMatchTitle")}</EmptyTitle>
-                <EmptyDescription>{t("noMatchDescription")}</EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-          )}
+          <div className="max-h-[calc(100vh-20rem)] overflow-y-auto pr-1">
+            {filteredItems.length ? (
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredItems.map((item) => (
+                  <OrderItemForm
+                    item={item}
+                    key={item.id}
+                    onAddAction={addItem}
+                  />
+                ))}
+              </div>
+            ) : (
+              <Empty>
+                <EmptyHeader>
+                  <EmptyTitle>{t("noMatchTitle")}</EmptyTitle>
+                  <EmptyDescription>{t("noMatchDescription")}</EmptyDescription>
+                </EmptyHeader>
+              </Empty>
+            )}
+          </div>
         </CardContent>
       </Card>
 
-      <OrderCart
-        lines={cartLines}
-        onClearAction={() => setCartLines([])}
-        onQuantityChangeAction={changeQuantity}
-        onRemoveAction={removeFromCart}
-        vendorSlug={vendorSlug}
-      />
+      <OrderCart vendorSlug={vendorSlug} />
     </div>
   )
 }

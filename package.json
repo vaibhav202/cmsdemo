@@ -15,11 +15,15 @@
     "test:integration": "node --import tsx --test tests/integration/*.test.ts",
     "test:rls": "node scripts/run-rls-tests.mjs",
     "test:e2e": "node scripts/run-firefox-e2e.mjs",
-    "test:all": "npm test && npm run test:rls && npm run test:e2e",
+    "test:e2e:firefox": "node scripts/run-firefox-e2e.mjs",
+    "test:e2e:brave": "node scripts/run-brave-e2e.mjs",
+    "test:e2e:all": "node scripts/run-firefox-e2e.mjs && node scripts/run-brave-e2e.mjs",
+    "test:all": "npm test && npm run test:rls && npm run test:e2e:all",
     "test:media": "node --import tsx --test tests/media/image-normalization.test.mjs",
     "test:subscriptions": "node --import tsx --test tests/subscriptions/entitlements.test.mjs"
   },
   "dependencies": {
+
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
     "class-variance-authority": "^0.7.1",

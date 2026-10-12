@@ -35,24 +35,21 @@ import {
   type CreatedOrderResult,
 } from "@/features/orders/actions"
 import {
+  useOrderCart,
+  type OrderCartLine,
+} from "./order-cart-context"
+import {
   maxCartLineQuantity,
   paymentModes,
   type PaymentMode,
 } from "@/features/orders/commands"
-import type { MenuItemWithCategory } from "@/lib/supabase/types"
 import { cn } from "@/lib/utils"
 
-export type OrderCartLine = {
-  item: MenuItemWithCategory
-  quantity: number
-}
 
 type OrderCartProps = {
   className?: string
-  lines: OrderCartLine[]
-  onClearAction: () => void
-  onRemoveAction: (menuItemId: string) => void
-  onQuantityChangeAction: (menuItemId: string, quantity: number) => void
+  embedded?: boolean
+  showHeader?: boolean
   vendorSlug: string
 }
 
@@ -65,12 +62,11 @@ function getCartTotal(lines: OrderCartLine[]) {
 
 export function OrderCart({
   className,
-  lines,
-  onClearAction,
-  onRemoveAction,
-  onQuantityChangeAction,
+  embedded = false,
+  showHeader = true,
   vendorSlug,
 }: OrderCartProps) {
+  const { changeQuantity, clearCart, lines, removeItem } = useOrderCart()
   const t = useTranslations("Order")
   const common = useTranslations("Common.actions")
   const format = useDashboardFormats()
@@ -123,7 +119,7 @@ export function OrderCart({
 
     try {
       const order = await createOrderAction(formData)
-      onClearAction()
+      clearCart()
       setCustomerLabel("")
       setNote("")
       toast.success(t("feedback.createdTitle"), {
@@ -147,29 +143,28 @@ export function OrderCart({
     }
   }
 
-  return (
-    <Card
-      className={cn("order-first lg:order-last lg:sticky lg:top-24", className)}
-      data-order-cart
-    >
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <ShoppingCart data-icon="inline-start" />
-          {t("cartTitle")}
-          <Badge
-            className="ml-auto"
-            data-cart-total
-            variant="secondary"
-          >
-            {format.integer(totalQuantity)}
-          </Badge>
-        </CardTitle>
-        <CardDescription>
-          {lines.length
-            ? format.currency(total)
-            : t("cartEmptyDescription")}
-        </CardDescription>
-      </CardHeader>
+  const content = (
+    <>
+      {showHeader ? (
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <ShoppingCart data-icon="inline-start" />
+            {t("cartTitle")}
+            <Badge
+              className="ml-auto"
+              data-cart-total
+              variant="secondary"
+            >
+              {format.integer(totalQuantity)}
+            </Badge>
+          </CardTitle>
+          <CardDescription>
+            {lines.length
+              ? format.currency(total)
+              : t("cartEmptyDescription")}
+          </CardDescription>
+        </CardHeader>
+      ) : null}
 
       <CardContent className="flex flex-col gap-4">
         {lines.length ? (
@@ -193,7 +188,7 @@ export function OrderCart({
                     aria-label={t("decreaseItem", { item: line.item.name })}
                     disabled={pending || line.quantity <= 1}
                     onClick={() =>
-                      onQuantityChangeAction(line.item.id, line.quantity - 1)
+                      changeQuantity(line.item.id, line.quantity - 1)
                     }
                     size="icon-sm"
                     type="button"
@@ -208,7 +203,7 @@ export function OrderCart({
                     aria-label={t("increaseItem", { item: line.item.name })}
                     disabled={pending || line.quantity >= maxCartLineQuantity}
                     onClick={() =>
-                      onQuantityChangeAction(line.item.id, line.quantity + 1)
+                      changeQuantity(line.item.id, line.quantity + 1)
                     }
                     size="icon-sm"
                     type="button"
@@ -219,7 +214,7 @@ export function OrderCart({
                   <Button
                     aria-label={t("removeItem", { item: line.item.name })}
                     disabled={pending}
-                    onClick={() => onRemoveAction(line.item.id)}
+                    onClick={() => removeItem(line.item.id)}
                     size="icon-sm"
                     type="button"
                     variant="ghost"
@@ -301,13 +296,32 @@ export function OrderCart({
         <Button
           className="w-full"
           disabled={!lines.length || pending}
-          onClick={onClearAction}
+          onClick={clearCart}
           type="button"
           variant="outline"
         >
           {t("clearCart")}
         </Button>
       </CardFooter>
+    </>
+  )
+
+  return embedded ? (
+    <div
+      className={cn(
+        "flex flex-col gap-(--card-spacing) text-sm text-card-foreground [--card-spacing:--spacing(4)]",
+        className
+      )}
+      data-order-cart
+    >
+      {content}
+    </div>
+  ) : (
+    <Card
+      className={cn("lg:order-last lg:sticky lg:top-24", className)}
+      data-order-cart
+    >
+      {content}
     </Card>
   )
 }

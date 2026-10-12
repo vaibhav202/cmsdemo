@@ -48,15 +48,25 @@ export function VerticalTextTicker({
         aria-hidden="true"
         className={cn(
           isHero
-            ? "relative block min-h-[2.2em] w-full max-w-full overflow-hidden sm:min-h-[2.1em]"
+            ? "relative grid w-full max-w-full overflow-hidden py-[0.12em]"
             : "relative inline-flex max-w-full overflow-hidden"
         )}
       >
+        {isHero
+          ? items.map((item) => (
+              <span
+                className="invisible col-start-1 row-start-1 block w-full max-w-full whitespace-normal text-balance text-[0.95em] leading-[1.08] font-semibold"
+                key={`measure-${item}`}
+              >
+                {item}
+              </span>
+            ))
+          : null}
         <span
           className={cn(
             "text-foreground animate-in slide-in-from-bottom-2 fade-in duration-500 motion-reduce:animate-none",
             isHero
-              ? "block w-full max-w-full whitespace-normal text-balance text-[0.95em] font-semibold leading-[0.92]"
+              ? "col-start-1 row-start-1 block w-full max-w-full whitespace-normal text-balance text-[0.95em] leading-[1.08] font-semibold"
               : "flex h-7 items-center whitespace-nowrap font-medium",
             itemClassName
           )}

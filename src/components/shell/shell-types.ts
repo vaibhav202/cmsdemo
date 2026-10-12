@@ -6,6 +6,7 @@ import type {
   VendorRole,
 } from "@/features/memberships/permissions"
 import type { MediaUploadMode } from "@/lib/media/config"
+import type { OrderWithItems } from "@/lib/supabase/types"
 
 export type ShellVendor = {
   logoUrl: string | null
@@ -34,6 +35,7 @@ export type VendorShellProps = {
   homeHref: string
   initialClockIso: string
   navItems: ShellNavItem[]
+  orders?: OrderWithItems[]
   platformName: string
   user: ShellUser
   vendor: ShellVendor

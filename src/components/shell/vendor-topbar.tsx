@@ -1,10 +1,14 @@
 "use client"
 
-import { LogOut } from "lucide-react"
+
+import { usePathname } from "next/navigation"
+import { ClipboardList, LogOut, ShoppingCart } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { logoutAction } from "@/features/auth/actions"
+import { canAccessModule } from "@/features/memberships/permissions"
 import { AccessibilityMenu } from "@/components/accessibility/accessibility-control"
+import { useDashboardFormats } from "@/components/dashboard/shared/format"
 import { MediaImageUploadForm } from "@/components/media/media-image-upload-form"
 import { LanguageMenu } from "@/components/shell/language-control"
 import { LiveClock } from "@/components/shell/live-clock"
@@ -21,6 +25,8 @@ import {
 } from "@/components/ui/popover"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
+import { useActiveOrders } from "./active-orders-context"
+import { useOrderCart } from "@/features/orders/components/order-cart-context"
 import type { ShellUser } from "./shell-types"
 import { ThemeModeControl } from "./theme-mode-control"
 
@@ -35,7 +41,14 @@ export function VendorTopbar({
   user,
   vendorSlug,
 }: VendorTopbarProps) {
+  const pathname = usePathname()
   const common = useTranslations("Common")
+  const shell = useTranslations("Shell")
+  const format = useDashboardFormats()
+  const { activeOrdersCount, toggle } = useActiveOrders()
+  const { isOpen: isCartOpen, openCart, totalQuantity } = useOrderCart()
+  const hasOrderAccess = canAccessModule(user.role, "order")
+  const isOrderModule = pathname === `/app/${vendorSlug}/order`
 
   return (
     <header className="glass-surface hidden h-18 shrink-0 border-b px-4 md:sticky md:top-0 md:z-30 md:block md:px-6">
@@ -85,7 +98,49 @@ export function VendorTopbar({
             <p className="truncate text-xs text-muted-foreground">{user.email}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+
+        <div className="flex items-center gap-2.5">
+          <Button
+            aria-label={shell("openActiveOrders")}
+            className="h-9 gap-2 px-3"
+            onClick={toggle}
+            type="button"
+            variant="outline"
+          >
+            <ClipboardList className="size-4 text-primary" />
+            <span className="hidden lg:inline text-xs font-medium">
+              {shell("activeOrders")}
+            </span>
+            <Badge
+              className="h-5 px-1.5 text-[11px]"
+              variant={activeOrdersCount > 0 ? "default" : "secondary"}
+            >
+              {format.integer(activeOrdersCount)}
+            </Badge>
+          </Button>
+
+          {hasOrderAccess && !isOrderModule ? (
+            <Button
+              aria-expanded={isCartOpen}
+              aria-label={shell("openCart")}
+              className="relative size-9"
+              onClick={openCart}
+              size="icon"
+              type="button"
+              variant="outline"
+            >
+              <ShoppingCart data-icon="inline-start" />
+              <Badge
+                className="absolute -top-1 -right-1 min-w-5 px-1 text-[10px]"
+                variant={totalQuantity > 0 ? "default" : "secondary"}
+              >
+                {format.integer(totalQuantity)}
+              </Badge>
+            </Button>
+          ) : null}
+
+          <div className="h-4 w-px bg-border mx-0.5" />
+
           <LanguageMenu compact />
           <ThemeModeControl />
           <AccessibilityMenu />

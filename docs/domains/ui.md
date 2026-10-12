@@ -69,6 +69,10 @@ or all navigation text. Vendor theming must not erase the platform identity.
 - Compact labels, table text, input text, badges, and long descriptions remain Sans.
 - Do not apply serif to dense operational data.
 - Do not use viewport-scaled font sizes or negative letter spacing.
+- Devanagari and Gujarati display text needs vertical breathing room. Animated or
+  overflow-clipped headings must size from the actual localized content, use at least
+  `1.08` line height, and include a small vertical inset; never fix their height from
+  Latin-only font metrics.
 
 ## Language And Locale UI
 
